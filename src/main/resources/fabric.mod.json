@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "name": "${name}",
+  "description": "${description}",
+  "contact": {
+    "issues": "https://github.com/btwonion/telekinesis/issues",
+    "sources": "https://github.com/btwonion/telekinesis"
+  },
+  "authors": [
+    {
+      "name": "btwonion"
+    }
+  ],
+  "contributors": [],
+  "license": ["GNU General Public License v3.0"],
+  "version": "${version}",
+  "environment": "*",
+  "depends": {
+    "fabric-language-kotlin": ">=1.8.5+kotlin.1.7.20",
+    "fabric-api": ">=0.64.0+1.19.2",
+    "silk-all": ">=1.9.3",
+    "minecraft": ">=1.19.2"
+  },
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "dev.nyon.telekinesis.MainKt::init"
+      }
+    ]
+  },
+  "mixins": [
+    "telekinesis.mixins.json"
+  ],
+  "custom": {
+    "modmenu" : {
+      "links": {
+        "modmenu.discord": "https://discord.gg/pmHTtZnMd3"
+      }
+    }
+  }
+}
