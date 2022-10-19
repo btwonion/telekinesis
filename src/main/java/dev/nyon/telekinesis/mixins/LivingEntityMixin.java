@@ -1,6 +1,6 @@
 package dev.nyon.telekinesis.mixins;
 
-import dev.nyon.telekinesis.TelekinesisKt;
+import dev.nyon.telekinesis.check.TelekinesisCheck;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -47,27 +47,38 @@ public abstract class LivingEntityMixin {
 
     @Shadow protected abstract void dropEquipment();
 
-    @Inject(method = "dropAllDeathLoot", at = @At(value = "HEAD"))
+    @Inject(
+        method = "dropAllDeathLoot",
+        at = @At(
+            value = "HEAD"
+        ),
+        cancellable = true
+    )
     public void checkDrops(DamageSource damageSource, CallbackInfo ci) {
-        var entity = damageSource.getEntity();
-        if (entity instanceof Player) return;
-        if (!EnchantmentHelper.getEnchantments(((Player) entity).getOffhandItem()).containsKey(TelekinesisKt.getTelekinesis()) && !EnchantmentHelper.getEnchantments(((Player) entity).getUseItem()).containsKey(TelekinesisKt.getTelekinesis()))
-            return;
+        if (TelekinesisCheck.hasNoTelekinesis(damageSource)) return;
+        var player = (Player) damageSource.getEntity();
 
-        var loot = EnchantmentHelper.getMobLooting((LivingEntity) entity);
+        manipulateDrops(player, damageSource);
+        if (livingEntity.level instanceof ServerLevel
+            && !wasExperienceConsumed()
+            && (isAlwaysExperienceDropper()
+            || this.lastHurtByPlayerTime > 0 && shouldDropExperience()
+            && livingEntity.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))) {
+            player.giveExperiencePoints(getExperienceReward());
+        }
+        dropEquipment();
+        ci.cancel();
+    }
 
+    private void manipulateDrops(Player player, DamageSource damageSource) {
+        var loot = EnchantmentHelper.getMobLooting(player);
         ResourceLocation resourceLocation = getLootTable();
         LootTable lootTable = livingEntity.level.getServer().getLootTables().get(resourceLocation);
         LootContext.Builder builder = createLootContext(lastHurtByPlayerTime > 0, damageSource);
         lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY), item -> {
-            ((Player) entity).addItem(item);
+            if (!player.addItem(item)) livingEntity.spawnAtLocation(item);
         });
-        dropCustomDeathLoot(damageSource, loot, lastHurtByPlayerTime > 0);
 
-        if (livingEntity.level instanceof ServerLevel && !wasExperienceConsumed() && (isAlwaysExperienceDropper() || this.lastHurtByPlayerTime > 0 && shouldDropExperience() && livingEntity.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))) {
-            ((Player) entity).giveExperiencePoints(getExperienceReward());
-        }
-        dropEquipment();
-        ci.cancel();
+        dropCustomDeathLoot(damageSource, loot, lastHurtByPlayerTime > 0);
     }
 }

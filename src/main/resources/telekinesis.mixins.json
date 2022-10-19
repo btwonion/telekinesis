@@ -3,7 +3,13 @@
   "minVersion": "0.8",
   "package": "dev.nyon.telekinesis.mixins",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [],
+  "mixins": [
+    "EnderManMixin",
+    "LivingEntityMixin",
+    "MobMixin",
+    "PiglinMixin",
+    "WitherBossMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
