@@ -78,10 +78,9 @@ tasks {
 val changelogText =
     file("changelogs/$version.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
 
-val modrinthID = ""
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
-    projectId.set(modrinthID)
+    projectId.set("LLfA8jAD")
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
