@@ -76,7 +76,7 @@ tasks {
     }
 }
 val changelogText =
-    file("changelogs/${project.version}.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
+    file("changelogs/$version.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
 
 val modrinthID = ""
 modrinth {
@@ -105,4 +105,5 @@ githubRelease {
     tagName("v${project.version}")
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
+    targetCommitish("master")
 }
