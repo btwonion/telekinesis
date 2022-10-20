@@ -59,7 +59,7 @@ tasks {
     }
 
     register("releaseMod") {
-        group = "mod"
+        group = "publishing"
 
         dependsOn("modrinth")
         dependsOn("modrinthSyncBody")
