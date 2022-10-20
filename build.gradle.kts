@@ -26,7 +26,7 @@ dependencies {
         //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.19.2+build.21:v2"))
         officialMojangMappings()
     })
-    modImplementation("net.fabricmc:fabric-loader:0.14.9")
+    modImplementation("net.fabricmc:fabric-loader:0.14.10")
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.64.0+1.19.2")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.8.5+kotlin.1.7.20")
 
