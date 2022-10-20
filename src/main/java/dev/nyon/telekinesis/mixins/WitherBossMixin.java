@@ -22,8 +22,9 @@ public abstract class WitherBossMixin {
         cancellable = true
     )
     public void checkDrop(DamageSource damageSource, int i, boolean bl, CallbackInfo ci) {
-        if (TelekinesisCheck.hasNoTelekinesis(damageSource)) return;
-        var player = (Player) damageSource.getEntity();
+        var telekinesisResult = TelekinesisCheck.hasNoTelekinesis(damageSource, (WitherBoss) (Object) this);
+        if (telekinesisResult.component1()) return;
+        var player = telekinesisResult.component2();
         if (!player.addItem(new ItemStack(Items.NETHER_STAR))) return;
         ci.cancel();
     }

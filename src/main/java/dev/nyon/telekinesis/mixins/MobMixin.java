@@ -13,18 +13,19 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(Mob.class)
 public class MobMixin {
 
-    Mob mob = (Mob) (Object) this;
-
     @Redirect(
         method = "dropCustomDeathLoot",
         at = @At(
-            value = "INVOKE_ASSIGN",
+            value = "INVOKE",
             target = "Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
     public ItemEntity checkDrop(Mob instance, ItemStack itemStack, DamageSource damageSource) {
-        if (TelekinesisCheck.hasNoTelekinesis(damageSource)) return mob.spawnAtLocation(itemStack);
-        var player = (Player) damageSource.getEntity();
+        Mob mob = (Mob) (Object) this;
+        var telekinesisResult = TelekinesisCheck.hasNoTelekinesis(damageSource, mob);
+        if (telekinesisResult.component1()) return mob.spawnAtLocation(itemStack);;
+
+        var player = telekinesisResult.component2();
         if (!player.addItem(itemStack)) return mob.spawnAtLocation(itemStack);
         return null;
     }

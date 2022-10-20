@@ -4,6 +4,7 @@
   "package": "dev.nyon.telekinesis.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractHorseAccessor",
     "EnderManMixin",
     "LivingEntityMixin",
     "MobMixin",

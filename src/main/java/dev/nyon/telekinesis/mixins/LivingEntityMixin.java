@@ -4,10 +4,19 @@ import dev.nyon.telekinesis.check.TelekinesisCheck;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.animal.allay.Allay;
+import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.monster.Strider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -45,8 +54,6 @@ public abstract class LivingEntityMixin {
     @Shadow
     protected abstract void dropCustomDeathLoot(DamageSource damageSource, int i, boolean bl);
 
-    @Shadow protected abstract void dropEquipment();
-
     @Inject(
         method = "dropAllDeathLoot",
         at = @At(
@@ -55,18 +62,15 @@ public abstract class LivingEntityMixin {
         cancellable = true
     )
     public void checkDrops(DamageSource damageSource, CallbackInfo ci) {
-        if (TelekinesisCheck.hasNoTelekinesis(damageSource)) return;
-        var player = (Player) damageSource.getEntity();
+        var telekinesisResult = TelekinesisCheck.hasNoTelekinesis(damageSource, livingEntity);
+        if (telekinesisResult.component1()) return;
+        var player = telekinesisResult.component2();
 
         manipulateDrops(player, damageSource);
-        if (livingEntity.level instanceof ServerLevel
-            && !wasExperienceConsumed()
-            && (isAlwaysExperienceDropper()
-            || this.lastHurtByPlayerTime > 0 && shouldDropExperience()
-            && livingEntity.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))) {
+        if (livingEntity.level instanceof ServerLevel && !wasExperienceConsumed() && (isAlwaysExperienceDropper() || this.lastHurtByPlayerTime > 0 && shouldDropExperience() && livingEntity.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))) {
             player.giveExperiencePoints(getExperienceReward());
         }
-        dropEquipment();
+        handleEquipmentDrops(player);
         ci.cancel();
     }
 
@@ -80,5 +84,47 @@ public abstract class LivingEntityMixin {
         });
 
         dropCustomDeathLoot(damageSource, loot, lastHurtByPlayerTime > 0);
+    }
+
+    private void handleEquipmentDrops(Player player) {
+        if (livingEntity instanceof Pig pig) {
+            if (pig.isSaddled()) if (!player.addItem(new ItemStack(Items.SADDLE))) pig.spawnAtLocation(Items.SADDLE);
+        } else if (livingEntity instanceof Allay allay) {
+            allay.getInventory().removeAllItems().forEach(item -> {
+                if (!player.addItem(item)) allay.spawnAtLocation(item);
+            });
+            ItemStack itemStack = allay.getItemBySlot(EquipmentSlot.MAINHAND);
+            if (!itemStack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemStack)) {
+                if (!player.addItem(itemStack)) allay.spawnAtLocation(itemStack);
+                allay.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+            }
+        } else if (livingEntity instanceof AbstractChestedHorse horse) {
+            if (horse.hasChest()) {
+                if (!horse.level.isClientSide)
+                    if (!player.addItem(new ItemStack(Blocks.CHEST))) horse.spawnAtLocation(Blocks.CHEST);
+                horse.setChest(false);
+            }
+        } else if (livingEntity instanceof AbstractHorse abstractHorse) {
+            AbstractHorseAccessor horse = (AbstractHorseAccessor) abstractHorse;
+            if (horse.getInventory() != null) {
+                for (int i = 0; i < horse.getInventory().getContainerSize(); ++i) {
+                    ItemStack itemStack = horse.getInventory().getItem(i);
+                    if (!itemStack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemStack))
+                        if (!player.addItem(itemStack)) abstractHorse.spawnAtLocation(itemStack);
+                }
+            }
+        } else if (livingEntity instanceof Strider strider) {
+            if (strider.isSaddled())
+                if (!player.addItem(new ItemStack(Items.SADDLE))) strider.spawnAtLocation(Items.SADDLE);
+        } else if (livingEntity instanceof Player target) {
+            if (!target.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+                for (int i = 0; i < target.getInventory().getContainerSize(); ++i) {
+                    ItemStack itemStack = target.getInventory().getItem(i);
+                    if (!itemStack.isEmpty() && EnchantmentHelper.hasVanishingCurse(itemStack))
+                        target.getInventory().removeItemNoUpdate(i);
+                    else if (!itemStack.isEmpty()) if (!player.addItem(itemStack)) target.spawnAtLocation(itemStack);
+                }
+            }
+        }
     }
 }

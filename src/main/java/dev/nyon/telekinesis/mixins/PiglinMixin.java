@@ -20,9 +20,10 @@ public class PiglinMixin {
         cancellable = true
     )
     public void manipulateDrops(DamageSource damageSource, int i, boolean bl, CallbackInfo ci) {
-        if (TelekinesisCheck.hasNoTelekinesis(damageSource)) return;
-        var player = (Player) damageSource.getEntity();
         var piglin = (Piglin) (Object) this;
+        var telekinesisResult = TelekinesisCheck.hasNoTelekinesis(damageSource, piglin);
+        if (telekinesisResult.component1()) return;
+        var player = telekinesisResult.component2();
         piglin.getInventory().removeAllItems().forEach(item -> {
             if (!player.addItem(item)) piglin.spawnAtLocation(item);
         });
