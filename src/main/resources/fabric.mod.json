@@ -19,7 +19,7 @@
   "depends": {
     "fabric-language-kotlin": ">=1.8.5+kotlin.1.7.20",
     "fabric-api": ">=0.64.0+1.19.2",
-    "silk-all": ">=1.9.3",
+    "silk-all": ">=1.9.2",
     "minecraft": ">=1.19.2"
   },
   "entrypoints": {

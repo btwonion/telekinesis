@@ -30,7 +30,7 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.64.0+1.19.2")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.8.5+kotlin.1.7.20")
 
-    modImplementation("net.silkmc:silk-core:1.9.3")
+    modImplementation("net.silkmc:silk-core:1.9.2")
 }
 
 tasks {
