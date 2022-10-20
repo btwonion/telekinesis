@@ -1,0 +1,12 @@
+# telekinesis
+This mod adds the telekinesis enchantment to:
+- block drops
+- item drops
+- exp drops
+
+It uses [Silk](https://github.com/silkmc/silk), [Fabric API](https://github.com/fabricmc/fabric) and [Fabric Language Kotlin](https://github.com/fabricmc/fabric-language-kotlin)
+
+### Other
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I3I8F1WX4)
+
+If you need help with any of my mods just join my [discord server](https://nyon.dev/discord)
