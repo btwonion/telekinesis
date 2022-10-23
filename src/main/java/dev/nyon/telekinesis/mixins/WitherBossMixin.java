@@ -3,7 +3,6 @@ package dev.nyon.telekinesis.mixins;
 import dev.nyon.telekinesis.check.TelekinesisCheck;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
