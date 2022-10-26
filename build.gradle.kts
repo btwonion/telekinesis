@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "dev.nyon"
-version = "1.1.0"
+version = "1.1.1"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
 
@@ -21,16 +21,14 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:22w42a")
+    minecraft("com.mojang:minecraft:22w43a")
     mappings(loom.layered {
-        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:22w42a+build.5:v2"))
+        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:22w43a+build.4:v2"))
         officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:0.14.10")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.65.0+1.19.3")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.65.1+1.19.3")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.8.5+kotlin.1.7.20")
-
-    modImplementation("net.silkmc:silk-core:1.9.2")
 }
 
 tasks {
@@ -84,7 +82,7 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf("22w42a"))
+    gameVersions.set(listOf("22w43a"))
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-api")
