@@ -22,7 +22,7 @@ public class MobMixin {
     public ItemEntity checkDrop(Mob instance, ItemStack itemStack, DamageSource damageSource) {
         Mob mob = (Mob) (Object) this;
         var telekinesisResult = TelekinesisCheck.hasNoTelekinesis(damageSource, mob);
-        if (telekinesisResult.component1()) return mob.spawnAtLocation(itemStack);;
+        if (telekinesisResult.component1()) return mob.spawnAtLocation(itemStack);
 
         var player = telekinesisResult.component2();
         if (!player.addItem(itemStack)) return mob.spawnAtLocation(itemStack);

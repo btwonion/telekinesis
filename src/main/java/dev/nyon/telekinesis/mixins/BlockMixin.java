@@ -29,7 +29,8 @@ public abstract class BlockMixin {
         at = @At(
             value = "HEAD"
         ),
-        cancellable = true)
+        cancellable = true
+    )
     private static void redirectDrops(
         BlockState blockState, Level level, BlockPos blockPos, BlockEntity blockEntity, Entity entity, ItemStack itemStack, CallbackInfo ci
     ) {
