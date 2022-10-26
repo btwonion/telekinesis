@@ -87,7 +87,6 @@ modrinth {
     dependencies {
         required.project("fabric-api")
         required.project("fabric-language-kotlin")
-        required.project("silk")
     }
     changelog.set(changelogText)
     syncBodyFrom.set(file("README.md").readText())
