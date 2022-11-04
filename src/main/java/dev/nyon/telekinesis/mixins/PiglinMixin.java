@@ -1,6 +1,6 @@
 package dev.nyon.telekinesis.mixins;
 
-import dev.nyon.telekinesis.check.TelekinesisCheck;
+import dev.nyon.telekinesis.check.TelekinesisUtils;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +20,7 @@ public class PiglinMixin {
     )
     public void manipulateDrops(DamageSource damageSource, int i, boolean bl, CallbackInfo ci) {
         var piglin = (Piglin) (Object) this;
-        var telekinesisResult = TelekinesisCheck.hasNoTelekinesis(damageSource, piglin);
+        var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, piglin);
         if (telekinesisResult.component1()) return;
         var player = telekinesisResult.component2();
         piglin.getInventory().removeAllItems().forEach(item -> {

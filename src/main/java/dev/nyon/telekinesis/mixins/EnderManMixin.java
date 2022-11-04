@@ -1,6 +1,6 @@
 package dev.nyon.telekinesis.mixins;
 
-import dev.nyon.telekinesis.check.TelekinesisCheck;
+import dev.nyon.telekinesis.check.TelekinesisUtils;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
@@ -21,7 +21,7 @@ public class EnderManMixin {
     )
     public ItemEntity manipulateDrops(EnderMan instance, ItemLike itemLike, DamageSource damageSource) {
         var enderman = (EnderMan) (Object) this;
-        var telekinesisResult = TelekinesisCheck.hasNoTelekinesis(damageSource, enderman);
+        var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, enderman);
         if (telekinesisResult.component1()) return enderman.spawnAtLocation(itemLike);
         var player = telekinesisResult.component2();
         if (!player.addItem(itemLike.asItem().getDefaultInstance())) return enderman.spawnAtLocation(itemLike);
