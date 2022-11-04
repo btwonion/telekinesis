@@ -1,6 +1,6 @@
 package dev.nyon.telekinesis.mixins;
 
-import dev.nyon.telekinesis.check.TelekinesisCheck;
+import dev.nyon.telekinesis.check.TelekinesisUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,6 +25,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Map;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
@@ -62,16 +64,29 @@ public abstract class LivingEntityMixin {
         cancellable = true
     )
     public void checkDrops(DamageSource damageSource, CallbackInfo ci) {
-        var telekinesisResult = TelekinesisCheck.hasNoTelekinesis(damageSource, livingEntity);
+        var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, livingEntity);
         if (telekinesisResult.component1()) return;
         var player = telekinesisResult.component2();
 
         manipulateDrops(player, damageSource);
-        if (livingEntity.level instanceof ServerLevel && !wasExperienceConsumed() && (isAlwaysExperienceDropper() || this.lastHurtByPlayerTime > 0 && shouldDropExperience() && livingEntity.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))) {
-            player.giveExperiencePoints(getExperienceReward());
-        }
+        manipulateXp(player);
         handleEquipmentDrops(player);
         ci.cancel();
+    }
+
+    private void manipulateXp(Player player) {
+        if (
+            livingEntity.level instanceof ServerLevel
+                && !wasExperienceConsumed()
+                && (
+                    isAlwaysExperienceDropper()
+                    || this.lastHurtByPlayerTime > 0
+                    && shouldDropExperience()
+                    && livingEntity.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)
+                )
+        ) {
+            TelekinesisUtils.addXPToPlayer(player, getExperienceReward());
+        }
     }
 
     private void manipulateDrops(Player player, DamageSource damageSource) {
