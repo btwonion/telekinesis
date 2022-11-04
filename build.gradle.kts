@@ -21,13 +21,13 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:22w43a")
+    minecraft("com.mojang:minecraft:22w44a")
     mappings(loom.layered {
-        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:22w43a+build.4:v2"))
+        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:22w44a+build.4:v2"))
         officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:0.14.10")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.65.1+1.19.3")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.65.3+1.19.3")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.8.5+kotlin.1.7.20")
 }
 
@@ -82,7 +82,7 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf("22w43a"))
+    gameVersions.set(listOf("22w44a"))
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-api")

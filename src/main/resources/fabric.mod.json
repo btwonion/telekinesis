@@ -18,8 +18,11 @@
   "environment": "*",
   "depends": {
     "fabric-language-kotlin": ">=1.8.5+kotlin.1.7.20",
-    "fabric-api": ">=0.65.0+1.19.3",
-    "minecraft": ">=1.19.3-alpha.22.43.a"
+    "fabric-api": ">=0.65.3+1.19.3",
+    "minecraft": ">=1.19.3-alpha.22.44.a"
+  },
+  "suggests": {
+    "modmenu": ">=4.0.6"
   },
   "entrypoints": {
     "main": [
