@@ -13,6 +13,8 @@
     "LivingEntityMixin",
     "MobMixin",
     "PiglinMixin",
+    "SheepMixin",
+    "SnowGolemMixin",
     "WitherBossMixin"
   ],
   "injectors": {
