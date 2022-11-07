@@ -23,7 +23,7 @@ public class TelekinesisUtils {
         ArrayList<ItemStack> acceptedItems = new ArrayList<>(List.of(player.getOffhandItem(), player.getInventory().getSelected()));
         player.getArmorSlots().forEach(acceptedItems::add);
         return new Pair<>(
-            acceptedItems.stream().noneMatch(item -> EnchantmentHelper.getEnchantments(item).containsKey(TelekinesisKt.getTelekinesis())),
+            acceptedItems.stream().allMatch(item -> EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), item) == 0),
             player
         );
     }
