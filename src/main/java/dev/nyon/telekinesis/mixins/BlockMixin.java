@@ -37,7 +37,7 @@ public abstract class BlockMixin {
         BlockState blockState, Level level, BlockPos blockPos, BlockEntity blockEntity, Entity entity, ItemStack itemStack, CallbackInfo ci
     ) {
         if (
-            !EnchantmentHelper.getEnchantments(itemStack).containsKey(TelekinesisKt.getTelekinesis())
+            EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), itemStack) == 0
             || !(entity instanceof Player player)
         ) return;
         getDrops(blockState, (ServerLevel) level, blockPos, blockEntity, entity, itemStack).forEach(item -> {
