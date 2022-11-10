@@ -6,11 +6,13 @@
   "mixins": [
     "AbstractHorseAccessor",
     "BlockMixin",
+    "BoatMixin",
     "CatalystBlockAccessor",
     "DropExperienceBlockAccessor",
     "EnderManMixin",
     "InfestedBlockAccessor",
     "LivingEntityMixin",
+    "MinecartMixin",
     "MobMixin",
     "PiglinMixin",
     "SheepMixin",
