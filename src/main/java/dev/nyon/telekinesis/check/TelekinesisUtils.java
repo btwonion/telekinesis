@@ -28,6 +28,13 @@ public class TelekinesisUtils {
         );
     }
 
+    public static Boolean hasNoTelekinesis(DamageSource source) {
+        if (!(source.getEntity() instanceof Player player)) return true;
+        ArrayList<ItemStack> acceptedItems = new ArrayList<>(List.of(player.getOffhandItem(), player.getInventory().getSelected()));
+        player.getArmorSlots().forEach(acceptedItems::add);
+        return acceptedItems.stream().allMatch(item -> EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), item) == 0);
+    }
+
     public static void addXPToPlayer(Player player, Integer xp) {
         player.giveExperiencePoints(xp);
         Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, player, ItemStack::isDamaged);
