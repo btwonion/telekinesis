@@ -2,7 +2,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version "1.7.21"
     id("fabric-loom") version "1.0-SNAPSHOT"
     id("io.github.juuxel.loom-quiltflower") version "1.7.4"
     id("org.quiltmc.quilt-mappings-on-loom") version "4.2.1"
@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "dev.nyon"
-version = "1.1.2"
+version = "1.1.3"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
 
@@ -23,12 +23,12 @@ repositories {
 dependencies {
     minecraft("com.mojang:minecraft:22w44a")
     mappings(loom.layered {
-        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:22w44a+build.4:v2"))
+        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:22w44a+build.6:v2"))
         officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:0.14.10")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.65.3+1.19.3")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.5+kotlin.1.7.20")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.66.0+1.19.3")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.6+kotlin.1.7.21")
 }
 
 tasks {
