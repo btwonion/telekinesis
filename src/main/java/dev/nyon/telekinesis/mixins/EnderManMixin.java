@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.check.TelekinesisUtils;
+import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
@@ -22,7 +23,10 @@ public class EnderManMixin {
     public ItemEntity manipulateDrops(EnderMan instance, ItemLike itemLike, DamageSource damageSource) {
         var enderman = (EnderMan) (Object) this;
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, enderman);
-        if (telekinesisResult.component1()) return enderman.spawnAtLocation(itemLike);
+        if (
+            !ConfigKt.getConfig().getMobDrops()
+            || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+        ) return enderman.spawnAtLocation(itemLike);
         var player = telekinesisResult.component2();
         if (!player.addItem(itemLike.asItem().getDefaultInstance())) return enderman.spawnAtLocation(itemLike);
         return null;

@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.check.TelekinesisUtils;
+import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -27,8 +28,10 @@ public abstract class MinecartMixin {
     public ItemEntity redirectDrops(AbstractMinecart instance, ItemStack itemStack, DamageSource damageSource) {
         var boat = (AbstractMinecart) (Object) this;
         var item = getDropItem();
-        if (TelekinesisUtils.hasNoTelekinesis(damageSource)) return boat.spawnAtLocation(item);
-
+        if (
+            !ConfigKt.getConfig().getEntityDrops()
+            || (TelekinesisUtils.hasNoTelekinesis(damageSource) && !ConfigKt.getConfig().getOnByDefault())
+        ) return boat.spawnAtLocation(item);
         var player = (Player) damageSource.getEntity();
         if (!player.getInventory().add(new ItemStack(item)))
             return boat.spawnAtLocation(item);

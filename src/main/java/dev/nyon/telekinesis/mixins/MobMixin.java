@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.check.TelekinesisUtils;
+import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -22,8 +23,10 @@ public class MobMixin {
     public ItemEntity checkDrop(Mob instance, ItemStack itemStack, DamageSource damageSource) {
         Mob mob = (Mob) (Object) this;
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, mob);
-        if (telekinesisResult.component1()) return mob.spawnAtLocation(itemStack);
-
+        if (
+            !ConfigKt.getConfig().getMobDrops()
+                || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+        ) return mob.spawnAtLocation(itemStack);
         var player = telekinesisResult.component2();
         if (!player.addItem(itemStack)) return mob.spawnAtLocation(itemStack);
         return null;

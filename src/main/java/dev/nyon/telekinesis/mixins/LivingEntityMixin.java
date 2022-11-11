@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.check.TelekinesisUtils;
+import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -65,11 +66,14 @@ public abstract class LivingEntityMixin {
     )
     public void checkDrops(DamageSource damageSource, CallbackInfo ci) {
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, livingEntity);
-        if (telekinesisResult.component1()) return;
+        if (
+            !ConfigKt.getConfig().getMobDrops()
+                || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+        ) return;
         var player = telekinesisResult.component2();
 
         manipulateDrops(player, damageSource);
-        manipulateXp(player);
+        if(ConfigKt.getConfig().getExpDrops()) manipulateXp(player);
         handleEquipmentDrops(player);
         ci.cancel();
     }

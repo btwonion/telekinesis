@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.check.TelekinesisUtils;
+import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +22,10 @@ public class PiglinMixin {
     public void manipulateDrops(DamageSource damageSource, int i, boolean bl, CallbackInfo ci) {
         var piglin = (Piglin) (Object) this;
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, piglin);
-        if (telekinesisResult.component1()) return;
+        if (
+            !ConfigKt.getConfig().getMobDrops()
+                || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+        ) return;
         var player = telekinesisResult.component2();
         piglin.getInventory().removeAllItems().forEach(item -> {
             if (!player.addItem(item)) piglin.spawnAtLocation(item);

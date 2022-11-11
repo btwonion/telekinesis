@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.check.TelekinesisUtils;
+import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -26,7 +27,10 @@ public abstract class BoatMixin {
     public void manipulateDrop(Boat instance, DamageSource damageSource) {
         var boat = (Boat) (Object) this;
         var item = getDropItem();
-        if (TelekinesisUtils.hasNoTelekinesis(damageSource)) {
+        if (
+            !ConfigKt.getConfig().getEntityDrops()
+                || (TelekinesisUtils.hasNoTelekinesis(damageSource) && !ConfigKt.getConfig().getOnByDefault())
+        ) {
             boat.spawnAtLocation(item);
             return;
         }

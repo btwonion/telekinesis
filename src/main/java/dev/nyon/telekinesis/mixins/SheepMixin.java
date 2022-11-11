@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.TelekinesisKt;
+import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -23,7 +24,9 @@ import java.util.Map;
 @Mixin(Sheep.class)
 public abstract class SheepMixin {
 
-    @Shadow @Final private static Map<DyeColor, ItemLike> ITEM_BY_DYE;
+    @Shadow
+    @Final
+    private static Map<DyeColor, ItemLike> ITEM_BY_DYE;
 
     @Redirect(
         method = "mobInteract",
@@ -40,21 +43,19 @@ public abstract class SheepMixin {
         var random = RandomSource.create();
         int i = 1 + random.nextInt(3);
 
-        for(int j = 0; j < i; ++j) {
+        for (int j = 0; j < i; ++j) {
             var item = ITEM_BY_DYE.get(sheep.getColor());
 
-            if (EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), itemStack) == 0
-                && !player.getInventory().add(new ItemStack(item))) {
+            if (
+                !ConfigKt.getConfig().getShearingDrops()
+                || (
+                    EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), itemStack) == 0
+                        && !ConfigKt.getConfig().getOnByDefault()) || !player.getInventory().add(new ItemStack(item)
+                )
+            ) {
                 ItemEntity itemEntity = sheep.spawnAtLocation(item, 1);
                 if (itemEntity != null) {
-                    itemEntity.setDeltaMovement(
-                        itemEntity.getDeltaMovement()
-                            .add(
-                                (random.nextFloat() - random.nextFloat()) * 0.1F,
-                                random.nextFloat() * 0.05F,
-                                (random.nextFloat() - random.nextFloat()) * 0.1F
-                            )
-                    );
+                    itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add((random.nextFloat() - random.nextFloat()) * 0.1F, random.nextFloat() * 0.05F, (random.nextFloat() - random.nextFloat()) * 0.1F));
                 }
             }
         }
