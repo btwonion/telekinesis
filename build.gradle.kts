@@ -64,7 +64,6 @@ tasks {
         group = "publishing"
 
         dependsOn("modrinth")
-        dependsOn("modrinthSyncBody")
         dependsOn("githubRelease")
     }
 
