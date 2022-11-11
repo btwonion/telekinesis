@@ -33,6 +33,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:1.8.6+kotlin.1.7.21")
 
     include("com.akuleshov7:ktoml-core:0.3.0")
+    implementation("com.akuleshov7:ktoml-core:0.3.0")
 }
 
 tasks {
