@@ -25,7 +25,8 @@ public abstract class WitherBossMixin {
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, (WitherBoss) (Object) this);
         if ((
             !ConfigKt.getConfig().getMobDrops()
-                || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            || telekinesisResult.component2() == null
         )) return;
         var player = telekinesisResult.component2();
         if (!player.addItem(new ItemStack(Items.NETHER_STAR))) return;

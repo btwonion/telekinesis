@@ -25,7 +25,8 @@ public class MobMixin {
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, mob);
         if (
             !ConfigKt.getConfig().getMobDrops()
-                || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            || telekinesisResult.component2() == null
         ) return mob.spawnAtLocation(itemStack);
         var player = telekinesisResult.component2();
         if (!player.addItem(itemStack)) return mob.spawnAtLocation(itemStack);

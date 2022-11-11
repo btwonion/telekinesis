@@ -26,6 +26,7 @@ public class EnderManMixin {
         if (
             !ConfigKt.getConfig().getMobDrops()
             || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            || telekinesisResult.component2() == null
         ) return enderman.spawnAtLocation(itemLike);
         var player = telekinesisResult.component2();
         if (!player.addItem(itemLike.asItem().getDefaultInstance())) return enderman.spawnAtLocation(itemLike);
