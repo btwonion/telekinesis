@@ -13,7 +13,8 @@ plugins {
 }
 
 group = "dev.nyon"
-version = "1.1.3"
+val majorVersion = "1.1.3"
+version = "$majorVersion-22w44a"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
 
@@ -77,7 +78,7 @@ tasks {
     }
 }
 val changelogText =
-    file("changelogs/$version.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
+    file("changelogs/$majorVersion.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
@@ -104,5 +105,5 @@ githubRelease {
     tagName("v${project.version}")
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
-    targetCommitish("master")
+    targetCommitish("snapshot")
 }
