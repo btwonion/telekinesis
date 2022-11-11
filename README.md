@@ -1,10 +1,12 @@
 # telekinesis
-This mod adds the telekinesis enchantment to:
+This mod adds the telekinesis enchantment (toggleable) to:
 - block drops
-- item drops
+- mob drops
 - exp drops
+- entity drops (boats, minecarts)
+- shearing drops
 
-It uses [Silk](https://github.com/silkmc/silk), [Fabric API](https://github.com/fabricmc/fabric) and [Fabric Language Kotlin](https://github.com/fabricmc/fabric-language-kotlin)
+It uses [Fabric API](https://github.com/fabricmc/fabric) and [Fabric Language Kotlin](https://github.com/fabricmc/fabric-language-kotlin)
 
 ### Other
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I3I8F1WX4)
