@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "1.1.5"
+val majorVersion = "1.1.6"
 version = "$majorVersion-1.19.2"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -33,7 +33,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:1.8.6+kotlin.1.7.21")
 
     include("com.akuleshov7:ktoml-core-jvm:0.3.0")
-    compileOnly("com.akuleshov7:ktoml-core-jvm:0.3.0")
+    implementation("com.akuleshov7:ktoml-core-jvm:0.3.0")
 }
 
 tasks {
