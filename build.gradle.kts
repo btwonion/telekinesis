@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.21"
+    kotlin("plugin.serialization") version "1.7.21"
     id("fabric-loom") version "1.0-SNAPSHOT"
     id("io.github.juuxel.loom-quiltflower") version "1.7.4"
     id("org.quiltmc.quilt-mappings-on-loom") version "4.2.1"
@@ -29,6 +30,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:0.14.10")
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.66.0+1.19.3")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.8.6+kotlin.1.7.21")
+
+    implementation("com.akuleshov7:ktoml-core:0.3.0")
 }
 
 tasks {
