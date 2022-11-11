@@ -27,8 +27,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Map;
-
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
@@ -68,7 +66,8 @@ public abstract class LivingEntityMixin {
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, livingEntity);
         if (
             !ConfigKt.getConfig().getMobDrops()
-                || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            || telekinesisResult.component2() == null
         ) return;
         var player = telekinesisResult.component2();
 

@@ -24,7 +24,8 @@ public class PiglinMixin {
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, piglin);
         if (
             !ConfigKt.getConfig().getMobDrops()
-                || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            || telekinesisResult.component2() == null
         ) return;
         var player = telekinesisResult.component2();
         piglin.getInventory().removeAllItems().forEach(item -> {
