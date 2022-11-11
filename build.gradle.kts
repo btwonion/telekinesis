@@ -13,7 +13,8 @@ plugins {
 }
 
 group = "dev.nyon"
-version = "1.1.3"
+val majorVersion = "1.1.3"
+version = "$majorVersion-1.19.2"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
 
@@ -22,13 +23,13 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:22w44a")
+    minecraft("com.mojang:minecraft:1.19.2")
     mappings(loom.layered {
-        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:22w44a+build.6:v2"))
+        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.19.2+build.21:v2"))
         officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:0.14.10")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.66.0+1.19.3")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.66.0+1.19.2")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.8.6+kotlin.1.7.21")
 
     implementation("com.akuleshov7:ktoml-core:0.3.0")
@@ -77,7 +78,7 @@ tasks {
     }
 }
 val changelogText =
-    file("changelogs/$version.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
+    file("changelogs/$majorVersion.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
@@ -85,7 +86,7 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf("22w44a"))
+    gameVersions.set(listOf("1.19.2"))
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-api")
