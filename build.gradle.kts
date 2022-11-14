@@ -10,11 +10,14 @@ plugins {
 
     id("com.modrinth.minotaur") version "2.4.4"
     id("com.github.breadmoirai.github-release") version "2.4.1"
+    `maven-publish`
+    signing
 }
 
 group = "dev.nyon"
 val majorVersion = "1.1.6"
 version = "$majorVersion-22w45a"
+description = "Adds an telekinesis enchantment to minecraft"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
 
@@ -66,6 +69,7 @@ tasks {
 
         dependsOn("modrinth")
         dependsOn("githubRelease")
+        dependsOn("publish")
     }
 
     withType<KotlinCompile> {
@@ -106,4 +110,60 @@ githubRelease {
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
     targetCommitish("snapshot")
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "ossrh"
+            credentials(PasswordCredentials::class)
+            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
+        }
+    }
+
+    publications {
+        register<MavenPublication>(project.name) {
+            from(components["java"])
+
+            this.groupId = project.group.toString()
+            this.artifactId = project.name
+            this.version = rootProject.version.toString()
+
+            pom {
+                name.set(project.name)
+                description.set(project.description)
+
+                developers {
+                    authors.forEach {
+                        developer {
+                            name.set(it)
+                        }
+                    }
+                }
+
+                licenses {
+                    license {
+                        name.set("GNU General Public License 3")
+                        url.set("https://www.gnu.org/licenses/gpl-3.0.txt")
+                    }
+                }
+
+                url.set("https://github.com/${githubRepo}")
+
+                scm {
+                    connection.set("scm:git:git://github.com/${githubRepo}.git")
+                    url.set("https://github.com/${githubRepo}/tree/main")
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications)
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
 }

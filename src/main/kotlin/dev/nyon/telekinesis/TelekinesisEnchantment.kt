@@ -8,6 +8,10 @@ import net.minecraft.world.entity.MobType
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentCategory
 
+
+/**
+ * The telekinesis enchantment model
+ */
 class TelekinesisEnchantment : Enchantment(
     Rarity.RARE, EnchantmentCategory.BREAKABLE, listOf(EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND).toTypedArray()
 ) {
