@@ -9,8 +9,7 @@ This mod adds the telekinesis enchantment (toggleable) to:
 It uses [Fabric API](https://github.com/fabricmc/fabric) and [Fabric Language Kotlin](https://github.com/fabricmc/fabric-language-kotlin)
 
 ## Configuration
-configuration file: '~/.minecraft/config/telekinesis.toml'
-
+configuration file: `~/.minecraft/config/telekinesis.toml`
 
 ### Other
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I3I8F1WX4)
