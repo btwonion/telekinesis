@@ -10,6 +10,20 @@ It uses [Fabric API](https://github.com/fabricmc/fabric) and [Fabric Language Ko
 
 ## Configuration
 configuration file: `~/.minecraft/config/telekinesis.toml`
+<details>
+<summary>telekinesis.toml</summary>
+
+```toml
+onByDefault = false
+enchantment = true
+blockDrops = true
+shearingDrops = true
+mobDrops = true
+entityDrops = true
+expDrops = true
+```
+
+</details>
 
 ### Other
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I3I8F1WX4)
