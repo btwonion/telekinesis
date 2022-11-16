@@ -14,13 +14,13 @@ configuration file: `~/.minecraft/config/telekinesis.toml`
 <summary>telekinesis.toml</summary>
 
 ```toml
-onByDefault = false
-enchantment = true
-blockDrops = true
-shearingDrops = true
-mobDrops = true
-entityDrops = true
-expDrops = true
+onByDefault = false # should telekinesis work without the enchantment?
+enchantment = true # should the telekinesis enchantment be enabled?
+blockDrops = true # should telekinesis work for block drops?
+shearingDrops = true # should telekinesis work for shearing drops?
+mobDrops = true # should telekinesis work for mob drops?
+entityDrops = true # should telekinesis work for entity drops (boat, minecarts)?
+expDrops = true # should telekinesis work for exp drops?
 ```
 
 </details>
