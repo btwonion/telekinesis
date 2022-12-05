@@ -2,10 +2,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.21"
-    kotlin("plugin.serialization") version "1.7.21"
+    kotlin("jvm") version "1.7.22"
+    kotlin("plugin.serialization") version "1.7.22"
     id("fabric-loom") version "1.0-SNAPSHOT"
-    id("io.github.juuxel.loom-quiltflower") version "1.7.4"
+    id("io.github.juuxel.loom-quiltflower") version "1.8.0"
     id("org.quiltmc.quilt-mappings-on-loom") version "4.2.1"
 
     id("com.modrinth.minotaur") version "2.4.4"
@@ -16,7 +16,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "1.1.6"
-version = "$majorVersion-22w45a"
+version = "$majorVersion-1.19.3-rc1"
 description = "Adds an telekinesis enchantment to minecraft"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -26,14 +26,14 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:22w45a")
+    minecraft("com.mojang:minecraft:1.19.3-rc1")
     mappings(loom.layered {
-        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:22w45a+build.2:v2"))
+        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.19.3-rc1+build.4:v2"))
         officialMojangMappings()
     })
-    modImplementation("net.fabricmc:fabric-loader:0.14.10")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.66.1+1.19.3")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.6+kotlin.1.7.21")
+    modImplementation("net.fabricmc:fabric-loader:0.14.11")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.68.1+1.19.3")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.7+kotlin.1.7.22")
 
     include("com.akuleshov7:ktoml-core-jvm:0.3.0")
     implementation("com.akuleshov7:ktoml-core-jvm:0.3.0")
@@ -90,7 +90,7 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf("22w45a"))
+    gameVersions.set(listOf("1.19.3-pre2", "1.19.3-pre1"))
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-api")
