@@ -109,7 +109,7 @@ githubRelease {
     tagName("v${project.version}")
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
-    targetCommitish("master")
+    targetCommitish("snapshot")
 }
 
 publishing {
