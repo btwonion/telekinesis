@@ -16,7 +16,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "1.1.6"
-version = "$majorVersion-1.19.3-rc1"
+version = "$majorVersion-1.19.3"
 description = "Adds an telekinesis enchantment to minecraft"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -26,9 +26,9 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:1.19.3-rc1")
+    minecraft("com.mojang:minecraft:1.19.3")
     mappings(loom.layered {
-        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.19.3-rc1+build.4:v2"))
+        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.19.3+build.1:v2"))
         officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:0.14.11")
@@ -90,7 +90,7 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf("1.19.3-rc2", "1.19.3-rc1"))
+    gameVersions.set(listOf("1.19.3"))
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-api")
@@ -109,7 +109,7 @@ githubRelease {
     tagName("v${project.version}")
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
-    targetCommitish("snapshot")
+    targetCommitish("master")
 }
 
 publishing {
