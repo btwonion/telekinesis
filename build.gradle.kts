@@ -16,7 +16,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "1.1.6"
-version = "$majorVersion-1.19.2"
+version = "$majorVersion-1.19.3"
 description = "Adds an telekinesis enchantment to minecraft"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -26,13 +26,13 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:1.19.2")
+    minecraft("com.mojang:minecraft:1.19.3")
     mappings(loom.layered {
-        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.19.2+build.21:v2"))
+        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.19.3+build.1:v2"))
         officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:0.14.11")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.68.0+1.19.2")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.68.1+1.19.3")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.8.7+kotlin.1.7.22")
 
     include("com.akuleshov7:ktoml-core-jvm:0.3.0")
@@ -68,7 +68,6 @@ tasks {
         group = "publishing"
 
         dependsOn("modrinth")
-        dependsOn("modrinthSyncBody")
         dependsOn("githubRelease")
         dependsOn("publish")
     }
@@ -91,7 +90,7 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf("1.19.2"))
+    gameVersions.set(listOf("1.19.3"))
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-api")

@@ -66,8 +66,8 @@ public abstract class LivingEntityMixin {
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, livingEntity);
         if (
             !ConfigKt.getConfig().getMobDrops()
-            || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
-            || telekinesisResult.component2() == null
+                || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+                || telekinesisResult.component2() == null
         ) return;
         var player = telekinesisResult.component2();
 
