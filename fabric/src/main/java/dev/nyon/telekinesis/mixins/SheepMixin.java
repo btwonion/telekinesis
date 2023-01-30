@@ -1,4 +1,4 @@
-package telekinesis.mixins;
+package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.TelekinesisKt;
 import dev.nyon.telekinesis.config.ConfigKt;
@@ -48,7 +48,7 @@ public abstract class SheepMixin {
 
             if (
                 !ConfigKt.getConfig().getShearingDrops()
-                || (
+                    || (
                     EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), itemStack) == 0
                         && !ConfigKt.getConfig().getOnByDefault()) || !player.getInventory().add(new ItemStack(item)
                 )

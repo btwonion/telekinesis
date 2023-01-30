@@ -1,7 +1,6 @@
-package telekinesis.mixins;
+package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.TelekinesisKt;
-import telekinesis.check.TelekinesisUtils;
 import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -20,6 +19,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import dev.nyon.telekinesis.check.TelekinesisUtils;
 
 import static net.minecraft.world.level.block.Block.getDrops;
 import static net.minecraft.world.level.block.Block.popResource;
@@ -40,9 +40,9 @@ public abstract class BlockMixin {
         if (
             (
                 EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), itemStack) == 0
-                && !ConfigKt.getConfig().getOnByDefault()
+                    && !ConfigKt.getConfig().getOnByDefault()
             )
-            || !ConfigKt.getConfig().getBlockDrops() || !(entity instanceof Player player)
+                || !ConfigKt.getConfig().getBlockDrops() || !(entity instanceof Player player)
         ) return;
         getDrops(blockState, (ServerLevel) level, blockPos, blockEntity, entity, itemStack).forEach(item -> {
             if (!player.addItem(item)) popResource(level, blockPos, item);

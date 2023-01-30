@@ -1,4 +1,4 @@
-package telekinesis.check;
+package dev.nyon.telekinesis.check;
 
 import dev.nyon.telekinesis.TelekinesisKt;
 import kotlin.Pair;

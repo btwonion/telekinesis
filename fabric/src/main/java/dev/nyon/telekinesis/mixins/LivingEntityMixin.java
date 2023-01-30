@@ -1,6 +1,5 @@
-package telekinesis.mixins;
+package dev.nyon.telekinesis.mixins;
 
-import telekinesis.check.TelekinesisUtils;
 import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -26,19 +25,20 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import dev.nyon.telekinesis.check.TelekinesisUtils;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
+
+    @Shadow
+    protected int lastHurtByPlayerTime;
+    LivingEntity livingEntity = (LivingEntity) (Object) this;
 
     @Shadow
     public abstract ResourceLocation getLootTable();
 
     @Shadow
     protected abstract LootContext.Builder createLootContext(boolean bl, DamageSource damageSource);
-
-    LivingEntity livingEntity = (LivingEntity) (Object) this;
-    @Shadow
-    protected int lastHurtByPlayerTime;
 
     @Shadow
     public abstract boolean wasExperienceConsumed();
@@ -72,7 +72,7 @@ public abstract class LivingEntityMixin {
         var player = telekinesisResult.component2();
 
         manipulateDrops(player, damageSource);
-        if(ConfigKt.getConfig().getExpDrops()) manipulateXp(player);
+        if (ConfigKt.getConfig().getExpDrops()) manipulateXp(player);
         handleEquipmentDrops(player);
         ci.cancel();
     }
@@ -82,11 +82,11 @@ public abstract class LivingEntityMixin {
             livingEntity.level instanceof ServerLevel
                 && !wasExperienceConsumed()
                 && (
-                    isAlwaysExperienceDropper()
+                isAlwaysExperienceDropper()
                     || this.lastHurtByPlayerTime > 0
                     && shouldDropExperience()
                     && livingEntity.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)
-                )
+            )
         ) {
             TelekinesisUtils.addXPToPlayer(player, getExperienceReward());
         }

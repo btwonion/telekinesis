@@ -1,4 +1,4 @@
-package telekinesis.mixins;
+package dev.nyon.telekinesis.mixins;
 
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;

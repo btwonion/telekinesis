@@ -1,6 +1,5 @@
-package telekinesis.mixins;
+package dev.nyon.telekinesis.mixins;
 
-import telekinesis.check.TelekinesisUtils;
 import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -12,11 +11,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import dev.nyon.telekinesis.check.TelekinesisUtils;
 
 @Mixin(AbstractMinecart.class)
 public abstract class MinecartMixin {
 
-    @Shadow abstract Item getDropItem();
+    @Shadow
+    abstract Item getDropItem();
 
     @Redirect(
         method = "destroy",
@@ -30,7 +31,7 @@ public abstract class MinecartMixin {
         var item = getDropItem();
         if (
             !ConfigKt.getConfig().getEntityDrops()
-            || (TelekinesisUtils.hasNoTelekinesis(damageSource) && !ConfigKt.getConfig().getOnByDefault())
+                || (TelekinesisUtils.hasNoTelekinesis(damageSource) && !ConfigKt.getConfig().getOnByDefault())
         ) return boat.spawnAtLocation(item);
         var player = (Player) damageSource.getEntity();
         if (!player.getInventory().add(new ItemStack(item)))
