@@ -13,7 +13,9 @@
     }
   ],
   "contributors": [],
-  "license": ["GNU General Public License v3.0"],
+  "license": [
+    "GNU General Public License v3.0"
+  ],
   "version": "${version}",
   "environment": "*",
   "depends": {
@@ -36,7 +38,7 @@
     "telekinesis.mixins.json"
   ],
   "custom": {
-    "modmenu" : {
+    "modmenu": {
       "links": {
         "modmenu.discord": "https://discord.gg/pmHTtZnMd3"
       }

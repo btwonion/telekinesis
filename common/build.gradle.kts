@@ -1,4 +1,5 @@
 @file:Suppress("SpellCheckingInspection")
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
