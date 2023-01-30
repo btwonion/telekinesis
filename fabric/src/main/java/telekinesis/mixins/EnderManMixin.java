@@ -1,12 +1,11 @@
-package dev.nyon.telekinesis.mixins;
+package telekinesis.mixins;
 
-import dev.nyon.telekinesis.check.TelekinesisUtils;
+import telekinesis.check.TelekinesisUtils;
 import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;

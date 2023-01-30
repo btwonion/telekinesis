@@ -1,4 +1,4 @@
-package dev.nyon.telekinesis.mixins;
+package telekinesis.mixins;
 
 import dev.nyon.telekinesis.TelekinesisKt;
 import dev.nyon.telekinesis.config.ConfigKt;

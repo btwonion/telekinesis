@@ -1,4 +1,4 @@
-package dev.nyon.telekinesis.mixins;
+package telekinesis.mixins;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

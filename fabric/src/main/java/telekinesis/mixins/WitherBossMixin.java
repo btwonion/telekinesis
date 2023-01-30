@@ -1,16 +1,18 @@
-package dev.nyon.telekinesis.mixins;
+package telekinesis.mixins;
 
-import dev.nyon.telekinesis.check.TelekinesisUtils;
+import telekinesis.check.TelekinesisUtils;
 import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Piglin.class)
-public class PiglinMixin {
+@Mixin(WitherBoss.class)
+public abstract class WitherBossMixin {
 
     @Inject(
         method = "dropCustomDeathLoot",
@@ -19,19 +21,15 @@ public class PiglinMixin {
         ),
         cancellable = true
     )
-    public void manipulateDrops(DamageSource damageSource, int i, boolean bl, CallbackInfo ci) {
-        var piglin = (Piglin) (Object) this;
-        var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, piglin);
-        if (
+    public void checkDrop(DamageSource damageSource, int i, boolean bl, CallbackInfo ci) {
+        var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, (WitherBoss) (Object) this);
+        if ((
             !ConfigKt.getConfig().getMobDrops()
             || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
             || telekinesisResult.component2() == null
-        ) return;
+        )) return;
         var player = telekinesisResult.component2();
-        piglin.getInventory().removeAllItems().forEach(item -> {
-            if (!player.addItem(item)) piglin.spawnAtLocation(item);
-        });
-
+        if (!player.addItem(new ItemStack(Items.NETHER_STAR))) return;
         ci.cancel();
     }
 }

@@ -2,13 +2,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.0"
+    kotlin("jvm")
+    kotlin("plugin.serialization")
 
-    id("com.modrinth.minotaur") version "2.4.4"
-    id("com.github.breadmoirai.github-release") version "2.4.1"
+    id("com.modrinth.minotaur")
+    id("com.github.breadmoirai.github-release")
 
-    id("fabric-loom") version "1.1-SNAPSHOT"
-    id("io.github.juuxel.loom-quiltflower") version "1.8.0"
+    id("fabric-loom")
+    id("io.github.juuxel.loom-quiltflower")
 
     `maven-publish`
     signing
@@ -27,7 +28,8 @@ repositories {
 }
 
 dependencies {
-    include(project("common"))
+    include(project(":common"))
+    implementation(project(":common"))
     minecraft("com.mojang:minecraft:1.19.3")
     mappings(loom.layered {
         officialMojangMappings()

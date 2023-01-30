@@ -1,6 +1,6 @@
-package dev.nyon.telekinesis.mixins;
+package telekinesis.mixins;
 
-import dev.nyon.telekinesis.check.TelekinesisUtils;
+import telekinesis.check.TelekinesisUtils;
 import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;

@@ -1,6 +1,6 @@
-package dev.nyon.telekinesis.mixins;
+package telekinesis.mixins;
 
-import dev.nyon.telekinesis.check.TelekinesisUtils;
+import telekinesis.check.TelekinesisUtils;
 import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Mob;
