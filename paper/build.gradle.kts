@@ -1,12 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.0"
+    kotlin("jvm")
+    kotlin("plugin.serialization")
 
     id("com.github.johnrengelman.shadow") version "7.1.2"
 
-    id("com.modrinth.minotaur") version "2.4.4"
-    id("com.github.breadmoirai.github-release") version "2.4.1"
+    id("com.modrinth.minotaur")
+    id("com.github.breadmoirai.github-release")
 
     id("io.papermc.paperweight.userdev") version "1.4.1"
     id("xyz.jpenilla.run-paper") version "1.1.0"
@@ -28,10 +29,20 @@ repositories {
 }
 
 dependencies {
-    shadow(project("common"))
+    shadow(project(":common"))
     paperDevBundle("1.19.3-R0.1-SNAPSHOT")
     library("com.akuleshov7:ktoml-core-jvm:0.4.1")
     library(kotlin("stdlib"))
+}
+
+bukkit {
+    name = "telekinesis"
+    this.version = version
+    this.description = description
+    website = "https://nyon.dev/discord"
+    main = "dev.nyon.telekinesis.Main"
+    apiVersion = "1.19"
+    this.authors = authors
 }
 
 tasks {
@@ -77,7 +88,7 @@ githubRelease {
     repo(split[1])
     tagName("v${project.version}")
     body("No changelog provided")
-    releaseAssets(tasks["remapJar"].outputs.files)
+    releaseAssets(tasks["reobfJar"].outputs.files)
     targetCommitish("master")
 }
 
