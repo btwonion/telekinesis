@@ -6,5 +6,10 @@ pluginManagement {
         maven("https://maven.fabricmc.net/")
         maven("https://server.bbkr.space/artifactory/libs-release/")
         maven("https://maven.quiltmc.org/repository/release/")
+        maven("https://repo.papermc.io/repository/maven-public/")
     }
 }
+
+include("paper")
+include("fabric")
+include("common")
