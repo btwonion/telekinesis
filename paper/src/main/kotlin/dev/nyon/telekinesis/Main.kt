@@ -1,6 +1,5 @@
 package dev.nyon.telekinesis
 
-import dev.nyon.telekinesis.config.configPath
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.enchantments.Enchantment

@@ -1,6 +1,6 @@
 package dev.nyon.telekinesis.mixins;
 
-import dev.nyon.telekinesis.config.ConfigKt;
+import dev.nyon.telekinesis.TelekinesisConfigKt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.item.ItemStack;
@@ -24,8 +24,8 @@ public abstract class WitherBossMixin {
     public void checkDrop(DamageSource damageSource, int i, boolean bl, CallbackInfo ci) {
         var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, (WitherBoss) (Object) this);
         if ((
-            !ConfigKt.getConfig().getMobDrops()
-                || (telekinesisResult.component1() && !ConfigKt.getConfig().getOnByDefault())
+            !TelekinesisConfigKt.getConfig().getMobDrops()
+                || (telekinesisResult.component1() && !TelekinesisConfigKt.getConfig().getOnByDefault())
                 || telekinesisResult.component2() == null
         )) return;
         var player = telekinesisResult.component2();

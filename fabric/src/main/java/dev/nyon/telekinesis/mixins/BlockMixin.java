@@ -1,7 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
+import dev.nyon.telekinesis.TelekinesisConfigKt;
 import dev.nyon.telekinesis.TelekinesisKt;
-import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -40,25 +40,25 @@ public abstract class BlockMixin {
         if (
             (
                 EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), itemStack) == 0
-                    && !ConfigKt.getConfig().getOnByDefault()
+                    && !TelekinesisConfigKt.getConfig().getOnByDefault()
             )
-                || !ConfigKt.getConfig().getBlockDrops() || !(entity instanceof Player player)
+                || !TelekinesisConfigKt.getConfig().getBlockDrops() || !(entity instanceof Player player)
         ) return;
         getDrops(blockState, (ServerLevel) level, blockPos, blockEntity, entity, itemStack).forEach(item -> {
             if (!player.addItem(item)) popResource(level, blockPos, item);
         });
 
-        if (blockState.getBlock() instanceof DropExperienceBlock expBlock && ConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
+        if (blockState.getBlock() instanceof DropExperienceBlock expBlock && TelekinesisConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
             TelekinesisUtils.addXPToPlayer(player, ((DropExperienceBlockAccessor) expBlock).getXpRange().sample(level.random));
-        else if (blockState.getBlock() instanceof RedStoneOreBlock && ConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
+        else if (blockState.getBlock() instanceof RedStoneOreBlock && TelekinesisConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
             TelekinesisUtils.addXPToPlayer(player, 1 + level.random.nextInt(5));
-        else if (blockState.getBlock() instanceof SculkCatalystBlock catalystBlock && !ConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
+        else if (blockState.getBlock() instanceof SculkCatalystBlock catalystBlock && !TelekinesisConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
             TelekinesisUtils.addXPToPlayer(player, ((CatalystBlockAccessor) catalystBlock).getXpRange().sample(level.random));
-        else if (blockState.getBlock() instanceof SculkSensorBlock && ConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
+        else if (blockState.getBlock() instanceof SculkSensorBlock && TelekinesisConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
             TelekinesisUtils.addXPToPlayer(player, ConstantInt.of(5).sample(level.random));
-        else if (blockState.getBlock() instanceof SculkShriekerBlock && ConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
+        else if (blockState.getBlock() instanceof SculkShriekerBlock && TelekinesisConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
             TelekinesisUtils.addXPToPlayer(player, ConstantInt.of(5).sample(level.random));
-        else if (blockState.getBlock() instanceof SpawnerBlock && ConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
+        else if (blockState.getBlock() instanceof SpawnerBlock && TelekinesisConfigKt.getConfig().getExpDrops() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)
             TelekinesisUtils.addXPToPlayer(player, level.random.nextInt(15) + level.random.nextInt(15));
         else if (blockState.getBlock() instanceof InfestedBlock infestedBlock)
             if (level.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0)

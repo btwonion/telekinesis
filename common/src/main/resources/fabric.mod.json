@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "telekinesis-common",
+  "name": "telekinesis-common",
+  "description": "common modules for the telekinesis mod",
+  "authors": ["btwonion"],
+  "version": "2.0.0"
+}

@@ -1,6 +1,7 @@
 @file:Suppress("SpellCheckingInspection")
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
     kotlin("jvm")
@@ -25,7 +26,10 @@ val githubRepo = "btwonion/telekinesis"
 
 repositories {
     mavenCentral()
-    maven("https://maven.parchmentmc.org")
+    maven {
+        name = "ParchmentMC"
+        url = URI("https://maven.parchmentmc.org")
+    }
 }
 
 dependencies {
@@ -33,8 +37,8 @@ dependencies {
     implementation(project(":common"))
     minecraft("com.mojang:minecraft:1.19.3")
     mappings(loom.layered {
-        officialMojangMappings()
         parchment("org.parchmentmc.data:parchment-1.19.3:2022.12.18@zip")
+        officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:0.14.13")
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.73.0+1.19.3")

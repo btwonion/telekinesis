@@ -1,7 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
+import dev.nyon.telekinesis.TelekinesisConfigKt;
 import dev.nyon.telekinesis.TelekinesisKt;
-import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -47,10 +47,10 @@ public abstract class SheepMixin {
             var item = ITEM_BY_DYE.get(sheep.getColor());
 
             if (
-                !ConfigKt.getConfig().getShearingDrops()
+                !TelekinesisConfigKt.getConfig().getShearingDrops()
                     || (
                     EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), itemStack) == 0
-                        && !ConfigKt.getConfig().getOnByDefault()) || !player.getInventory().add(new ItemStack(item)
+                        && !TelekinesisConfigKt.getConfig().getOnByDefault()) || !player.getInventory().add(new ItemStack(item)
                 )
             ) {
                 ItemEntity itemEntity = sheep.spawnAtLocation(item, 1);

@@ -1,7 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
+import dev.nyon.telekinesis.TelekinesisConfigKt;
 import dev.nyon.telekinesis.TelekinesisKt;
-import dev.nyon.telekinesis.config.ConfigKt;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -32,10 +32,10 @@ public class SnowGolemMixin {
             var item = new ItemStack(Items.CARVED_PUMPKIN);
             golem.setPumpkin(false);
             if (
-                !ConfigKt.getConfig().getShearingDrops()
+                !TelekinesisConfigKt.getConfig().getShearingDrops()
                     || (
                     EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), itemStack) == 0
-                        && !ConfigKt.getConfig().getOnByDefault()
+                        && !TelekinesisConfigKt.getConfig().getOnByDefault()
                 )
                     || !player.getInventory().add(item)
             )

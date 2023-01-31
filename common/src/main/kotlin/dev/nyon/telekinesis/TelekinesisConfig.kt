@@ -1,7 +1,6 @@
-package dev.nyon.telekinesis.config
+package dev.nyon.telekinesis
 
 import com.akuleshov7.ktoml.Toml
-import com.akuleshov7.ktoml.annotations.TomlComments
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -10,27 +9,27 @@ import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 @Serializable
-data class Config(
-    @TomlComments(
+data class TelekinesisConfig(
+    /*@TomlComments(
         lines = ["decides whether telekinesis should work without the enchantment or not"],
         inline = "false by default"
-    )
+    )*/
     val onByDefault: Boolean = false,
-    @TomlComments(lines = ["decides if the enchantment is enabled"], inline = "true by default")
+    //@TomlComments(lines = ["decides if the enchantment is enabled"], inline = "true by default")
     val enchantment: Boolean = true,
-    @TomlComments(lines = ["decides if telekinesis is enabled for block drops"])
+    //@TomlComments(lines = ["decides if telekinesis is enabled for block drops"])
     val blockDrops: Boolean = true,
-    @TomlComments(lines = ["decides if telekinesis is enabled for exp drops"])
+    //@TomlComments(lines = ["decides if telekinesis is enabled for exp drops"])
     val expDrops: Boolean = true,
-    @TomlComments(lines = ["decides if telekinesis is enabled for mob drops"])
+    //@TomlComments(lines = ["decides if telekinesis is enabled for mob drops"])
     val mobDrops: Boolean = true,
-    @TomlComments(lines = ["decides if telekinesis is enabled for entity drops such as boats and minecarts"])
+    //@TomlComments(lines = ["decides if telekinesis is enabled for entity drops such as boats and minecarts"])
     val entityDrops: Boolean = true,
-    @TomlComments(lines = ["decides if telekinesis is enabled for shearing drops"])
+    //@TomlComments(lines = ["decides if telekinesis is enabled for shearing drops"])
     val shearingDrops: Boolean = true
 )
 
-var config = Config()
+var config = TelekinesisConfig()
 lateinit var configPath: Path
 
 fun saveConfig() = configPath.writeText(Toml.encodeToString(config))
