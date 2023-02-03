@@ -11,7 +11,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory
 /**
  * The telekinesis enchantment model
  */
-class TelekinesisEnchantment : Enchantment(
+class TelekinesisEnchantment : Enchantment  (
     Rarity.RARE, EnchantmentCategory.BREAKABLE, listOf(EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND).toTypedArray()
 ) {
 

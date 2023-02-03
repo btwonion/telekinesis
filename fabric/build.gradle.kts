@@ -21,7 +21,7 @@ group = "dev.nyon"
 val majorVersion = "2.0.0"
 version = "$majorVersion-1.19.3"
 description = "Adds an telekinesis enchantment to minecraft"
-val authors = listOf("btwonion")
+val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
 
 repositories {
@@ -36,13 +36,10 @@ dependencies {
     include(project(":common"))
     implementation(project(":common"))
     minecraft("com.mojang:minecraft:1.19.3")
-    mappings(loom.layered {
-        parchment("org.parchmentmc.data:parchment-1.19.3:2022.12.18@zip")
-        officialMojangMappings()
-    })
+    mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:0.14.13")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.73.0+1.19.3")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.9.0+kotlin.1.8.0")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.73.2+1.19.3")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.9.1+kotlin.1.8.10")
 
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
 }
@@ -140,7 +137,7 @@ publishing {
                 description.set(project.description)
 
                 developers {
-                    authors.forEach {
+                    projectAuthors.forEach {
                         developer {
                             name.set(it)
                         }

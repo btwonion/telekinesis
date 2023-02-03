@@ -23,18 +23,11 @@ val githubRepo = "btwonion/telekinesis"
 
 repositories {
     mavenCentral()
-    maven {
-        name = "ParchmentMC"
-        url = URI("https://maven.parchmentmc.org")
-    }
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:1.19.3")
-    mappings(loom.layered {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.19.3:2022.12.18@zip")
-    })
+    mappings(loom.officialMojangMappings())
 
     implementation("com.akuleshov7:ktoml-core-jvm:0.4.1")
 }

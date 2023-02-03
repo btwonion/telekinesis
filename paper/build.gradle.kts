@@ -10,7 +10,7 @@ plugins {
     id("com.github.breadmoirai.github-release")
 
     id("io.papermc.paperweight.userdev") version "1.4.1"
-    id("xyz.jpenilla.run-paper") version "1.1.0"
+    id("xyz.jpenilla.run-paper") version "2.0.1"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
 
     `maven-publish`
@@ -21,7 +21,7 @@ group = "dev.nyon"
 val majorVersion = "2.0.0"
 version = "$majorVersion-1.19.3"
 description = "Adds an telekinesis enchantment to minecraft"
-val authors = listOf("btwonion")
+val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
 
 repositories {
@@ -29,20 +29,20 @@ repositories {
 }
 
 dependencies {
-    shadow(project(":common"))
+    implementation(project(":common"))
     paperDevBundle("1.19.3-R0.1-SNAPSHOT")
     library("com.akuleshov7:ktoml-core-jvm:0.4.1")
     library(kotlin("stdlib"))
 }
 
-bukkit {
+bukkit bukkit@{
     name = "telekinesis"
-    this.version = version
-    this.description = description
-    website = "https://nyon.dev/discord"
-    main = "dev.nyon.telekinesis.Main"
-    apiVersion = "1.19"
-    this.authors = authors
+    this@bukkit.version = project.version.toString()
+    this@bukkit.description = project.description
+    this@bukkit.website = "https://nyon.dev/discord"
+    this@bukkit.main = "dev.nyon.telekinesis.Main"
+    this@bukkit.apiVersion = "1.19"
+    this@bukkit.authors = projectAuthors
 }
 
 tasks {
@@ -65,6 +65,14 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
+    }
+
+    shadowJar {
+        dependencies {
+            exclude {
+                it.moduleGroup != "dev.nyon"
+            }
+        }
     }
 }
 
@@ -114,7 +122,7 @@ publishing {
                 description.set(project.description)
 
                 developers {
-                    authors.forEach {
+                    projectAuthors.forEach {
                         developer {
                             name.set(it)
                         }

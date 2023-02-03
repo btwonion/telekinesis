@@ -9,7 +9,7 @@ val telekinesis = TelekinesisEnchantment()
 object Telekinesis {
     fun init() {
         loadConfig()
-        if (dev.nyon.telekinesis.config.enchantment) Registry.register(
+        if (config.enchantment) Registry.register(
             BuiltInRegistries.ENCHANTMENT,
             ResourceLocation("telekinesis", "telekinesis"),
             telekinesis
