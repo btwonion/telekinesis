@@ -26,4 +26,5 @@ class TelekinesisEnchantment : Enchantment (
 
     override fun getFullname(i: Int): Component =
         Component.literal("Telekinesis").withStyle(Style.EMPTY.withColor(0xFFB64C))
+
 }

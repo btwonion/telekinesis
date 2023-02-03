@@ -36,6 +36,10 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
     }
+    
+    withType<JavaCompile> {
+        options.release.set(17)
+    }
 }
 
 publishing {
