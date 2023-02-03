@@ -36,7 +36,7 @@ dependencies {
 }
 
 bukkit bukkit@{
-    name = "telekinesis"
+    this@bukkit.name = "telekinesis"
     this@bukkit.version = project.version.toString()
     this@bukkit.description = project.description
     this@bukkit.website = "https://nyon.dev/discord"
