@@ -9,7 +9,7 @@ plugins {
     id("com.modrinth.minotaur")
     id("com.github.breadmoirai.github-release")
 
-    id("io.papermc.paperweight.userdev") version "1.4.1"
+    id("io.papermc.paperweight.userdev") version "1.5.0"
     id("xyz.jpenilla.run-paper") version "2.0.1"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
 
