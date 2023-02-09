@@ -10,6 +10,6 @@ pluginManagement {
     }
 }
 
-include("paper")
-include("fabric")
-include("common")
+include("telekinesis-paper")
+include("telekinesis-fabric")
+include("telekinesis-common")

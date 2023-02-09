@@ -1,17 +1,17 @@
+@file:Suppress("SpellCheckingInspection")
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
 
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-
     id("com.modrinth.minotaur")
     id("com.github.breadmoirai.github-release")
 
-    id("io.papermc.paperweight.userdev") version "1.4.1"
-    id("xyz.jpenilla.run-paper") version "2.0.1"
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
+    id("fabric-loom")
+    id("io.github.juuxel.loom-quiltflower")
 
     `maven-publish`
     signing
@@ -26,27 +26,50 @@ val githubRepo = "btwonion/telekinesis"
 
 repositories {
     mavenCentral()
+    maven {
+        name = "ParchmentMC"
+        url = URI("https://maven.parchmentmc.org")
+    }
 }
 
 dependencies {
-    implementation(project(":common"))
-    paperDevBundle("1.19.3-R0.1-SNAPSHOT")
-    library("com.akuleshov7:ktoml-core-jvm:0.4.1")
-    library(kotlin("stdlib"))
-}
+    include(project(":telekinesis-common"))
+    implementation(project(":telekinesis-common"))
+    minecraft("com.mojang:minecraft:1.19.3")
+    mappings(loom.officialMojangMappings())
+    modImplementation("net.fabricmc:fabric-loader:0.14.13")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.73.2+1.19.3")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.9.1+kotlin.1.8.10")
 
-bukkit bukkit@{
-    this@bukkit.name = "telekinesis"
-    this@bukkit.version = project.version.toString()
-    this@bukkit.description = project.description
-    this@bukkit.website = "https://nyon.dev/discord"
-    this@bukkit.main = "dev.nyon.telekinesis.Main"
-    this@bukkit.apiVersion = "1.19"
-    this@bukkit.authors = projectAuthors
+    include("com.akuleshov7:ktoml-core-jvm:0.4.1")
 }
 
 tasks {
-    register("releasePlugin") {
+    processResources {
+        val modId = "telekinesis"
+        val modName = "Telekinesis"
+        val modDescription = "Adds an telekinesis enchantment"
+
+        inputs.property("id", modId)
+        inputs.property("group", project.group)
+        inputs.property("name", modName)
+        inputs.property("description", modDescription)
+        inputs.property("version", project.version)
+        inputs.property("github", githubRepo)
+
+        filesMatching(listOf("fabric.mod.json", "quilt.mod.json")) {
+            expand(
+                "id" to modId,
+                "group" to project.group,
+                "name" to modName,
+                "description" to modDescription,
+                "version" to project.version,
+                "github" to githubRepo,
+            )
+        }
+    }
+
+    register("releaseMod") {
         group = "publishing"
 
         dependsOn("modrinth")
@@ -54,25 +77,13 @@ tasks {
         dependsOn("publish")
     }
 
-    build {
-        dependsOn(reobfJar)
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.freeCompilerArgs += "-Xskip-prerelease-check"
     }
 
     withType<JavaCompile> {
-        options.encoding = "UTF-8"
         options.release.set(17)
-    }
-
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-
-    shadowJar {
-        dependencies {
-            exclude {
-                it.moduleGroup != "dev.nyon"
-            }
-        }
     }
 }
 
@@ -81,9 +92,13 @@ modrinth {
     projectId.set("LLfA8jAD")
     versionNumber.set("${project.version}")
     versionType.set("release")
-    uploadFile.set(tasks["reobfJar"])
+    uploadFile.set(tasks["remapJar"])
     gameVersions.set(listOf("1.19.3"))
-    loaders.set(listOf("paper"))
+    loaders.set(listOf("fabric", "quilt"))
+    dependencies {
+        required.project("fabric-api")
+        required.project("fabric-language-kotlin")
+    }
     changelog.set("No changelog provided")
     syncBodyFrom.set(file("../README.md").readText())
 }
@@ -96,7 +111,7 @@ githubRelease {
     repo(split[1])
     tagName("v${project.version}")
     body("No changelog provided")
-    releaseAssets(tasks["reobfJar"].outputs.files)
+    releaseAssets(tasks["remapJar"].outputs.files)
     targetCommitish("master")
 }
 
@@ -118,7 +133,7 @@ publishing {
             this.version = rootProject.version.toString()
 
             pom {
-                name.set("${project.name}-paper")
+                name.set("${project.name}-fabric")
                 description.set(project.description)
 
                 developers {
@@ -153,5 +168,4 @@ signing {
 
 java {
     withSourcesJar()
-    withJavadocJar()
 }

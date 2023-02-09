@@ -95,5 +95,4 @@ signing {
 
 java {
     withSourcesJar()
-    withJavadocJar()
 }
