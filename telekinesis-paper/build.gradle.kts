@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":telekinesis-common"))
+    implementation(project(":telekinesis-common", configuration = "namedElements"))
     paperDevBundle("1.19.3-R0.1-SNAPSHOT")
     library("com.akuleshov7:ktoml-core-jvm:0.4.1")
     library(kotlin("stdlib"))
