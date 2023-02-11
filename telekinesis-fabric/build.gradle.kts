@@ -26,20 +26,13 @@ val githubRepo = "btwonion/telekinesis"
 
 repositories {
     mavenCentral()
-    maven {
-        name = "ParchmentMC"
-        url = URI("https://maven.parchmentmc.org")
-    }
 }
 
 dependencies {
     include(project(":telekinesis-common"))
     implementation(project(":telekinesis-common"))
     minecraft("com.mojang:minecraft:1.19.3")
-    mappings(loom.layered {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.19.3:2023.02.05@zip")
-    })
+    mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:0.14.13")
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.73.2+1.19.3")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.9.1+kotlin.1.8.10")
