@@ -1,5 +1,6 @@
 package dev.nyon.telekinesis
 
+import net.minecraft.core.MappedRegistry
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -24,12 +25,24 @@ class Main : JavaPlugin() {
         Telekinesis.init()
         if (dev.nyon.telekinesis.config.enchantment) {
             val server = (Bukkit.getServer() as CraftServer).handle.server
-            val enchantmentRegistry = server.registryAccess().registryOrThrow(Registries.ENCHANTMENT)
+            val enchantmentRegistry = server.registryAccess().registryOrThrow(Registries.ENCHANTMENT) as MappedRegistry
+            val frozenField = enchantmentRegistry.javaClass.getDeclaredField("l")
+            val nextIntField = enchantmentRegistry.javaClass.getDeclaredField("o")
+            frozenField.isAccessible = true
+            nextIntField.isAccessible = true
+            nextIntField.setInt(enchantmentRegistry, 200)
+            frozenField.set(null, false)
+
             Registry.register(
                 enchantmentRegistry,
                 ResourceLocation("telekinesis", "telekinesis"),
                 telekinesis
             )
+
+            nextIntField.set(null, null)
+            nextIntField.isAccessible = false
+            frozenField.set(null, true)
+            frozenField.isAccessible = false
         }
 
         bukkitEnchantment = Enchantment.getByKey(NamespacedKey("telekinesis", "telekinesis"))
