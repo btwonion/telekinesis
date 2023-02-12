@@ -103,46 +103,20 @@ githubRelease {
 publishing {
     repositories {
         maven {
-            name = "ossrh"
+            name = "nyon"
+            url = uri("https://repo.nyon.dev/releases")
             credentials(PasswordCredentials::class)
-            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
         }
     }
-
     publications {
-        register<MavenPublication>(project.name) {
+        create<MavenPublication>("maven") {
+            groupId = "dev.nyon"
+            artifactId = "headquarters-api"
+            version = "1.0.0"
             from(components["java"])
-
-            this.groupId = project.group.toString()
-            this.artifactId = project.name
-            this.version = rootProject.version.toString()
-
-            pom {
-                name.set("${project.name}-paper")
-                description.set(project.description)
-
-                developers {
-                    projectAuthors.forEach {
-                        developer {
-                            name.set(it)
-                        }
-                    }
-                }
-
-                licenses {
-                    license {
-                        name.set("GNU General Public License 3")
-                        url.set("https://www.gnu.org/licenses/gpl-3.0.txt")
-                    }
-                }
-
-                url.set("https://github.com/${githubRepo}")
-
-                scm {
-                    connection.set("scm:git:git://github.com/${githubRepo}.git")
-                    url.set("https://github.com/${githubRepo}/tree/main")
-                }
-            }
         }
     }
 }
