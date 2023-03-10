@@ -50,7 +50,6 @@ tasks {
         group = "publishing"
 
         dependsOn("modrinth")
-        dependsOn("githubRelease")
         dependsOn("publish")
     }
 
@@ -86,18 +85,6 @@ modrinth {
     loaders.set(listOf("paper"))
     changelog.set("No changelog provided")
     syncBodyFrom.set(file("../README.md").readText())
-}
-
-githubRelease {
-    token(findProperty("github.token")?.toString())
-
-    val split = githubRepo.split("/")
-    owner(split[0])
-    repo(split[1])
-    tagName("v${project.version}")
-    body("No changelog provided")
-    releaseAssets(tasks["reobfJar"].outputs.files)
-    targetCommitish("master")
 }
 
 publishing {
