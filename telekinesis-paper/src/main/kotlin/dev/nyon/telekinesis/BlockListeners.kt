@@ -13,11 +13,11 @@ fun initBlockListeners() {
 val dropEvent = listen<BlockDropItemEvent> {
     if (!player.hasTelekinesis()) return@listen
 
-    player.inventory.addItem(*items.map { it.itemStack }.toTypedArray()).forEach { _, itemStack ->
+    player.inventory.addItem(*items.map { it.itemStack }.toTypedArray()).forEach { (_, itemStack) ->
         player.world.dropItemNaturally(block.location, itemStack)
     }
 
-    isCancelled = true
+    items.clear()
 }
 
 val blockBreakEvent = listen<BlockBreakEvent> {

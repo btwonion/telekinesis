@@ -16,6 +16,8 @@ val mobDie = listen<EntityDeathEvent> {
         drops.remove(itemStack)
     }
 
+    drops.clear()
+
     killer.giveExp(droppedExp, true)
     droppedExp = 0
 }
