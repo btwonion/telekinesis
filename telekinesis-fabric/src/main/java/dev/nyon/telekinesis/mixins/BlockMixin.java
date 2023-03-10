@@ -2,6 +2,7 @@ package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.TelekinesisConfigKt;
 import dev.nyon.telekinesis.TelekinesisKt;
+import dev.nyon.telekinesis.check.TelekinesisUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -19,7 +20,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import dev.nyon.telekinesis.check.TelekinesisUtils;
 
 import static net.minecraft.world.level.block.Block.getDrops;
 import static net.minecraft.world.level.block.Block.popResource;
