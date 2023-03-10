@@ -114,8 +114,8 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "dev.nyon"
-            artifactId = "headquarters-api"
-            version = "1.0.0"
+            artifactId = "telekinesis-paper"
+            version = project.version.toString()
             from(components["java"])
         }
     }

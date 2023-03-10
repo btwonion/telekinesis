@@ -124,7 +124,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "dev.nyon"
-            artifactId = "headquarters-api"
+            artifactId = "telekinesis-fabric"
             version = project.version.toString()
             from(components["java"])
         }

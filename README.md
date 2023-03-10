@@ -1,6 +1,6 @@
 # telekinesis
 
-This mod adds the telekinesis enchantment (toggleable) to:
+This mod/plugin adds the telekinesis enchantment to:
 
 - block drops
 - mob drops
@@ -8,12 +8,15 @@ This mod adds the telekinesis enchantment (toggleable) to:
 - entity drops (boats, minecarts)
 - shearing drops
 
-It uses [Fabric API](https://github.com/fabricmc/fabric)
+The mod requires [Fabric API](https://github.com/fabricmc/fabric)
 and [Fabric Language Kotlin](https://github.com/fabricmc/fabric-language-kotlin)
 
 ## Configuration
 
-configuration file: `~/.minecraft/config/telekinesis.toml`
+-> mod configuration file: `/config/telekinesis.toml`
+<br>
+-> plugin configuration file: `/plugins/telekinesis.toml`
+
 <details>
 <summary>telekinesis.toml</summary>
 
