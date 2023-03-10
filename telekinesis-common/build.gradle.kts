@@ -16,7 +16,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.0.0"
-version = "$majorVersion-1.19.3"
+version = "$majorVersion-1.19.4"
 description = "Adds an telekinesis enchantment to minecraft"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:1.19.3")
+    minecraft("com.mojang:minecraft:1.19.4-rc2")
     mappings(loom.officialMojangMappings())
 
     implementation("com.akuleshov7:ktoml-core-jvm:0.4.1")
@@ -57,7 +57,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "dev.nyon"
             artifactId = "headquarters-api"
-            version = "1.0.0"
+            version = project.version.toString()
             from(components["java"])
         }
     }

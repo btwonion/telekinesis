@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.TelekinesisConfigKt;
+import dev.nyon.telekinesis.check.TelekinesisUtils;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +12,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import dev.nyon.telekinesis.check.TelekinesisUtils;
 
 @Mixin(AbstractMinecart.class)
 public abstract class MinecartMixin {
@@ -20,22 +20,23 @@ public abstract class MinecartMixin {
     abstract Item getDropItem();
 
     @Redirect(
-        method = "destroy",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/vehicle/AbstractMinecart;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
-        )
+            method = "destroy",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/vehicle/AbstractMinecart;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
+            )
     )
     public ItemEntity redirectDrops(AbstractMinecart instance, ItemStack itemStack, DamageSource damageSource) {
-        var boat = (AbstractMinecart) (Object) this;
+        var minecart = (AbstractMinecart) (Object) this;
         var item = getDropItem();
+        var entity = damageSource.getEntity();
         if (
             !TelekinesisConfigKt.getConfig().getEntityDrops()
                 || (TelekinesisUtils.hasNoTelekinesis(damageSource) && !TelekinesisConfigKt.getConfig().getOnByDefault())
-        ) return boat.spawnAtLocation(item);
-        var player = (Player) damageSource.getEntity();
+                || !(entity instanceof Player player)
+        ) return minecart.spawnAtLocation(item);
         if (!player.getInventory().add(new ItemStack(item)))
-            return boat.spawnAtLocation(item);
+            return minecart.spawnAtLocation(item);
 
         return null;
     }

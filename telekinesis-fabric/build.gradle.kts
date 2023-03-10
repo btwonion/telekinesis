@@ -19,7 +19,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.0.0"
-version = "$majorVersion-1.19.3"
+version = "$majorVersion-1.19.4"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -31,10 +31,10 @@ repositories {
 dependencies {
     include(project(":telekinesis-common"))
     implementation(project(":telekinesis-common"))
-    minecraft("com.mojang:minecraft:1.19.3")
+    minecraft("com.mojang:minecraft:1.19.4-rc2")
     mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:0.14.13")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.73.2+1.19.3")
+    modImplementation("net.fabricmc:fabric-loader:0.14.17")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.75.3+1.19.4")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.9.1+kotlin.1.8.10")
 
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
@@ -53,7 +53,7 @@ tasks {
         inputs.property("version", project.version)
         inputs.property("github", githubRepo)
 
-        filesMatching(listOf("fabric.mod.json", "quilt.mod.json")) {
+        filesMatching(listOf("fabric.mod.json")) {
             expand(
                 "id" to modId,
                 "group" to project.group,
@@ -89,7 +89,7 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf("1.19.3"))
+    gameVersions.set(listOf("1.19.4-rc2"))
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-api")
@@ -126,7 +126,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "dev.nyon"
             artifactId = "headquarters-api"
-            version = "1.0.0"
+            version = project.version.toString()
             from(components["java"])
         }
     }
