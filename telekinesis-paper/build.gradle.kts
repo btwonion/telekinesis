@@ -80,7 +80,7 @@ modrinth {
     projectId.set("LLfA8jAD")
     versionNumber.set("${project.version}")
     versionType.set("release")
-    uploadFile.set(tasks["shadowJar"])
+    uploadFile.set(tasks["jar"])
     gameVersions.set(listOf("1.19.3"))
     loaders.set(listOf("paper"))
     changelog.set("No changelog provided")
