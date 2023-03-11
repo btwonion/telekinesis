@@ -28,8 +28,7 @@ repositories {
 }
 
 dependencies {
-    include(project(":telekinesis-common"))
-    implementation(project(":telekinesis-common"))
+    implementation(include(project(":telekinesis-common"))!!)
     minecraft("com.mojang:minecraft:1.19.4-rc2")
     mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:0.14.17")
@@ -68,6 +67,7 @@ tasks {
         group = "publishing"
 
         dependsOn("modrinth")
+        dependsOn("modrinthSyncBody")
         dependsOn("githubRelease")
         dependsOn("publish")
     }
@@ -106,7 +106,6 @@ githubRelease {
     repo(split[1])
     tagName("v${project.version}")
     body("No changelog provided")
-    releaseAssets(tasks["remapJar"].outputs.files)
     targetCommitish("master")
 }
 
