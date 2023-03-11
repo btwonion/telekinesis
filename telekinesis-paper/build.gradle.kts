@@ -19,7 +19,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.0.0"
-version = "$majorVersion-1.19.3"
+version = "paper-$majorVersion-1.19.3"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
