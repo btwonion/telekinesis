@@ -19,7 +19,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.0.0"
-version = "paper-$majorVersion-1.19.3"
+version = "paper-$majorVersion-1.19.4"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -30,7 +30,7 @@ repositories {
 
 dependencies {
     implementation(project(":telekinesis-common", configuration = "namedElements"))
-    paperDevBundle("1.19.3-R0.1-SNAPSHOT")
+    paperDevBundle("1.19.4-R0.1-SNAPSHOT")
     library("com.akuleshov7:ktoml-core-jvm:0.4.1")
     library(kotlin("stdlib"))
 }
@@ -73,6 +73,10 @@ tasks {
             }
         }
     }
+
+    runServer {
+        minecraftVersion("1.19.4")
+    }
 }
 
 modrinth {
@@ -81,7 +85,7 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["jar"])
-    gameVersions.set(listOf("1.19.3"))
+    gameVersions.set(listOf("1.19.4"))
     loaders.set(listOf("paper"))
     changelog.set("No changelog provided")
     syncBodyFrom.set(file("../README.md").readText())

@@ -29,10 +29,10 @@ repositories {
 
 dependencies {
     implementation(include(project(":telekinesis-common"))!!)
-    minecraft("com.mojang:minecraft:1.19.4-rc2")
+    minecraft("com.mojang:minecraft:1.19.4")
     mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:0.14.17")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.75.3+1.19.4")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.76.0+1.19.4")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.9.1+kotlin.1.8.10")
 
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")

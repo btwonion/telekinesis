@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:1.19.4-rc2")
+    minecraft("com.mojang:minecraft:1.19.4")
     mappings(loom.officialMojangMappings())
 
     implementation("com.akuleshov7:ktoml-core-jvm:0.4.1")

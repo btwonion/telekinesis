@@ -6,7 +6,7 @@ import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_19_R2.CraftServer
+import org.bukkit.craftbukkit.v1_19_R3.CraftServer
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.plugin.java.JavaPlugin
 import kotlin.io.path.createFile
@@ -50,7 +50,7 @@ private fun addToMinecraftRegistry() {
     val server = (Bukkit.getServer() as CraftServer).handle.server
     val enchantmentRegistry = server.registryAccess().registryOrThrow(Registries.ENCHANTMENT) as MappedRegistry
     val enchantmentRegistryClass = enchantmentRegistry.javaClass
-    val frozenField = enchantmentRegistryClass.getDeclaredField("l") // l - frozen
+    val frozenField = enchantmentRegistryClass.getDeclaredField("l") // l - frozen  MappedRegistry
     frozenField.isAccessible = true
     frozenField.set(enchantmentRegistry, false)
 
@@ -63,14 +63,14 @@ private fun addToMinecraftRegistry() {
     frozenField.set(enchantmentRegistry, true)
     frozenField.isAccessible = false
 
-    val byValueField = enchantmentRegistryClass.getDeclaredField("h") // h - byValue
+    val byValueField = enchantmentRegistryClass.getDeclaredField("h") // h - byValue    MappedRegistry
     byValueField.isAccessible = true
     val byValueMap =
         byValueField.get(enchantmentRegistry) as Map<*, Holder.Reference<*>>
     val value = byValueMap[telekinesis]!!
     val method = value.javaClass.getDeclaredMethod("b", Any::class.java)
     method.isAccessible = true
-    method.invoke(value, telekinesis) // b - bindValue
+    method.invoke(value, telekinesis) // b - bindValue  Holder$Reference
     method.isAccessible = false
     byValueField.isAccessible = false
 }
