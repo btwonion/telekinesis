@@ -1,6 +1,6 @@
 # telekinesis
 
-This mod/plugin adds the telekinesis enchantment to:
+This mod/plugin adds the telekinesis enchantment, which allows you to instantly move drops into your inventory, to:
 
 - block drops
 - mob drops
