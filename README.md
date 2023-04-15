@@ -13,6 +13,8 @@ and [Fabric Language Kotlin](https://github.com/fabricmc/fabric-language-kotlin)
 
 ## Configuration
 
+The configuration file can be found in the client/server directory:
+
 -> mod configuration file: `/config/telekinesis.toml`
 <br>
 -> plugin configuration file: `/plugins/telekinesis.toml`
