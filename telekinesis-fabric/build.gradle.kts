@@ -31,9 +31,8 @@ dependencies {
     implementation(include(project(":telekinesis-common"))!!)
     minecraft("com.mojang:minecraft:1.19.4")
     mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:0.14.17")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.76.0+1.19.4")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.9.1+kotlin.1.8.10")
+    modImplementation("net.fabricmc:fabric-loader:0.14.19")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.9.3+kotlin.1.8.20")
 
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
 }
@@ -88,10 +87,9 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf("1.19.4-rc2"))
+    gameVersions.set(listOf("1.19.4"))
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
-        required.project("fabric-api")
         required.project("fabric-language-kotlin")
     }
     changelog.set("No changelog provided")
