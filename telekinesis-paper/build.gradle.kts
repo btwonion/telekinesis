@@ -4,12 +4,12 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
 
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 
     id("com.modrinth.minotaur")
     id("com.github.breadmoirai.github-release")
 
-    id("io.papermc.paperweight.userdev") version "1.5.0"
+    id("io.papermc.paperweight.userdev") version "1.5.4"
     id("xyz.jpenilla.run-paper") version "2.0.1"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
 
@@ -76,17 +76,19 @@ tasks {
 
     runServer {
         minecraftVersion("1.19.4")
+
+        serverJar(File("run/server.jar"))
     }
 }
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set("${project.version}")
+    versionNumber.set(project.version.toString())
     versionType.set("release")
     uploadFile.set(tasks["jar"])
     gameVersions.set(listOf("1.19.4"))
-    loaders.set(listOf("paper"))
+    loaders.set(listOf("paper", "folia"))
     changelog.set("No changelog provided")
     syncBodyFrom.set(file("../README.md").readText())
 }
