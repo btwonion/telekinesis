@@ -30,7 +30,7 @@ repositories {
 
 dependencies {
     implementation(project(":telekinesis-common", configuration = "namedElements"))
-    paperDevBundle("1.19.4-R0.1-SNAPSHOT")
+    paperweight.foliaDevBundle("1.19.4-R0.1-SNAPSHOT")
     library("com.akuleshov7:ktoml-core-jvm:0.4.1")
     library(kotlin("stdlib"))
 }
