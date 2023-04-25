@@ -98,7 +98,10 @@ modrinth {
     uploadFile.set(tasks["jar"])
     gameVersions.set(listOf("1.19.4"))
     loaders.set(listOf("paper", "folia"))
-    changelog.set("No changelog provided")
+    changelog.set("""
+        $version
+        - add folia support
+    """.trimIndent())
     syncBodyFrom.set(file("../README.md").readText())
 }
 
