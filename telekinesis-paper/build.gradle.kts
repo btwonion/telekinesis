@@ -10,15 +10,14 @@ plugins {
     id("com.github.breadmoirai.github-release")
 
     id("io.papermc.paperweight.userdev") version "1.5.4"
-    id("xyz.jpenilla.run-paper") version "2.0.1"
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
+    id("xyz.jpenilla.run-paper") version "2.1.0"
 
     `maven-publish`
     signing
 }
 
 group = "dev.nyon"
-val majorVersion = "2.0.0"
+val majorVersion = "2.1.0"
 version = "paper-$majorVersion-1.19.4"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
@@ -31,18 +30,6 @@ repositories {
 dependencies {
     implementation(project(":telekinesis-common", configuration = "namedElements"))
     paperweight.foliaDevBundle("1.19.4-R0.1-SNAPSHOT")
-    library("com.akuleshov7:ktoml-core-jvm:0.4.1")
-    library(kotlin("stdlib"))
-}
-
-bukkit bukkit@{
-    this@bukkit.name = "telekinesis"
-    this@bukkit.version = project.version.toString()
-    this@bukkit.description = project.description
-    this@bukkit.website = "https://nyon.dev/discord"
-    this@bukkit.main = "dev.nyon.telekinesis.Main"
-    this@bukkit.apiVersion = "1.19"
-    this@bukkit.authors = projectAuthors
 }
 
 tasks {
@@ -51,6 +38,29 @@ tasks {
 
         dependsOn("modrinth")
         dependsOn("publish")
+    }
+
+    val kotlinVersion: String by project
+    processResources {
+        val props = mapOf(
+            "name" to "telekinesis",
+            "version" to project.version.toString(),
+            "main" to "dev.nyon.telekinesis.Main",
+            "description" to project.description,
+            "website" to "https://nyon.dev/discord",
+            "apiVersion" to "1.19",
+            "authors" to projectAuthors.joinToString("\n  - ", "\n  - "),
+            "foliaSupported" to true,
+            "libraries" to listOf(
+                "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+                "com.akuleshov7:ktoml-core-jvm:0.4.1"
+            ).joinToString("\n  - ", "\n  - ")
+        )
+
+        inputs.properties(props)
+        filesMatching("plugin.yml") {
+            expand(props)
+        }
     }
 
     build {
@@ -74,10 +84,9 @@ tasks {
         }
     }
 
+    runPaper.folia.registerTask()
     runServer {
         minecraftVersion("1.19.4")
-
-        serverJar(File("run/server.jar"))
     }
 }
 
