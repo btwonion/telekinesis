@@ -99,7 +99,7 @@ modrinth {
     gameVersions.set(listOf("1.19.4"))
     loaders.set(listOf("paper", "folia"))
     changelog.set("""
-        $version
+        # $version
         - add folia support
     """.trimIndent())
     syncBodyFrom.set(file("../README.md").readText())
