@@ -1,6 +1,7 @@
 @file:Suppress("SpellCheckingInspection")
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import kotlin.io.path.readText
 
 plugins {
     kotlin("jvm")
@@ -74,13 +75,14 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
-        kotlinOptions.freeCompilerArgs += "-Xskip-prerelease-check"
     }
 
     withType<JavaCompile> {
         options.release.set(17)
     }
 }
+
+val changelogText = rootDir.toPath().resolve("changelogs/$version.md").readText()
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
@@ -93,7 +95,7 @@ modrinth {
     dependencies {
         required.project("fabric-language-kotlin")
     }
-    changelog.set("No changelog provided")
+    changelog.set(changelogText)
     syncBodyFrom.set(file("../README.md").readText())
 }
 
@@ -104,7 +106,7 @@ githubRelease {
     owner(split[0])
     repo(split[1])
     tagName("v${project.version}")
-    body("No changelog provided")
+    body(changelogText)
     targetCommitish("master")
 }
 
