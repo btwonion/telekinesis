@@ -14,8 +14,9 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.0.0"
-version = "$majorVersion-1.19.4"
+val majorVersion = "2.1.0"
+val mcVersion = "1.20"
+version = "$majorVersion-$mcVersion"
 description = "Adds an telekinesis enchantment to minecraft"
 val authors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -25,10 +26,10 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:1.19.4")
+    minecraft("com.mojang:minecraft:$mcVersion")
     mappings(loom.officialMojangMappings())
 
-    implementation("com.akuleshov7:ktoml-core-jvm:0.4.1")
+    implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")
 }
 
 tasks {

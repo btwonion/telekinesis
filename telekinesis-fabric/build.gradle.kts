@@ -17,8 +17,9 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.0.0"
-version = "fabric-$majorVersion-1.19.4"
+val majorVersion = "2.1.0"
+val mcVersion = "1.20"
+version = "fabric-$majorVersion-$mcVersion"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -29,10 +30,10 @@ repositories {
 
 dependencies {
     implementation(include(project(":telekinesis-common"))!!)
-    minecraft("com.mojang:minecraft:1.19.4")
+    minecraft("com.mojang:minecraft:$mcVersion")
     mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:0.14.19")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.9.3+kotlin.1.8.20")
+    modImplementation("net.fabricmc:fabric-loader:0.14.21")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.9.4+kotlin.1.8.21")
 
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
 }
@@ -87,7 +88,7 @@ modrinth {
     versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf("1.19.4"))
+    gameVersions.set(listOf(mcVersion))
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-language-kotlin")

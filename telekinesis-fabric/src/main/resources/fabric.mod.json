@@ -19,8 +19,8 @@
   "version": "${version}",
   "environment": "*",
   "depends": {
-    "fabric-language-kotlin": ">=1.9.3+kotlin.1.8.20",
-    "minecraft": ">=1.19.4"
+    "fabric-language-kotlin": ">=1.9.4+kotlin.1.8.21",
+    "minecraft": ">=1.20"
   },
   "entrypoints": {
     "main": [
