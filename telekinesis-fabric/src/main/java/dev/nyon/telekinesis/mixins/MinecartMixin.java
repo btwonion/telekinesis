@@ -20,11 +20,11 @@ public abstract class MinecartMixin {
     abstract Item getDropItem();
 
     @Redirect(
-            method = "destroy",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/vehicle/AbstractMinecart;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
-            )
+        method = "destroy",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/entity/vehicle/AbstractMinecart;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
+        )
     )
     public ItemEntity redirectDrops(AbstractMinecart instance, ItemStack itemStack, DamageSource damageSource) {
         var minecart = (AbstractMinecart) (Object) this;

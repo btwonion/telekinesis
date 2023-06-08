@@ -38,7 +38,7 @@ public abstract class SheepMixin {
     public void manipulateWoolDrops(Sheep instance, SoundSource soundSource, Player player, InteractionHand interactionHand) {
         Sheep sheep = (Sheep) (Object) this;
         ItemStack itemStack = player.getItemInHand(interactionHand);
-        sheep.level.playSound(null, sheep, SoundEvents.SHEEP_SHEAR, soundSource, 1.0F, 1.0F);
+        sheep.level().playSound(null, sheep, SoundEvents.SHEEP_SHEAR, soundSource, 1.0F, 1.0F);
         sheep.setSheared(true);
         var random = RandomSource.create();
         int i = 1 + random.nextInt(3);

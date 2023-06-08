@@ -27,8 +27,8 @@ public class SnowGolemMixin {
     public void manipulateWoolDrops(SnowGolem instance, SoundSource soundSource, Player player, InteractionHand interactionHand) {
         SnowGolem golem = (SnowGolem) (Object) this;
         ItemStack itemStack = player.getItemInHand(interactionHand);
-        golem.level.playSound(null, golem, SoundEvents.SNOW_GOLEM_SHEAR, soundSource, 1.0F, 1.0F);
-        if (!golem.level.isClientSide()) {
+        golem.level().playSound(null, golem, SoundEvents.SNOW_GOLEM_SHEAR, soundSource, 1.0F, 1.0F);
+        if (!golem.level().isClientSide()) {
             var item = new ItemStack(Items.CARVED_PUMPKIN);
             golem.setPumpkin(false);
             if (

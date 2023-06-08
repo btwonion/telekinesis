@@ -18,9 +18,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,9 +39,6 @@ public abstract class LivingEntityMixin {
     public abstract ResourceLocation getLootTable();
 
     @Shadow
-    protected abstract LootContext.Builder createLootContext(boolean bl, DamageSource damageSource);
-
-    @Shadow
     public abstract boolean wasExperienceConsumed();
 
     @Shadow
@@ -54,6 +52,9 @@ public abstract class LivingEntityMixin {
 
     @Shadow
     protected abstract void dropCustomDeathLoot(DamageSource damageSource, int i, boolean bl);
+
+    @Shadow
+    public abstract long getLootTableSeed();
 
     @Inject(
         method = "dropAllDeathLoot",
@@ -79,13 +80,13 @@ public abstract class LivingEntityMixin {
 
     private void manipulateXp(Player player) {
         if (
-            livingEntity.level instanceof ServerLevel
+            livingEntity.level() instanceof ServerLevel
                 && !wasExperienceConsumed()
                 && (
                 isAlwaysExperienceDropper()
                     || this.lastHurtByPlayerTime > 0
                     && shouldDropExperience()
-                    && livingEntity.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)
+                    && livingEntity.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)
             )
         ) {
             TelekinesisUtils.addXPToPlayer(player, getExperienceReward());
@@ -93,15 +94,16 @@ public abstract class LivingEntityMixin {
     }
 
     private void manipulateDrops(Player player, DamageSource damageSource) {
-        var loot = EnchantmentHelper.getMobLooting(player);
-        ResourceLocation resourceLocation = getLootTable();
-        LootTable lootTable = livingEntity.level.getServer().getLootTables().get(resourceLocation);
-        LootContext.Builder builder = createLootContext(lastHurtByPlayerTime > 0, damageSource);
-        lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY), item -> {
+        LootTable lootTable = livingEntity.level().getServer().getLootData().getLootTable(getLootTable());
+        LootParams.Builder builder = (new LootParams.Builder((ServerLevel) livingEntity.level())).withParameter(LootContextParams.THIS_ENTITY, livingEntity).withParameter(LootContextParams.ORIGIN, livingEntity.position()).withParameter(LootContextParams.DAMAGE_SOURCE, damageSource).withOptionalParameter(LootContextParams.KILLER_ENTITY, damageSource.getEntity()).withOptionalParameter(LootContextParams.DIRECT_KILLER_ENTITY, damageSource.getDirectEntity());
+        builder = builder.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player).withLuck(player.getLuck());
+
+        LootParams lootParams = builder.create(LootContextParamSets.ENTITY);
+        lootTable.getRandomItems(lootParams, this.getLootTableSeed(), item -> {
             if (!player.addItem(item)) livingEntity.spawnAtLocation(item);
         });
 
-        dropCustomDeathLoot(damageSource, loot, lastHurtByPlayerTime > 0);
+        dropCustomDeathLoot(damageSource, EnchantmentHelper.getMobLooting(player), lastHurtByPlayerTime > 0);
     }
 
     private void handleEquipmentDrops(Player player) {
@@ -118,7 +120,7 @@ public abstract class LivingEntityMixin {
             }
         } else if (livingEntity instanceof AbstractChestedHorse horse) {
             if (horse.hasChest()) {
-                if (!horse.level.isClientSide)
+                if (!horse.level().isClientSide)
                     if (!player.addItem(new ItemStack(Blocks.CHEST))) horse.spawnAtLocation(Blocks.CHEST);
                 horse.setChest(false);
             }
@@ -135,7 +137,7 @@ public abstract class LivingEntityMixin {
             if (strider.isSaddled())
                 if (!player.addItem(new ItemStack(Items.SADDLE))) strider.spawnAtLocation(Items.SADDLE);
         } else if (livingEntity instanceof Player target) {
-            if (!target.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+            if (!target.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
                 for (int i = 0; i < target.getInventory().getContainerSize(); ++i) {
                     ItemStack itemStack = target.getInventory().getItem(i);
                     if (!itemStack.isEmpty() && EnchantmentHelper.hasVanishingCurse(itemStack))
