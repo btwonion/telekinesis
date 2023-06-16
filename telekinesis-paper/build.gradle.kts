@@ -9,7 +9,7 @@ plugins {
     id("com.modrinth.minotaur")
     id("com.github.breadmoirai.github-release")
 
-    id("io.papermc.paperweight.userdev") version "1.5.4"
+    id("io.papermc.paperweight.userdev") version "1.5.5"
     id("xyz.jpenilla.run-paper") version "2.1.0"
 
     `maven-publish`
@@ -18,7 +18,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.1.0"
-version = "paper-$majorVersion-1.19.4"
+version = "paper-$majorVersion-1.20"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -29,7 +29,7 @@ repositories {
 
 dependencies {
     implementation(project(":telekinesis-common", configuration = "namedElements"))
-    paperweight.foliaDevBundle("1.19.4-R0.1-SNAPSHOT")
+    paperweight.foliaDevBundle("1.20.1-R0.1-SNAPSHOT")
 }
 
 tasks {
@@ -48,12 +48,12 @@ tasks {
             "main" to "dev.nyon.telekinesis.Main",
             "description" to project.description,
             "website" to "https://nyon.dev/discord",
-            "apiVersion" to "1.19",
+            "apiVersion" to "1.20",
             "authors" to projectAuthors.joinToString("\n  - ", "\n  - "),
             "foliaSupported" to true,
             "libraries" to listOf(
                 "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-                "com.akuleshov7:ktoml-core-jvm:0.4.1"
+                "com.akuleshov7:ktoml-core-jvm:0.5.0"
             ).joinToString("\n  - ", "\n  - ")
         )
 
