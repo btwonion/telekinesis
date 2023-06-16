@@ -18,7 +18,7 @@ public class TelekinesisUtils {
     public static Pair<Boolean, Player> hasNoTelekinesis(DamageSource source, LivingEntity entity) {
         Player player = null;
         if (source.getEntity() instanceof Player) player = (Player) source.getEntity();
-        if (entity.getKillCredit() instanceof Player) player = (Player) entity.getKillCredit();
+        else if (entity.getKillCredit() instanceof Player) player = (Player) entity.getKillCredit();
         if (player == null) return new Pair<>(true, null);
         ArrayList<ItemStack> acceptedItems = new ArrayList<>(List.of(player.getOffhandItem(), player.getInventory().getSelected()));
         player.getArmorSlots().forEach(acceptedItems::add);
