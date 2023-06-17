@@ -1,6 +1,7 @@
 @file:Suppress("SpellCheckingInspection")
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 import kotlin.io.path.readText
 
 plugins {
@@ -27,6 +28,17 @@ val githubRepo = "btwonion/telekinesis"
 
 repositories {
     mavenCentral()
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = URI("https://api.modrinth.com/maven")
+            }
+        }
+        filter {
+            includeGroup("maven.modrinth")
+        }
+    }
 }
 
 dependencies {
@@ -37,6 +49,9 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:1.9.4+kotlin.1.8.21")
 
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
+
+    // Integration
+    modImplementation("maven.modrinth:abooMhox:aGmMikTd") // tree-harvester by ricksouth
 }
 
 tasks {
@@ -49,7 +64,7 @@ tasks {
         inputs.property("group", project.group)
         inputs.property("name", modName)
         inputs.property("description", modDescription)
-        inputs.property("version", project.version)
+        inputs.property("version", "$majorVersion-$mcVersion")
         inputs.property("github", githubRepo)
 
         filesMatching(listOf("fabric.mod.json")) {
@@ -58,7 +73,7 @@ tasks {
                 "group" to project.group,
                 "name" to modName,
                 "description" to modDescription,
-                "version" to project.version,
+                "version" to "$majorVersion-$mcVersion",
                 "github" to githubRepo,
             )
         }

@@ -18,7 +18,8 @@
     "PiglinMixin",
     "SheepMixin",
     "SnowGolemMixin",
-    "WitherBossMixin"
+    "WitherBossMixin",
+    "compat.treeharvester.TreeCutEventsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
