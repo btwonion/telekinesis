@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 @Pseudo
-@Mixin(targets = "com.natamus.treeharvester_common_fabric.events.TreeCutEvents", remap = false)
+@Mixin(targets = "com.natamus.treeharvester_common_fabric.events.TreeCutEvents")
 public class TreeCutEventsMixin {
 
     @Redirect(
@@ -31,8 +31,7 @@ public class TreeCutEventsMixin {
         at = @At(
             value = "INVOKE",
             target = "Lcom/natamus/collective_common_fabric/functions/BlockFunctions;dropBlock(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"
-        ),
-        remap = false
+        )
     )
     private static void redirectDrop(Level level, BlockPos blockPos, Level _level, Player player, BlockPos bpos, BlockState state, BlockEntity blockEntity) {
         System.out.println("sadawdadwda");
@@ -63,8 +62,7 @@ public class TreeCutEventsMixin {
         at = @At(
             value = "INVOKE",
             target = "Lcom/natamus/collective_common_fabric/functions/BlockFunctions;dropBlock(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"
-        ),
-        remap = false
+        )
     )
     private static void testDrop(Level level, Player player, BlockPos bpos, BlockState state, BlockEntity blockEntity, CallbackInfoReturnable<Boolean> cir) {
         System.out.println("cooooll");
