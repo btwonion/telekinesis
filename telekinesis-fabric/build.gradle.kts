@@ -21,8 +21,8 @@ plugins {
 group = "dev.nyon"
 val majorVersion = "2.2.0"
 val mcVersion = "1.20"
-version = "fabric-$majorVersion-$mcVersion"
-description = "Adds an telekinesis enchantment to minecraft"
+version = "$majorVersion-$mcVersion"
+description = "Adds a telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
 
@@ -39,6 +39,8 @@ repositories {
             includeGroup("maven.modrinth")
         }
     }
+    maven("https://maven.isxander.dev/releases")
+    maven("https://maven.terraformersmc.com/releases")
 }
 
 dependencies {
@@ -47,6 +49,8 @@ dependencies {
     mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:0.14.21")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.9.4+kotlin.1.8.21")
+    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.0.2+1.20")
+    modImplementation("com.terraformersmc:modmenu:7.1.0")
 
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
 
@@ -64,7 +68,7 @@ tasks {
         inputs.property("group", project.group)
         inputs.property("name", modName)
         inputs.property("description", modDescription)
-        inputs.property("version", "$majorVersion-$mcVersion")
+        inputs.property("version", project.version)
         inputs.property("github", githubRepo)
 
         filesMatching(listOf("fabric.mod.json")) {
@@ -73,7 +77,7 @@ tasks {
                 "group" to project.group,
                 "name" to modName,
                 "description" to modDescription,
-                "version" to "$majorVersion-$mcVersion",
+                "version" to project.version,
                 "github" to githubRepo,
             )
         }
@@ -97,12 +101,12 @@ tasks {
     }
 }
 
-val changelogText = rootDir.toPath().resolve("changelogs/$version.md").readText()
+val changelogText = rootDir.toPath().resolve("changelogs/fabric-$version.md").readText()
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set("$majorVersion-$mcVersion")
+    versionNumber.set("${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
     gameVersions.set(listOf(mcVersion))
@@ -120,7 +124,7 @@ githubRelease {
     val split = githubRepo.split("/")
     owner(split[0])
     repo(split[1])
-    tagName("$majorVersion-$mcVersion")
+    tagName("${project.version}")
     body(changelogText)
     targetCommitish("master")
 }
@@ -140,7 +144,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "dev.nyon"
             artifactId = "telekinesis-fabric"
-            version = "$majorVersion-$mcVersion"
+            version = "${project.version}"
             from(components["java"])
         }
     }

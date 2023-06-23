@@ -9,14 +9,14 @@ import kotlin.io.path.writeText
 
 @Serializable
 data class TelekinesisConfig(
-    val onByDefault: Boolean = false,
-    val onlyOnSneak: Boolean = false,
-    val enchantment: Boolean = true,
-    val blockDrops: Boolean = true,
-    val expDrops: Boolean = true,
-    val mobDrops: Boolean = true,
-    val entityDrops: Boolean = true,
-    val shearingDrops: Boolean = true
+    var onByDefault: Boolean = false,
+    var onlyOnSneak: Boolean = false,
+    var enchantment: Boolean = true,
+    var blockDrops: Boolean = true,
+    var expDrops: Boolean = true,
+    var mobDrops: Boolean = true,
+    var entityDrops: Boolean = true,
+    var shearingDrops: Boolean = true
 )
 
 var config: TelekinesisConfig = TelekinesisConfig()
