@@ -16,9 +16,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Pseudo
@@ -31,7 +32,7 @@ public class TreeCutEventsMixin {
             value = "INVOKE",
             target = "Lcom/natamus/collective_common_fabric/functions/BlockFunctions;dropBlock(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"
         ),
-        require = 0
+        remap = false
     )
     private static void redirectDrop(Level level, BlockPos blockPos, Level _level, Player player, BlockPos bpos, BlockState state, BlockEntity blockEntity) {
         System.out.println("sadawdadwda");
@@ -55,5 +56,17 @@ public class TreeCutEventsMixin {
         });
 
         serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
+    }
+
+    @Inject(
+        method = "onTreeHarvest",
+        at = @At(
+            value = "INVOKE",
+            target = "Lcom/natamus/collective_common_fabric/functions/BlockFunctions;dropBlock(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"
+        ),
+        remap = false
+    )
+    private static void testDrop(Level level, Player player, BlockPos bpos, BlockState state, BlockEntity blockEntity, CallbackInfoReturnable<Boolean> cir) {
+        System.out.println("cooooll");
     }
 }

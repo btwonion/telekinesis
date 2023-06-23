@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "plugin": "dev.nyon.telekinesis.mixins.compat.treeharvester.TreeHarvesterMixinPlugin",
   "package": "dev.nyon.telekinesis.mixins.compat.treeharvester",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_17",
   "client": [
     "TreeCutEventsMixin"
   ],

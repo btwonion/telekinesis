@@ -21,7 +21,7 @@ public class TreeHarvesterMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return FabricLoader.getInstance().isModLoaded("tree-harvester");
+        return FabricLoader.getInstance().isModLoaded("treeharvester");
     }
 
     @Override
