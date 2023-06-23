@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import kotlin.io.path.readText
 
 plugins {
     kotlin("jvm")
@@ -38,6 +39,8 @@ tasks {
 
         dependsOn("modrinth")
         dependsOn("publish")
+        dependsOn("modrinthSyncBody")
+        dependsOn("githubRelease")
     }
 
     val kotlinVersion: String by project
@@ -90,19 +93,29 @@ tasks {
     }
 }
 
+val changelogText = rootDir.toPath().resolve("changelogs/$version.md").readText()
+
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
     versionNumber.set(project.version.toString())
     versionType.set("release")
     uploadFile.set(tasks["jar"])
-    gameVersions.set(listOf("1.19.4"))
+    gameVersions.set(listOf("1.20", "1.20.1"))
     loaders.set(listOf("paper", "folia"))
-    changelog.set("""
-        # $version
-        - add folia support
-    """.trimIndent())
+    changelog.set(changelog)
     syncBodyFrom.set(file("../README.md").readText())
+}
+
+githubRelease {
+    token(findProperty("github.token")?.toString())
+
+    val split = githubRepo.split("/")
+    owner(split[0])
+    repo(split[1])
+    tagName("${project.version}")
+    body(changelogText)
+    targetCommitish("master")
 }
 
 publishing {
