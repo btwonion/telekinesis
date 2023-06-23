@@ -1,7 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
-import dev.nyon.telekinesis.TelekinesisConfigKt;
-import dev.nyon.telekinesis.check.TelekinesisUtils;
+import dev.nyon.telekinesis.TelekinesisPolicy;
+import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
@@ -22,14 +22,12 @@ public class EnderManMixin {
     )
     public ItemEntity manipulateDrops(EnderMan instance, ItemStack itemStack, DamageSource damageSource, int i, boolean bl) {
         var enderman = (EnderMan) (Object) this;
-        var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, enderman);
-        if (
-            !TelekinesisConfigKt.getConfig().getMobDrops()
-                || (telekinesisResult.component1() && !TelekinesisConfigKt.getConfig().getOnByDefault())
-                || telekinesisResult.component2() == null
-        ) return enderman.spawnAtLocation(itemStack);
-        var player = telekinesisResult.component2();
-        if (!player.addItem(itemStack)) return enderman.spawnAtLocation(itemStack);
-        return null;
+
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops, damageSource, player -> {
+            if (!player.addItem(itemStack)) enderman.spawnAtLocation(itemStack);
+        });
+
+        if (hasTelekinesis) return null;
+        else return enderman.spawnAtLocation(itemStack);
     }
 }

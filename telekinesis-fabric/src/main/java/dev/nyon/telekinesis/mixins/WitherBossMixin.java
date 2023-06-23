@@ -1,35 +1,36 @@
 package dev.nyon.telekinesis.mixins;
 
-import dev.nyon.telekinesis.TelekinesisConfigKt;
-import dev.nyon.telekinesis.check.TelekinesisUtils;
+import dev.nyon.telekinesis.TelekinesisPolicy;
+import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(WitherBoss.class)
 public abstract class WitherBossMixin {
 
-    @Inject(
+    @Redirect(
         method = "dropCustomDeathLoot",
         at = @At(
-            value = "HEAD"
-        ),
-        cancellable = true
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/entity/boss/wither/WitherBoss;spawnAtLocation(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;"
+        )
     )
-    public void checkDrop(DamageSource damageSource, int i, boolean bl, CallbackInfo ci) {
-        var telekinesisResult = TelekinesisUtils.hasNoTelekinesis(damageSource, (WitherBoss) (Object) this);
-        if ((
-            !TelekinesisConfigKt.getConfig().getMobDrops()
-                || (telekinesisResult.component1() && !TelekinesisConfigKt.getConfig().getOnByDefault())
-                || telekinesisResult.component2() == null
-        )) return;
-        var player = telekinesisResult.component2();
-        if (!player.addItem(new ItemStack(Items.NETHER_STAR))) return;
-        ci.cancel();
+    public ItemEntity checkDrop(WitherBoss instance, ItemLike itemLike, DamageSource damageSource, int i, boolean bl) {
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
+            TelekinesisPolicy.MobDrops,
+            damageSource,
+            player -> {
+                if (!player.addItem(new ItemStack(itemLike))) instance.spawnAtLocation(itemLike);
+            }
+        );
+
+        if (hasTelekinesis) return null;
+        else return instance.spawnAtLocation(itemLike);
     }
 }

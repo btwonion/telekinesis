@@ -1,42 +1,35 @@
 package dev.nyon.telekinesis.mixins;
 
-import dev.nyon.telekinesis.TelekinesisConfigKt;
-import dev.nyon.telekinesis.check.TelekinesisUtils;
+import dev.nyon.telekinesis.TelekinesisPolicy;
+import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Boat.class)
 public abstract class BoatMixin {
 
-    @Shadow
-    public abstract Item getDropItem();
-
     @Redirect(
-        method = "hurt",
+        method = "destroy",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/vehicle/Boat;destroy(Lnet/minecraft/world/damagesource/DamageSource;)V"
+            target = "Lnet/minecraft/world/entity/vehicle/Boat;spawnAtLocation(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
-    public void manipulateDrop(Boat instance, DamageSource damageSource) {
-        var boat = (Boat) (Object) this;
-        var item = getDropItem();
-        if (
-            !TelekinesisConfigKt.getConfig().getEntityDrops()
-                || (TelekinesisUtils.hasNoTelekinesis(damageSource) && !TelekinesisConfigKt.getConfig().getOnByDefault())
-        ) {
-            boat.spawnAtLocation(item);
-            return;
-        }
+    public ItemEntity manipulateDrop(Boat instance, ItemLike itemLike, DamageSource damageSource) {
+        Boat boat = (Boat) (Object) this;
+        ItemStack item = new ItemStack(itemLike);
 
-        var player = (Player) damageSource.getEntity();
-        if (!player.getInventory().add(new ItemStack(item))) boat.spawnAtLocation(item);
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.EntityDrops, damageSource, player -> {
+            if (!player.addItem(item)) boat.spawnAtLocation(item);
+        });
+
+        if (hasTelekinesis) return null;
+        else return boat.spawnAtLocation(item);
     }
 }

@@ -4,20 +4,20 @@
   "package": "dev.nyon.telekinesis.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AbstractHorseAccessor",
     "BlockMixin",
     "BoatMixin",
     "CatalystBlockAccessor",
     "DropExperienceBlockAccessor",
     "EnderManMixin",
     "InfestedBlockAccessor",
+    "InventoryAccessor",
     "LivingEntityMixin",
     "MinecartMixin",
     "MinecraftServerMixin",
     "MobMixin",
     "PiglinMixin",
+    "PlayerAccessor",
     "SheepMixin",
-    "SnowGolemMixin",
     "WitherBossMixin"
   ],
   "injectors": {
