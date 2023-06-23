@@ -51,7 +51,7 @@ dependencies {
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
 
     // Integration
-    modImplementation("maven.modrinth:abooMhox:aGmMikTd") // tree-harvester by ricksouth
+    modImplementation("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth
 }
 
 tasks {
