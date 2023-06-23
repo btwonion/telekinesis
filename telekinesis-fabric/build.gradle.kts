@@ -19,7 +19,7 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.1.1"
+val majorVersion = "2.2.0"
 val mcVersion = "1.20"
 version = "fabric-$majorVersion-$mcVersion"
 description = "Adds an telekinesis enchantment to minecraft"
@@ -102,7 +102,7 @@ val changelogText = rootDir.toPath().resolve("changelogs/$version.md").readText(
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set("${project.version}")
+    versionNumber.set("$majorVersion-$mcVersion")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
     gameVersions.set(listOf(mcVersion))
@@ -120,7 +120,7 @@ githubRelease {
     val split = githubRepo.split("/")
     owner(split[0])
     repo(split[1])
-    tagName("v${project.version}")
+    tagName("$majorVersion-$mcVersion")
     body(changelogText)
     targetCommitish("master")
 }
@@ -140,7 +140,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "dev.nyon"
             artifactId = "telekinesis-fabric"
-            version = project.version.toString()
+            version = "$majorVersion-$mcVersion"
             from(components["java"])
         }
     }
