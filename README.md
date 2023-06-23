@@ -24,11 +24,12 @@ The configuration file can be found in the client/server directory:
 
 ```toml
 onByDefault = false # should telekinesis work without the enchantment?
+onlyOnSneak = false # should telekinesis only work while sneaking?
 enchantment = true # should the telekinesis enchantment be enabled?
 blockDrops = true # should telekinesis work for block drops?
 shearingDrops = true # should telekinesis work for shearing drops?
 mobDrops = true # should telekinesis work for mob drops?
-entityDrops = true # should telekinesis work for entity drops (boat, minecarts)?
+entityDrops = true # should telekinesis work for entity drops (boats, minecarts)?
 expDrops = true # should telekinesis work for exp drops?
 ```
 
@@ -36,6 +37,6 @@ expDrops = true # should telekinesis work for exp drops?
 
 ### Other
 ⚠️ The development version is always the latest stable release of minecraft. 
-Therefore new features will only be available for the current and following minecraft versions.
+Therefore, new features will only be available for the current and following minecraft versions.
 
 If you need help with any of my mods just join my [discord server](https://nyon.dev/discord)
