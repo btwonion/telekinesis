@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack
 class BukkitTelekinesis : Enchantment(NamespacedKey("telekinesis", "telekinesis")) {
     override fun translationKey(): String = "telekinesis.telekinesis"
 
+    @Deprecated("Deprecated in Java", ReplaceWith("\"Telekinesis\""))
     override fun getName(): String = "Telekinesis"
 
     override fun getMaxLevel(): Int = 1
