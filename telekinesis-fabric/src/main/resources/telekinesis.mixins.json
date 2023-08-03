@@ -9,7 +9,6 @@
     "CatalystBlockAccessor",
     "DropExperienceBlockAccessor",
     "EnderManMixin",
-    "InfestedBlockAccessor",
     "InventoryAccessor",
     "LivingEntityMixin",
     "MinecartMixin",
@@ -18,6 +17,7 @@
     "PiglinMixin",
     "PlayerAccessor",
     "SheepMixin",
+    "SnowgolemMixin",
     "WitherBossMixin"
   ],
   "injectors": {

@@ -48,7 +48,10 @@ public abstract class BlockMixin {
                 entity,
                 itemStack,
                 player -> {
-                    if (!player.addItem(item)) Block.popResource(level, blockPos, item);
+                    if (!player.addItem(item)) {
+                        Block.popResource(level, blockPos, item);
+                        System.out.println("dont know why");
+                    }
                 })
             ) Block.popResource(level, blockPos, item);
         });

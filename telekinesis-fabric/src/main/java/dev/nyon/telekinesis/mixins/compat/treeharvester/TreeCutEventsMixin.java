@@ -34,8 +34,6 @@ public class TreeCutEventsMixin {
         )
     )
     private static void redirectDrop(Level level, BlockPos blockPos, Level _level, Player player, BlockPos bpos, BlockState state, BlockEntity blockEntity) {
-        System.out.println("sadawdadwda");
-
         if (
             (
                 EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), player.getItemInHand(InteractionHand.MAIN_HAND)) == 0
@@ -55,16 +53,5 @@ public class TreeCutEventsMixin {
         });
 
         serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
-    }
-
-    @Inject(
-        method = "onTreeHarvest",
-        at = @At(
-            value = "INVOKE",
-            target = "Lcom/natamus/collective_common_fabric/functions/BlockFunctions;dropBlock(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"
-        )
-    )
-    private static void testDrop(Level level, Player player, BlockPos bpos, BlockState state, BlockEntity blockEntity, CallbackInfoReturnable<Boolean> cir) {
-        System.out.println("cooooll");
     }
 }
