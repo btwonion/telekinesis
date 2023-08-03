@@ -117,6 +117,8 @@ modrinth {
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-language-kotlin")
+        required.project("yacl")
+        required.project("modmenu")
     }
     changelog.set(changelogText)
     syncBodyFrom.set(file("../README.md").readText())
