@@ -19,8 +19,8 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.2.0"
-val mcVersion = "1.20"
+val majorVersion = "2.2.1"
+val mcVersion = "1.20.1"
 version = "$majorVersion-$mcVersion"
 description = "Adds a telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
@@ -41,14 +41,18 @@ repositories {
     }
     maven("https://maven.isxander.dev/releases")
     maven("https://maven.terraformersmc.com/releases")
+    maven("https://maven.parchmentmc.org/")
 }
 
 dependencies {
     implementation(include(project(":telekinesis-common"))!!)
     minecraft("com.mojang:minecraft:$mcVersion")
-    mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:0.14.21")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.9.4+kotlin.1.8.21")
+    mappings(loom.layered {
+        parchment("org.parchmentmc.data:parchment-1.20.1:2023.07.30@zip")
+        officialMojangMappings()
+    })
+    modImplementation("net.fabricmc:fabric-loader:0.14.22")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.8+kotlin.1.9.0")
     modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.0.2+1.20")
     modImplementation("com.terraformersmc:modmenu:7.1.0")
 
@@ -106,7 +110,7 @@ val changelogText = rootDir.toPath().resolve("changelogs/fabric-$version.md").re
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set("${project.version}")
+    versionNumber.set("v${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
     gameVersions.set(listOf(mcVersion))
@@ -124,7 +128,7 @@ githubRelease {
     val split = githubRepo.split("/")
     owner(split[0])
     repo(split[1])
-    tagName("${project.version}")
+    tagName("v${project.version}")
     body(changelogText)
     targetCommitish("master")
 }
