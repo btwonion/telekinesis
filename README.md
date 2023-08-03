@@ -8,8 +8,7 @@ This mod/plugin adds the telekinesis enchantment, which allows you to instantly 
 - entity drops (boats, minecarts)
 - shearing drops
 
-The mod requires [Fabric API](https://github.com/fabricmc/fabric)
-and [Fabric Language Kotlin](https://github.com/fabricmc/fabric-language-kotlin)
+The mod requires [Fabric Language Kotlin](https://github.com/fabricmc/fabric-language-kotlin).
 
 ## Configuration
 
