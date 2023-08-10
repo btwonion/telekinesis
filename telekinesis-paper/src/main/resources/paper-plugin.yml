@@ -6,4 +6,4 @@ authors: $authors
 website: $website
 api-version: $apiVersion
 folia-supported: $foliaSupported
-libraries: $libraries
+loader: $loader

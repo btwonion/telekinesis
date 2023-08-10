@@ -5,8 +5,6 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
 
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-
     id("com.modrinth.minotaur")
     id("com.github.breadmoirai.github-release")
 
@@ -37,31 +35,27 @@ tasks {
     register("releasePlugin") {
         group = "publishing"
 
+        dependsOn("modrinthSyncBody")
         dependsOn("modrinth")
         dependsOn("publish")
-        dependsOn("modrinthSyncBody")
         dependsOn("githubRelease")
     }
 
-    val kotlinVersion: String by project
     processResources {
         val props = mapOf(
             "name" to "telekinesis",
-            "version" to project.version.toString(),
+            "version" to "'${project.version.toString()}'",
             "main" to "dev.nyon.telekinesis.Main",
             "description" to project.description,
             "website" to "https://nyon.dev/discord",
-            "apiVersion" to "1.20",
+            "apiVersion" to "'1.20'",
             "authors" to projectAuthors.joinToString("\n  - ", "\n  - "),
             "foliaSupported" to true,
-            "libraries" to listOf(
-                "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-                "com.akuleshov7:ktoml-core-jvm:0.5.0"
-            ).joinToString("\n  - ", "\n  - ")
+            "loader" to "dev.nyon.telekinesis.PaperLoader"
         )
 
         inputs.properties(props)
-        filesMatching("plugin.yml") {
+        filesMatching("paper-plugin.yml") {
             expand(props)
         }
     }
@@ -73,19 +67,6 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
-    }
-
-    shadowJar {
-        dependencies {
-            exclude {
-                it.moduleGroup != "dev.nyon"
-            }
-        }
-    }
-
-    assemble {
-        dependsOn(shadowJar)
-        dependsOn(reobfJar)
     }
 
     runPaper.folia.registerTask()
@@ -101,7 +82,7 @@ modrinth {
     projectId.set("LLfA8jAD")
     versionNumber.set(project.version.toString())
     versionType.set("release")
-    uploadFile.set(tasks["assemble"])
+    uploadFile.set(tasks.build)
     gameVersions.set(listOf("1.20", "1.20.1"))
     loaders.set(listOf("paper", "folia"))
     changelog.set(changelog)
