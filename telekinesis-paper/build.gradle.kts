@@ -82,10 +82,10 @@ modrinth {
     projectId.set("LLfA8jAD")
     versionNumber.set(project.version.toString())
     versionType.set("release")
-    uploadFile.set(tasks.build)
+    uploadFile.set("build")
     gameVersions.set(listOf("1.20", "1.20.1"))
     loaders.set(listOf("paper", "folia"))
-    changelog.set(changelog)
+    changelog.set(changelogText)
     syncBodyFrom.set(file("../README.md").readText())
 }
 
