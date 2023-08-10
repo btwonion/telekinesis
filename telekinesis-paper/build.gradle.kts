@@ -18,8 +18,8 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.1.0"
-version = "paper-$majorVersion-1.20"
+val majorVersion = "2.1.1"
+version = "paper-$majorVersion-1.20.1"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -66,10 +66,6 @@ tasks {
         }
     }
 
-    build {
-        dependsOn(reobfJar)
-    }
-
     withType<JavaCompile> {
         options.encoding = "UTF-8"
         options.release.set(17)
@@ -87,9 +83,14 @@ tasks {
         }
     }
 
+    assemble {
+        dependsOn(shadowJar)
+        dependsOn(reobfJar)
+    }
+
     runPaper.folia.registerTask()
     runServer {
-        minecraftVersion("1.19.4")
+        minecraftVersion("1.20.1")
     }
 }
 
@@ -100,7 +101,7 @@ modrinth {
     projectId.set("LLfA8jAD")
     versionNumber.set(project.version.toString())
     versionType.set("release")
-    uploadFile.set(tasks["jar"])
+    uploadFile.set(tasks["assemble"])
     gameVersions.set(listOf("1.20", "1.20.1"))
     loaders.set(listOf("paper", "folia"))
     changelog.set(changelog)
