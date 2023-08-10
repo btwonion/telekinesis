@@ -28,7 +28,7 @@ repositories {
 
 dependencies {
     implementation(project(":telekinesis-common", configuration = "namedElements"))
-    paperweight.foliaDevBundle("1.20.1-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
 }
 
 tasks {
@@ -82,7 +82,7 @@ modrinth {
     projectId.set("LLfA8jAD")
     versionNumber.set(project.version.toString())
     versionType.set("release")
-    uploadFile.set("build")
+    uploadFile.set(tasks["jar"])
     gameVersions.set(listOf("1.20", "1.20.1"))
     loaders.set(listOf("paper", "folia"))
     changelog.set(changelogText)
@@ -95,9 +95,11 @@ githubRelease {
     val split = githubRepo.split("/")
     owner(split[0])
     repo(split[1])
-    tagName("${project.version}")
+    releaseName(project.version.toString())
+    tagName(project.version.toString())
     body(changelogText)
     targetCommitish("master")
+    setReleaseAssets(tasks["jar"])
 }
 
 publishing {

@@ -48,7 +48,7 @@ private fun addToBukkitRegistry() {
 // Check the values with: https://mappings.cephx.dev/
 @Suppress("unchecked_cast")
 private fun addToMinecraftRegistry() {
-    val server = (Bukkit.getServer() as CraftServer).handle.server
+    val server = (Bukkit.getServer() as CraftServer).server
     val enchantmentRegistry = server.registryAccess().registryOrThrow(Registries.ENCHANTMENT) as MappedRegistry
     val enchantmentRegistryClass = enchantmentRegistry.javaClass
     val frozenField = enchantmentRegistryClass.getDeclaredField("l") // l - frozen  MappedRegistry
