@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 import kotlin.io.path.readText
 
 plugins {
@@ -8,7 +9,7 @@ plugins {
     id("com.modrinth.minotaur")
     id("com.github.breadmoirai.github-release")
 
-    id("io.papermc.paperweight.userdev") version "1.5.5"
+    id("io.papermc.paperweight.userdev")
     id("xyz.jpenilla.run-paper") version "2.1.0"
 
     `maven-publish`
@@ -44,7 +45,7 @@ tasks {
     processResources {
         val props = mapOf(
             "name" to "telekinesis",
-            "version" to "'${project.version.toString()}'",
+            "version" to "'${project.version}'",
             "main" to "dev.nyon.telekinesis.Main",
             "description" to project.description,
             "website" to "https://nyon.dev/discord",
@@ -60,6 +61,13 @@ tasks {
         }
     }
 
+    assemble {
+        dependsOn(reobfJar)
+    }
+
+    reobfJar {
+
+    }
     withType<JavaCompile> {
         options.encoding = "UTF-8"
         options.release.set(17)
@@ -82,7 +90,7 @@ modrinth {
     projectId.set("LLfA8jAD")
     versionNumber.set(project.version.toString())
     versionType.set("release")
-    uploadFile.set(tasks["jar"])
+    uploadFile.set(tasks["build"])
     gameVersions.set(listOf("1.20", "1.20.1"))
     loaders.set(listOf("paper", "folia"))
     changelog.set(changelogText)

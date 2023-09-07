@@ -13,7 +13,7 @@ public class PaperLoader implements PluginLoader {
     @Override
     public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
         MavenLibraryResolver resolver = new MavenLibraryResolver();
-        resolver.addDependency(new Dependency(new DefaultArtifact("dev.nyon:telekinesis-common:2.2.0-1.20"), null));
+        resolver.addDependency(new Dependency(new DefaultArtifact("dev.nyon:telekinesis-common:2.2.1-1.20:reobf"), null));
         resolver.addRepository(new RemoteRepository.Builder("nyon", "default", "https://repo.nyon.dev/releases").build());
 
         resolver.addDependency(new Dependency(new DefaultArtifact("org.jetbrains.kotlin:kotlin-stdlib:1.9.0"), null));

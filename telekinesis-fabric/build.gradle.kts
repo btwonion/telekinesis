@@ -1,7 +1,10 @@
 @file:Suppress("SpellCheckingInspection")
 
+import org.gradle.api.artifacts.ArtifactRepositoryContainer.MAVEN_CENTRAL_URL
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URI
+import java.nio.file.Path
+import kotlin.io.path.notExists
 import kotlin.io.path.readText
 
 plugins {
@@ -42,6 +45,13 @@ repositories {
     maven("https://maven.isxander.dev/releases")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://maven.parchmentmc.org/")
+    maven {
+        name = "Netty Maven Central"
+        url = URI(MAVEN_CENTRAL_URL)
+        content {
+            includeGroup("io.netty")
+        }
+    }
 }
 
 dependencies {
@@ -52,7 +62,7 @@ dependencies {
         officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:0.14.22")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.8+kotlin.1.9.0")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.10+kotlin.1.9.10")
     modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.0.2+1.20")
     modImplementation("com.terraformersmc:modmenu:7.1.0")
 
@@ -105,7 +115,8 @@ tasks {
     }
 }
 
-val changelogText = rootDir.toPath().resolve("changelogs/fabric-$version.md").readText()
+val changelogFile: Path = rootDir.toPath().resolve("changelogs/fabric-$version.md")
+val changelogText = if (changelogFile.notExists()) "" else changelogFile.readText()
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
