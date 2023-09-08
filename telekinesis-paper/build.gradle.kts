@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URI
+import java.nio.file.Path
+import kotlin.io.path.notExists
 import kotlin.io.path.readText
 
 plugins {
@@ -18,7 +20,8 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.2.0"
-version = "paper-$majorVersion-1.20.1"
+val mcVersion = "1.20.1"
+version = "$majorVersion-$mcVersion"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -28,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("$mcVersion-R0.1-SNAPSHOT")
     implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")
 }
 
@@ -65,9 +68,6 @@ tasks {
         dependsOn(reobfJar)
     }
 
-    reobfJar {
-
-    }
     withType<JavaCompile> {
         options.encoding = "UTF-8"
         options.release.set(17)
@@ -83,14 +83,15 @@ tasks {
     }
 }
 
-val changelogText = rootDir.toPath().resolve("changelogs/$version.md").readText()
+val changelogFile: Path = rootDir.toPath().resolve("changelogs/paper-$version.md")
+val changelogText = if (changelogFile.notExists()) "" else changelogFile.readText()
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set(project.version.toString())
+    versionNumber.set("v${project.version}")
     versionType.set("release")
-    uploadFile.set(tasks["build"])
+    uploadFile.set(tasks.reobfJar.get().outputJar)
     gameVersions.set(listOf("1.20", "1.20.1"))
     loaders.set(listOf("paper", "folia"))
     changelog.set(changelogText)
