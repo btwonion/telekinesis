@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.1.1"
+val majorVersion = "2.2.0"
 version = "paper-$majorVersion-1.20.1"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
