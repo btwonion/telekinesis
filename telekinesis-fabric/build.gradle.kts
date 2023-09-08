@@ -55,10 +55,9 @@ repositories {
 }
 
 dependencies {
-    implementation(include(project(":telekinesis-common"))!!)
     minecraft("com.mojang:minecraft:$mcVersion")
     mappings(loom.layered {
-        parchment("org.parchmentmc.data:parchment-1.20.1:2023.07.30@zip")
+        parchment("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip")
         officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:0.14.22")
@@ -66,6 +65,7 @@ dependencies {
     modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.0.2+1.20")
     modImplementation("com.terraformersmc:modmenu:7.1.0")
 
+    implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
 
     // Integration

@@ -28,8 +28,8 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":telekinesis-common", configuration = "namedElements"))
     paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
+    implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")
 }
 
 tasks {

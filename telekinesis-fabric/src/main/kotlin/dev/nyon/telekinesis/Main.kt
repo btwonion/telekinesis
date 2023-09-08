@@ -11,11 +11,12 @@ import kotlin.io.path.createFile
 import kotlin.io.path.exists
 
 var server: MinecraftServer? = null
+val telekinesis = TelekinesisEnchantment()
 
 fun init() {
     configPath = FabricLoader.getInstance().configDir.toAbsolutePath().resolve("telekinesis.toml")
         .also { if (!it.exists()) it.createFile() }
-    Telekinesis.init()
+    loadConfig()
     if (config.enchantment)
         Registry.register(BuiltInRegistries.ENCHANTMENT, ResourceLocation("telekinesis", "telekinesis"), telekinesis)
 }

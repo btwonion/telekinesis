@@ -1,7 +1,7 @@
 package dev.nyon.telekinesis.mixins.compat.treeharvester;
 
+import dev.nyon.telekinesis.MainKt;
 import dev.nyon.telekinesis.TelekinesisConfigKt;
-import dev.nyon.telekinesis.TelekinesisKt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -16,9 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class TreeCutEventsMixin {
     private static void redirectDrop(Level level, BlockPos blockPos, Level _level, Player player, BlockPos bpos, BlockState state, BlockEntity blockEntity) {
         if (
             (
-                EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), player.getItemInHand(InteractionHand.MAIN_HAND)) == 0
+                EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), player.getItemInHand(InteractionHand.MAIN_HAND)) == 0
                     && !TelekinesisConfigKt.getConfig().getOnByDefault()
             )
                 || !TelekinesisConfigKt.getConfig().getBlockDrops()

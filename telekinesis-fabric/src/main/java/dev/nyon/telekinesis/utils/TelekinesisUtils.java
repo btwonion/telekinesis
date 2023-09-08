@@ -1,7 +1,7 @@
 package dev.nyon.telekinesis.utils;
 
+import dev.nyon.telekinesis.MainKt;
 import dev.nyon.telekinesis.TelekinesisConfigKt;
-import dev.nyon.telekinesis.TelekinesisKt;
 import dev.nyon.telekinesis.TelekinesisPolicy;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -49,10 +49,10 @@ public class TelekinesisUtils {
 
         boolean isEnabledByDefault = TelekinesisConfigKt.getConfig().getOnByDefault();
 
-        boolean hasArmorTelekinesis = player.getInventory().armor.stream().allMatch(item -> EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), item) > 0);
-        boolean hasMainHandTelekinesis = (itemStack != null && EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), itemStack) > 0) ||
-            EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), player.getMainHandItem()) > 0;
-        boolean hasOffHandTelekinesis = EnchantmentHelper.getItemEnchantmentLevel(TelekinesisKt.getTelekinesis(), player.getOffhandItem()) > 0;
+        boolean hasArmorTelekinesis = player.getInventory().armor.stream().allMatch(item -> EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), item) > 0);
+        boolean hasMainHandTelekinesis = (itemStack != null && EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), itemStack) > 0) ||
+            EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), player.getMainHandItem()) > 0;
+        boolean hasOffHandTelekinesis = EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), player.getOffhandItem()) > 0;
 
         if (isEnabledByDefault) conditionsMet = true;
         else switch (policy) {

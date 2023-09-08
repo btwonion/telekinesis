@@ -1,4 +1,4 @@
-package dev.nyon.telekinesis
+package dev.nyon.telekinesis.listeners
 
 import dev.nyon.telekinesis.util.hasTelekinesis
 import dev.nyon.telekinesis.util.listen

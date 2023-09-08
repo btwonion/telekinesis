@@ -1,5 +1,7 @@
 package dev.nyon.telekinesis
 
+import dev.nyon.telekinesis.listeners.initBlockListeners
+import dev.nyon.telekinesis.listeners.initMobListeners
 import net.minecraft.core.Holder
 import net.minecraft.core.MappedRegistry
 import net.minecraft.core.Registry
@@ -13,6 +15,7 @@ import kotlin.io.path.createFile
 import kotlin.io.path.exists
 
 val bukkitEnchantment: Enchantment = BukkitTelekinesis()
+val telekinesis = TelekinesisEnchantment()
 
 class Main : JavaPlugin() {
     companion object {
@@ -23,7 +26,7 @@ class Main : JavaPlugin() {
         INSTANCE = this
         configPath = Bukkit.getPluginsFolder().toPath().resolve("telekinesis.toml")
             .also { if (!it.exists()) it.createFile() }
-        Telekinesis.init()
+        loadConfig()
         if (dev.nyon.telekinesis.config.enchantment) {
             addToBukkitRegistry()
             addToMinecraftRegistry()
