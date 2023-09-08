@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis.listeners
 
-import dev.nyon.telekinesis.util.hasTelekinesis
+import dev.nyon.telekinesis.TelekinesisPolicy
+import dev.nyon.telekinesis.util.handleTelekinesis
 import dev.nyon.telekinesis.util.listen
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
@@ -11,20 +12,19 @@ fun initBlockListeners() {
 }
 
 val dropEvent = listen<BlockDropItemEvent> {
-    if (!player.hasTelekinesis()) return@listen
-
-    player.inventory.addItem(*items.map { it.itemStack }.toTypedArray()).forEach { (_, itemStack) ->
-        player.world.dropItemNaturally(block.location, itemStack)
+    player.handleTelekinesis(TelekinesisPolicy.BlockDrops, player.inventory.itemInMainHand) {
+        val copy = mutableListOf(items).flatten()
+        items.clear()
+        copy.forEach {
+            val result = inventory.addItem(it.itemStack)
+            if (result.isNotEmpty()) items.add(it)
+        }
     }
-
-    items.clear()
 }
 
 val blockBreakEvent = listen<BlockBreakEvent> {
-    if (!player.hasTelekinesis()) return@listen
-
-    if (!isCancelled && expToDrop != 0) {
-        player.giveExp(expToDrop, true)
+    player.handleTelekinesis(TelekinesisPolicy.ExpDrops, null) {
+        giveExp(expToDrop)
         expToDrop = 0
     }
 }

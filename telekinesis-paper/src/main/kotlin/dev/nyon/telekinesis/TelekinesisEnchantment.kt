@@ -54,8 +54,10 @@ class BukkitTelekinesis : org.bukkit.enchantments.Enchantment(NamespacedKey("tel
 
     override fun canEnchantItem(item: ItemStack): Boolean = true
 
-    override fun displayName(level: Int): net.kyori.adventure.text.Component = net.kyori.adventure.text.Component.text("Telekinesis").color(
-        TextColor.color(0xFFB64C))
+    override fun displayName(level: Int): net.kyori.adventure.text.Component =
+        net.kyori.adventure.text.Component.text("Telekinesis").color(
+            TextColor.color(0xFFB64C)
+        )
 
     override fun isTradeable(): Boolean = true
 
@@ -65,5 +67,6 @@ class BukkitTelekinesis : org.bukkit.enchantments.Enchantment(NamespacedKey("tel
 
     override fun getDamageIncrease(level: Int, entityCategory: EntityCategory): Float = 0.0f
 
-    override fun getActiveSlots(): MutableSet<org.bukkit.inventory.EquipmentSlot> = mutableSetOf(org.bukkit.inventory.EquipmentSlot.OFF_HAND, org.bukkit.inventory.EquipmentSlot.HAND)
+    override fun getActiveSlots(): MutableSet<org.bukkit.inventory.EquipmentSlot> =
+        mutableSetOf(org.bukkit.inventory.EquipmentSlot.OFF_HAND, org.bukkit.inventory.EquipmentSlot.HAND)
 }

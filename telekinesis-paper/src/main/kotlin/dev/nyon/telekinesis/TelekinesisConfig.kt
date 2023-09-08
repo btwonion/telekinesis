@@ -1,6 +1,7 @@
 package dev.nyon.telekinesis
 
 import com.akuleshov7.ktoml.Toml
+import com.akuleshov7.ktoml.TomlInputConfig
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.nio.file.Path
@@ -14,15 +15,14 @@ data class TelekinesisConfig(
     var enchantment: Boolean = true,
     var blockDrops: Boolean = true,
     var expDrops: Boolean = true,
-    var mobDrops: Boolean = true,
-    var entityDrops: Boolean = true,
-    var shearingDrops: Boolean = true
+    var entityDrops: Boolean = true
 )
 
 var config: TelekinesisConfig = TelekinesisConfig()
 lateinit var configPath: Path
+val toml = Toml(inputConfig = TomlInputConfig(ignoreUnknownNames = true))
 
-fun saveConfig() = configPath.writeText(Toml.encodeToString(TelekinesisConfig.serializer(), config))
+fun saveConfig() = configPath.writeText(toml.encodeToString(TelekinesisConfig.serializer(), config))
 
 fun loadConfig() {
     if (configPath.readText().isEmpty()) {
@@ -31,7 +31,7 @@ fun loadConfig() {
     }
 
     try {
-        config = Toml.decodeFromString(configPath.readText())
+        config = toml.decodeFromString(configPath.readText())
     } catch (e: Exception) {
         saveConfig()
     }
