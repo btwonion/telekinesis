@@ -12,7 +12,8 @@ The mod requires [Fabric Language Kotlin](https://github.com/fabricmc/fabric-lan
 
 ## Configuration
 
-The configuration file can be found in the client/server directory:
+The configuration file can be found in the client/server directory.
+The file differs between fabric and paper environments because on paper are some features not supported.
 
 -> mod configuration file: `/config/telekinesis.toml`
 <br>
@@ -26,8 +27,8 @@ onByDefault = false # should telekinesis work without the enchantment?
 onlyOnSneak = false # should telekinesis only work while sneaking?
 enchantment = true # should the telekinesis enchantment be enabled?
 blockDrops = true # should telekinesis work for block drops?
-shearingDrops = true # should telekinesis work for shearing drops?
-mobDrops = true # should telekinesis work for mob drops?
+shearingDrops = true # should telekinesis work for shearing drops? (fabric only)
+mobDrops = true # should telekinesis work for mob drops? (in paper merged with entityDrops)
 entityDrops = true # should telekinesis work for entity drops (boats, minecarts)?
 expDrops = true # should telekinesis work for exp drops?
 ```
