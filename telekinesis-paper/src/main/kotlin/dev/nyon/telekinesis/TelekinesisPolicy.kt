@@ -10,4 +10,10 @@ enum class TelekinesisPolicy {
         ExpDrops -> config.expDrops
         EntityDrops -> config.entityDrops
     }
+
+    fun associatedPermission(): String? = when (this) {
+        BlockDrops -> config.blockDropsPermissionRequirement
+        ExpDrops -> config.expDropsPermissionRequirement
+        EntityDrops -> config.entityDropsPermissionRequirement
+    }
 }

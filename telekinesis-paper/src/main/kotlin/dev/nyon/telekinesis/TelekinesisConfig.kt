@@ -11,11 +11,15 @@ import kotlin.io.path.writeText
 @Serializable
 data class TelekinesisConfig(
     var onByDefault: Boolean = false,
+    var onByDefaultPermissionRequirement: String? = null,
     var onlyOnSneak: Boolean = false,
     var enchantment: Boolean = true,
     var blockDrops: Boolean = true,
+    var blockDropsPermissionRequirement: String? = null,
     var expDrops: Boolean = true,
-    var entityDrops: Boolean = true
+    var expDropsPermissionRequirement: String? = null,
+    var entityDrops: Boolean = true,
+    var entityDropsPermissionRequirement: String? = null
 )
 
 var config: TelekinesisConfig = TelekinesisConfig()

@@ -17,9 +17,15 @@ fun Player.handleTelekinesis(policy: TelekinesisPolicy, itemStack: ItemStack?, c
 }
 
 private fun Player.meetCondition(policy: TelekinesisPolicy, itemStack: ItemStack?): Boolean {
+    fun Player.hasPermission(policy: TelekinesisPolicy): Boolean {
+        val permission = policy.associatedPermission()
+        return permission == null || this@hasPermission.hasPermission(permission)
+    }
+
     var conditionsMet: Boolean
 
-    val isEnabledByDefault = config.onByDefault
+    val isEnabledByDefault = config.onByDefault &&
+            (config.onByDefaultPermissionRequirement == null || hasPermission(config.onByDefaultPermissionRequirement!!))
 
     val hasArmorTelekinesis: Boolean = inventory.armorContents.all { it?.hasTelekinesis() == true }
     val hasMainHandTelekinesis =
@@ -32,6 +38,7 @@ private fun Player.meetCondition(policy: TelekinesisPolicy, itemStack: ItemStack
         TelekinesisPolicy.BlockDrops -> hasMainHandTelekinesis
     }
 
+    if (!hasPermission(policy)) conditionsMet = false
     if (config.onlyOnSneak && !isSneaking) conditionsMet = false
 
     return conditionsMet
