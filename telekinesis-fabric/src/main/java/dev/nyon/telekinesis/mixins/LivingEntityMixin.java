@@ -4,6 +4,7 @@ import dev.nyon.telekinesis.TelekinesisPolicy;
 import dev.nyon.telekinesis.utils.PlayerUtils;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -32,6 +34,7 @@ import java.util.function.Consumer;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
+    @Unique
     LivingEntity livingEntity = (LivingEntity) (Object) this;
 
     @Redirect(
@@ -42,9 +45,14 @@ public abstract class LivingEntityMixin {
         )
     )
     public void redirectExp(ServerLevel serverLevel, Vec3 vec3, int i) {
+        final var attacker = livingEntity.getLastAttacker();
+        if (!(attacker instanceof ServerPlayer)) ExperienceOrb.award(serverLevel, vec3, i);
+        final var serverPlayer = (ServerPlayer) attacker;
+
         boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
             TelekinesisPolicy.ExpDrops,
-            livingEntity.getLastDamageSource(),
+            serverPlayer,
+            serverPlayer.getMainHandItem(),
             player -> {
                 PlayerUtils.addExpToPlayer(player, i);
             }

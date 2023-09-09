@@ -22,7 +22,7 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.2.1"
+val majorVersion = "2.2.2"
 val mcVersion = "1.20.1"
 version = "$majorVersion-$mcVersion"
 description = "Adds a telekinesis enchantment to minecraft"
@@ -52,6 +52,7 @@ repositories {
             includeGroup("io.netty")
         }
     }
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -67,6 +68,10 @@ dependencies {
 
     implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
+
+    include("com.github.LlamaLad7:MixinExtras:0.1.1")
+    implementation("com.github.LlamaLad7:MixinExtras:0.1.1")
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
 
     // Integration
     modImplementation("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth

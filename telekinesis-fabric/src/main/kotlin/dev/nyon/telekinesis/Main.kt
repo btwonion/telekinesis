@@ -2,6 +2,7 @@
 
 package dev.nyon.telekinesis
 
+import com.llamalad7.mixinextras.MixinExtrasBootstrap
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
@@ -19,4 +20,5 @@ fun init() {
     loadConfig()
     if (config.enchantment)
         Registry.register(BuiltInRegistries.ENCHANTMENT, ResourceLocation("telekinesis", "telekinesis"), telekinesis)
+    MixinExtrasBootstrap.init()
 }
