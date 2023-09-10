@@ -123,11 +123,12 @@ tasks {
 
 val changelogFile: Path = rootDir.toPath().resolve("changelogs/fabric-$version.md")
 val changelogText = if (changelogFile.notExists()) "" else changelogFile.readText()
+val versionName = "fabric-${project.version}"
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set("v${project.version}")
+    versionNumber.set(versionName)
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
     gameVersions.set(listOf(mcVersion))
@@ -147,9 +148,11 @@ githubRelease {
     val split = githubRepo.split("/")
     owner(split[0])
     repo(split[1])
-    tagName("v${project.version}")
+    releaseName(versionName)
+    tagName(versionName)
     body(changelogText)
     targetCommitish("master")
+    setReleaseAssets(tasks["remapJar"])
 }
 
 publishing {

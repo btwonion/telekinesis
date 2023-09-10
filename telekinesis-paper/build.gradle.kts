@@ -85,11 +85,12 @@ tasks {
 
 val changelogFile: Path = rootDir.toPath().resolve("changelogs/paper-$version.md")
 val changelogText = if (changelogFile.notExists()) "" else changelogFile.readText()
+val versionName = "paper-${project.version}"
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set("v${project.version}")
+    versionNumber.set(versionName)
     versionType.set("release")
     uploadFile.set(tasks.reobfJar.get().outputJar)
     gameVersions.set(listOf("1.20", "1.20.1"))
@@ -104,8 +105,8 @@ githubRelease {
     val split = githubRepo.split("/")
     owner(split[0])
     repo(split[1])
-    releaseName(project.version.toString())
-    tagName(project.version.toString())
+    releaseName(versionName)
+    tagName(versionName)
     body(changelogText)
     targetCommitish("master")
     setReleaseAssets(tasks["jar"])
