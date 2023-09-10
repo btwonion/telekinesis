@@ -43,7 +43,8 @@
   },
   "mixins": [
     "telekinesis.mixins.json",
-    "compat.treeharvester.mixins.json"
+    "compat.treeharvester.mixins.json",
+    "compat.betternether.mixins.json"
   ],
   "custom": {
     "modmenu": {

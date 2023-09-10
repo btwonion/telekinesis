@@ -75,6 +75,7 @@ dependencies {
 
     // Integration
     modImplementation("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth
+    modImplementation("maven.modrinth:MpzVLzy5:9kJblF2V") // better nether by quickueck
 }
 
 tasks {
