@@ -12,6 +12,7 @@
     "CatalystBlockAccessor",
     "DropExperienceBlockAccessor",
     "EnderManMixin",
+    "FishingHookMixin",
     "InventoryMixin",
     "LivingEntityMixin",
     "MinecartMixin",

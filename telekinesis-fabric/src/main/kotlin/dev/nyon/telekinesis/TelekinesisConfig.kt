@@ -16,7 +16,8 @@ data class TelekinesisConfig(
     var expDrops: Boolean = true,
     var mobDrops: Boolean = true,
     var entityDrops: Boolean = true,
-    var shearingDrops: Boolean = true
+    var shearingDrops: Boolean = true,
+    var fishingDrops: Boolean = true
 )
 
 var config: TelekinesisConfig = TelekinesisConfig()

@@ -5,7 +5,8 @@ enum class TelekinesisPolicy {
     ExpDrops,
     MobDrops,
     EntityDrops,
-    ShearingDrops;
+    ShearingDrops,
+    FishingDrops;
 
     fun isEnabled(): Boolean = when (this) {
         BlockDrops -> config.blockDrops
@@ -13,5 +14,6 @@ enum class TelekinesisPolicy {
         MobDrops -> config.mobDrops
         EntityDrops -> config.entityDrops
         ShearingDrops -> config.shearingDrops
+        FishingDrops -> config.fishingDrops
     }
 }
