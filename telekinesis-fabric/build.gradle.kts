@@ -113,12 +113,13 @@ tasks {
 
 val changelogFile: Path = rootDir.toPath().resolve("changelogs/fabric-$version.md")
 val changelogText = if (changelogFile.notExists()) "" else changelogFile.readText()
-val versionName = "fabric-${project.version}"
+val projectVersionname = "fabric-${project.version}"
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set(versionName)
+    versionNumber.set(projectVersionname)
+    versionName.set(projectVersionname)
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
     gameVersions.set(listOf(mcVersion))

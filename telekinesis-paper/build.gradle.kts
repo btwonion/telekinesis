@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.net.URI
 import java.nio.file.Path
 import kotlin.io.path.notExists
 import kotlin.io.path.readText
@@ -85,12 +84,13 @@ tasks {
 
 val changelogFile: Path = rootDir.toPath().resolve("changelogs/paper-$version.md")
 val changelogText = if (changelogFile.notExists()) "" else changelogFile.readText()
-val versionName = "paper-${project.version}"
+val projectVersionname = "paper-${project.version}"
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set(versionName)
+    versionNumber.set(projectVersionname)
+    versionName.set(projectVersionname)
     versionType.set("release")
     uploadFile.set(tasks.reobfJar.get().outputJar)
     gameVersions.set(listOf("1.20", "1.20.1"))
@@ -105,8 +105,8 @@ githubRelease {
     val split = githubRepo.split("/")
     owner(split[0])
     repo(split[1])
-    releaseName(versionName)
-    tagName(versionName)
+    releaseName(projectVersionname)
+    tagName(projectVersionname)
     body(changelogText)
     targetCommitish("master")
     setReleaseAssets(tasks["jar"])
