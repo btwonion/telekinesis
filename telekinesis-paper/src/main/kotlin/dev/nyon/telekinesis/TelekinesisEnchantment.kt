@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack
  * The telekinesis enchantment model
  */
 class TelekinesisEnchantment : Enchantment(
-    Rarity.RARE, EnchantmentCategory.BREAKABLE, listOf(EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND).toTypedArray()
+    EnchantmentRarity.RARE, EnchantmentCategory.BREAKABLE, listOf(EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND).toTypedArray()
 ) {
 
     override fun getMinLevel(): Int = 1
