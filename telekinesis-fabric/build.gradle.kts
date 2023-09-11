@@ -33,10 +33,7 @@ repositories {
     mavenCentral()
     exclusiveContent {
         forRepository {
-            maven {
-                name = "Modrinth"
-                url = URI("https://api.modrinth.com/maven")
-            }
+            maven("https://api.modrinth.com/maven")
         }
         filter {
             includeGroup("maven.modrinth")
@@ -45,13 +42,6 @@ repositories {
     maven("https://maven.isxander.dev/releases")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://maven.parchmentmc.org/")
-    maven {
-        name = "Netty Maven Central"
-        url = URI(MAVEN_CENTRAL_URL)
-        content {
-            includeGroup("io.netty")
-        }
-    }
     maven("https://jitpack.io")
 }
 
