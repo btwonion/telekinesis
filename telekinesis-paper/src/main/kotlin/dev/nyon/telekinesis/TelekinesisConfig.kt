@@ -2,6 +2,7 @@ package dev.nyon.telekinesis
 
 import com.akuleshov7.ktoml.Toml
 import com.akuleshov7.ktoml.TomlInputConfig
+import com.akuleshov7.ktoml.annotations.TomlComments
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.nio.file.Path
