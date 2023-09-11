@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 public abstract class LivingEntityMixin {
 
     @Unique
-    LivingEntity livingEntity = (LivingEntity) (Object) this;
+    final LivingEntity livingEntity = (LivingEntity) (Object) this;
 
     @WrapWithCondition(
         method = "dropExperience",
@@ -31,8 +31,8 @@ public abstract class LivingEntityMixin {
             target = "Lnet/minecraft/world/entity/ExperienceOrb;award(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;I)V"
         )
     )
-    public boolean redirectExp(LivingEntity instance, ServerLevel world, Vec3 pos, int amount) {
-        final var attacker = instance.getLastAttacker();
+    public boolean redirectExp(ServerLevel world, Vec3 pos, int amount) {
+        final var attacker = livingEntity.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
 
         boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(

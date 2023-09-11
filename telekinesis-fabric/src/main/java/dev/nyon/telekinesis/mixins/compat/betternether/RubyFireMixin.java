@@ -15,15 +15,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import org.betterx.betternether.enchantments.RubyFire;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-@Mixin(RubyFire.class)
+@Pseudo
+@Mixin(targets = "org.betterx.betternether.enchantments.RubyFire")
 public class RubyFireMixin {
 
     @WrapWithCondition(
@@ -34,7 +35,6 @@ public class RubyFireMixin {
         )
     )
     private static boolean redirectExp(
-        RubyFire instance,
         ServerLevel level,
         BlockPos blockPos,
         int amount,
@@ -49,7 +49,7 @@ public class RubyFireMixin {
             TelekinesisPolicy.ExpDrops,
             _serverPlayer,
             breakingItem,
-            serverPlayer -> serverPlayer.giveExperiencePoints(amount));
+            serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, amount));
         return !hasTelekinesis;
     }
 
@@ -87,7 +87,7 @@ public class RubyFireMixin {
         )
     )
     private static boolean redirectAfterDrops(
-        RubyFire instance,
+        BlockState instance,
         ServerLevel world,
         BlockPos pos,
         ItemStack tool,

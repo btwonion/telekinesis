@@ -5,6 +5,7 @@ import dev.nyon.telekinesis.TelekinesisPolicy;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,8 +20,8 @@ public class InventoryMixin {
             target = "Lnet/minecraft/world/entity/player/Player;drop(Lnet/minecraft/world/item/ItemStack;ZZ)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
-    public boolean redirectEquipmentDrop(Inventory instance, ItemStack stack, boolean throwRandomly, boolean retainOwnership) {
-        final var attacker = instance.player.getLastAttacker();
+    public boolean redirectEquipmentDrop(Player instance, ItemStack stack, boolean throwRandomly, boolean retainOwnership) {
+        final var attacker = instance.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
 
         boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
@@ -28,7 +29,7 @@ public class InventoryMixin {
             serverPlayer,
             serverPlayer.getMainHandItem(),
             player -> {
-                if (!player.addItem(stack)) instance.player.spawnAtLocation(stack);
+                if (!player.addItem(stack)) instance.spawnAtLocation(stack);
             }
         );
 
