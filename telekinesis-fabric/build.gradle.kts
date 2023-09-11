@@ -59,13 +59,13 @@ dependencies {
     implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")
     include("com.akuleshov7:ktoml-core-jvm:0.4.1")
 
-    include("com.github.LlamaLad7:MixinExtras:0.1.1")
-    implementation("com.github.LlamaLad7:MixinExtras:0.1.1")
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-rc.2")!!)!!)
+    include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.0.2")!!)!!)
 
     // Integration
     modImplementation("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth
     modImplementation("maven.modrinth:MpzVLzy5:9kJblF2V") // better nether by quickueck
+    modImplementation("maven.modrinth:EFtixeiF:Mk1aTgPH") // levelz by Globox1997
 }
 
 tasks {
