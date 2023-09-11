@@ -11,14 +11,27 @@ import kotlin.io.path.writeText
 @Serializable
 data class TelekinesisConfig(
     var onByDefault: Boolean = false,
+    @TomlComments(
+        "Uncomment this by removing '# ' to block functionality for those who don't have the required permission.",
+        "onByDefaultPermissionRequirement = "permission"
+    )
     var onByDefaultPermissionRequirement: String? = null,
     var onlyOnSneak: Boolean = false,
     var enchantment: Boolean = true,
     var blockDrops: Boolean = true,
+     @TomlComments(
+        "blockDropsPermissionRequirement = "permission"
+    )
     var blockDropsPermissionRequirement: String? = null,
     var expDrops: Boolean = true,
+     @TomlComments(
+        "expDropsPermissionRequirement = "permission"
+    )
     var expDropsPermissionRequirement: String? = null,
     var entityDrops: Boolean = true,
+    @TomlComments(
+        "entityDropsPermissionRequirement = "permission"
+    )
     var entityDropsPermissionRequirement: String? = null
 )
 
