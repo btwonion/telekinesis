@@ -57,7 +57,7 @@ public class TelekinesisUtils {
         if (isEnabledByDefault) conditionsMet = true;
         else switch (policy) {
             case ExpDrops -> conditionsMet = hasArmorTelekinesis || hasMainHandTelekinesis || hasOffHandTelekinesis;
-            case MobDrops, ShearingDrops, EntityDrops, FishingDrops ->
+            case MobDrops, ShearingDrops, VehicleDrops, FishingDrops ->
                 conditionsMet = hasMainHandTelekinesis || hasOffHandTelekinesis;
             case BlockDrops -> conditionsMet = hasMainHandTelekinesis;
         }

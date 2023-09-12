@@ -22,7 +22,7 @@ public abstract class MinecartMixin {
     )
     public ItemEntity redirectDrops(AbstractMinecart instance, ItemStack itemStack, DamageSource damageSource) {
         boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-            TelekinesisPolicy.EntityDrops,
+            TelekinesisPolicy.VehicleDrops,
             damageSource,
             player -> {
                 if (!player.addItem(itemStack)) instance.spawnAtLocation(itemStack);

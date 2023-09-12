@@ -25,7 +25,7 @@ public abstract class BoatMixin {
         Boat boat = (Boat) (Object) this;
         ItemStack item = new ItemStack(itemLike);
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.EntityDrops, damageSource, player -> {
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.VehicleDrops, damageSource, player -> {
             if (!player.addItem(item)) boat.spawnAtLocation(item);
         });
 

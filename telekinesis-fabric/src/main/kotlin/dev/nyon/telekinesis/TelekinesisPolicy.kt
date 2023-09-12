@@ -4,7 +4,7 @@ enum class TelekinesisPolicy {
     BlockDrops,
     ExpDrops,
     MobDrops,
-    EntityDrops,
+    VehicleDrops,
     ShearingDrops,
     FishingDrops;
 
@@ -12,7 +12,7 @@ enum class TelekinesisPolicy {
         BlockDrops -> config.blockDrops
         ExpDrops -> config.expDrops
         MobDrops -> config.mobDrops
-        EntityDrops -> config.entityDrops
+        VehicleDrops -> config.vehicleDrops
         ShearingDrops -> config.shearingDrops
         FishingDrops -> config.fishingDrops
     }
