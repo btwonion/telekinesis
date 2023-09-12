@@ -2,7 +2,6 @@ package dev.nyon.telekinesis
 
 import com.akuleshov7.ktoml.Toml
 import com.akuleshov7.ktoml.TomlInputConfig
-import com.akuleshov7.ktoml.TomlOutputConfig
 import com.akuleshov7.ktoml.annotations.TomlComments
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
@@ -13,31 +12,51 @@ import kotlin.io.path.writeText
 
 @Serializable
 data class TelekinesisConfig(
+    @TomlComments(
+        "Uncomment the following values if you want to change them:",
+        "",
+        "Decides whether telekinesis can be used without the enchantment."
+    )
     var onByDefault: Boolean = false,
+    var onByDefaultPermissionRequirement: String? = null,
     @TomlComments(
-        "Uncomment this by removing '# ' to block functionality for those who don't have the required permission.",
-        "onByDefaultPermissionRequirement = 'permission'"
-    ) var onByDefaultPermissionRequirement: String? = null,
+        "Uncomment this to block functionality for those who don't have the required permission.",
+        "onByDefaultPermissionRequirement = 'permission'",
+        "",
+        "Decides whether players should be required to sneak to use telekinesis."
+    )
     var onlyOnSneak: Boolean = false,
-    var enchantment: Boolean = true,
+    @TomlComments(
+        "Decides whether telekinesis can be used for block drops."
+    )
     var blockDrops: Boolean = true,
+    var blockDropsPermissionRequirement: String? = null,
     @TomlComments(
-        "blockDropsPermissionRequirement = 'permission'"
-    ) var blockDropsPermissionRequirement: String? = null,
+        "blockDropsPermissionRequirement = 'permission'",
+        "",
+        "Decides whether telekinesis can be used for exp drops."
+    )
     var expDrops: Boolean = true,
+    var expDropsPermissionRequirement: String? = null,
     @TomlComments(
-        "expDropsPermissionRequirement = 'permission'"
-    ) var expDropsPermissionRequirement: String? = null,
+        "expDropsPermissionRequirement = 'permission'",
+        "",
+        "Decides whether telekinesis can be used for entity drops."
+    )
     var entityDrops: Boolean = true,
+    var entityDropsPermissionRequirement: String? = null,
     @TomlComments(
-        "entityDropsPermissionRequirement = 'permission'"
-    ) var entityDropsPermissionRequirement: String? = null
+        "entityDropsPermissionRequirement = 'permission'",
+        "",
+        "Decides whether to add the enchantment to the game."
+    )
+    var enchantment: Boolean = true,
 )
 
 var config: TelekinesisConfig = TelekinesisConfig()
 lateinit var configPath: Path
 val toml = Toml(
-    inputConfig = TomlInputConfig(ignoreUnknownNames = true), outputConfig = TomlOutputConfig(ignoreNullValues = false)
+    inputConfig = TomlInputConfig(ignoreUnknownNames = true)
 )
 
 fun saveConfig() = configPath.writeText(toml.encodeToString(TelekinesisConfig.serializer(), config))
