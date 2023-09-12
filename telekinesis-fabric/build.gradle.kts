@@ -22,7 +22,7 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.3.0"
+val majorVersion = "2.3.1"
 val mcVersion = "1.20.1"
 version = "$majorVersion-$mcVersion"
 description = "Adds a telekinesis enchantment to minecraft"

@@ -24,7 +24,7 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.literal("On by default"))
-                    .description(OptionDescription.of(Component.literal("Should the feature work without the enchantment?")))
+                    .description(OptionDescription.of(Component.literal("Decides whether telekinesis can be used without the enchantment.")))
                     .binding(config.onByDefault, { config.onByDefault }, { config.onByDefault = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -33,7 +33,7 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.literal("Only while sneaking"))
-                    .description(OptionDescription.of(Component.literal("Should the feature work only while sneaking?")))
+                    .description(OptionDescription.of(Component.literal("Decides whether players should be required to sneak to use telekinesis.")))
                     .binding(config.onlyOnSneak, { config.onlyOnSneak }, { config.onlyOnSneak = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -44,7 +44,7 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
                     .name(Component.literal("Enchantment"))
                     .description(
                         OptionDescription.of(
-                            Component.literal("Should the enchantment be available?"),
+                            Component.literal("Decides whether to add the enchantment to the game."),
                             Component.literal("Requires a restart to work!")
                         )
                     )
@@ -56,7 +56,7 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.literal("Block drops"))
-                    .description(OptionDescription.of(Component.literal("Should block drops instantly be moved into your inventory?")))
+                    .description(OptionDescription.of(Component.literal("Decides whether telekinesis can be used for block drops.")))
                     .binding(config.blockDrops, { config.blockDrops }, { config.blockDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -65,7 +65,7 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.literal("Exp drops"))
-                    .description(OptionDescription.of(Component.literal("Should exp drops instantly be moved into your inventory?")))
+                    .description(OptionDescription.of(Component.literal("Decides whether telekinesis can be used for exp drops.")))
                     .binding(config.expDrops, { config.expDrops }, { config.expDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -74,7 +74,7 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.literal("Mob drops"))
-                    .description(OptionDescription.of(Component.literal("Should mob drops instantly be moved into your inventory?")))
+                    .description(OptionDescription.of(Component.literal("Decides whether telekinesis can be used for mob drops.")))
                     .binding(config.mobDrops, { config.mobDrops }, { config.mobDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -82,9 +82,9 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             )
             .option(
                 Option.createBuilder<Boolean>()
-                    .name(Component.literal("Entity drops"))
-                    .description(OptionDescription.of(Component.literal("Should entity drops instantly be moved into your inventory?")))
-                    .binding(config.entityDrops, { config.entityDrops }, { config.entityDrops = it })
+                    .name(Component.literal("Vehicle drops"))
+                    .description(OptionDescription.of(Component.literal("Decides whether telekinesis can be used for vehicle drops.")))
+                    .binding(config.vehicleDrops, { config.vehicleDrops }, { config.vehicleDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
                     }.build()
@@ -92,8 +92,17 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.literal("Shearing drops"))
-                    .description(OptionDescription.of(Component.literal("Should shearing drops instantly be moved into your inventory?")))
+                    .description(OptionDescription.of(Component.literal("Decides whether telekinesis can be used for shearing drops.")))
                     .binding(config.shearingDrops, { config.shearingDrops }, { config.shearingDrops = it })
+                    .controller {
+                        TickBoxControllerBuilder.create(it)
+                    }.build()
+            )
+            .option(
+                Option.createBuilder<Boolean>()
+                    .name(Component.literal("Fishing drops"))
+                    .description(OptionDescription.of(Component.literal("Decides whether telekinesis can be used for fishing drops.")))
+                    .binding(config.fishingDrops, { config.fishingDrops }, { config.fishingDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
                     }.build()
