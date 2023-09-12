@@ -1,19 +1,19 @@
 # telekinesis
 
-This mod/plugin adds the telekinesis enchantment, which allows you to instantly move drops into your inventory, to:
+This mod/plugin adds the telekinesis enchantment, allowing you to instantly move drops into your inventory:
 
+## Supported drops
 - block drops
 - mob drops
 - exp drops
-- entity drops (boats, minecarts)
-- shearing drops
-
-The mod requires [Fabric Language Kotlin](https://github.com/fabricmc/fabric-language-kotlin).
+- shearing drops (fabric only)
+- vehicle drops (fabric only)
+- fishing drops (fabric only)
 
 ## Configuration
 
 The configuration file can be found in the client/server directory.
-The file differs between fabric and paper environments because on paper are some features not supported.
+The file differs cause of the supported drops between fabric and paper environments.
 
 -> mod configuration file: `/config/telekinesis.toml`
 <br>
@@ -22,21 +22,67 @@ The file differs between fabric and paper environments because on paper are some
 <details>
 <summary>telekinesis.toml</summary>
 
+<details>
+<summary>paper config</summary>
+
 ```toml
-onByDefault = false # should telekinesis work without the enchantment?
-onlyOnSneak = false # should telekinesis only work while sneaking?
-enchantment = true # should the telekinesis enchantment be enabled?
-blockDrops = true # should telekinesis work for block drops?
-shearingDrops = true # should telekinesis work for shearing drops? (fabric only)
-mobDrops = true # should telekinesis work for mob drops? (in paper merged with entityDrops)
-entityDrops = true # should telekinesis work for entity drops (boats, minecarts)?
-expDrops = true # should telekinesis work for exp drops?
+# Uncomment the following values if you want to change them:
+# 
+# Decides whether telekinesis can be used without the enchantment.
+onByDefault = false
+# Uncomment this to block functionality for those who don't have the required permission.
+# onByDefaultPermissionRequirement = 'permission'
+# 
+# Decides whether players should be required to sneak to use telekinesis.
+onlyOnSneak = false
+# Decides whether telekinesis can be used for block drops.
+blockDrops = true
+# blockDropsPermissionRequirement = 'permission'
+# 
+# Decides whether telekinesis can be used for exp drops.
+expDrops = true
+# expDropsPermissionRequirement = 'permission'
+# 
+# Decides whether telekinesis can be used for entity drops.
+entityDrops = true
+# entityDropsPermissionRequirement = 'permission'
+# 
+# Decides whether to add the enchantment to the game.
+enchantment = true
 ```
+</details>
+
+<details>
+<summary>fabric config</summary>
+
+```toml
+# Uncomment the following values if you want to change them:
+# 
+# Decides whether telekinesis can be used without the enchantment.
+onByDefault = false
+# Decides whether players should be required to sneak to use telekinesis.
+onlyOnSneak = false
+# Decides whether to add the enchantment to the game.
+enchantment = true
+# Decides whether telekinesis can be used for block drops.
+blockDrops = true
+# Decides whether telekinesis can be used for exp drops.
+expDrops = true
+# Decides whether telekinesis can be used for mob drops.
+mobDrops = true
+# Decides whether telekinesis can be used for vehicle drops.
+vehicleDrops = true
+# Decides whether telekinesis can be used for shearing drops.
+shearingDrops = true
+# Decides whether telekinesis can be used for fishing drops.
+fishingDrops = true
+```
+</details>
 
 </details>
 
 ### Other
-⚠️ The development version is always the latest stable release of minecraft. 
-Therefore, new features will only be available for the current and following minecraft versions.
+⚠️ The development version is always the latest stable release of Minecraft. 
+Therefore, new features will only be available for the current and following Minecraft versions.
 
-If you need help with any of my mods just join my [discord server](https://nyon.dev/discord)
+If you need help with any of my mods, just join my [discord server](https://nyon.dev/discord)
