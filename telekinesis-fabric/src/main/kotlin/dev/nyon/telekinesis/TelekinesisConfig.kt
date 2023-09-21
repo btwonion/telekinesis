@@ -4,7 +4,10 @@ import com.akuleshov7.ktoml.Toml
 import com.akuleshov7.ktoml.annotations.TomlComments
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
+import net.fabricmc.loader.api.FabricLoader
 import java.nio.file.Path
+import kotlin.io.path.createFile
+import kotlin.io.path.exists
 import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
@@ -56,6 +59,9 @@ lateinit var configPath: Path
 fun saveConfig() = configPath.writeText(Toml.encodeToString(TelekinesisConfig.serializer(), config))
 
 fun loadConfig() {
+    configPath = FabricLoader.getInstance().configDir.toAbsolutePath().resolve("telekinesis.toml")
+        .also { if (!it.exists()) it.createFile() }
+
     if (configPath.readText().isEmpty()) {
         saveConfig()
         return

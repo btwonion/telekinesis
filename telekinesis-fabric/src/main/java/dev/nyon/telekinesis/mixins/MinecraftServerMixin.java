@@ -21,5 +21,4 @@ public class MinecraftServerMixin {
     private void onBeforeInit(CallbackInfo ci) {
         MainKt.setServer((MinecraftServer) (Object) this);
     }
-
 }

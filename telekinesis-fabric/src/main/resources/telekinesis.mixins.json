@@ -9,6 +9,7 @@
     "AllayMixin",
     "BlockMixin",
     "BoatMixin",
+    "BuiltInRegistriesMixin",
     "CatalystBlockAccessor",
     "DropExperienceBlockAccessor",
     "EnderManMixin",
