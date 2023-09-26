@@ -22,7 +22,8 @@ plugins {
 group = "dev.nyon"
 val majorVersion = "2.3.1"
 val mcVersion = "1.20.2"
-version = "$majorVersion-$mcVersion"
+val supportedMcVersions = listOf("1.20", "1.20.1", "1.20.2")
+version = "$majorVersion-1.20"
 description = "Adds a telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -120,7 +121,7 @@ modrinth {
     versionName.set(projectVersionname)
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
-    gameVersions.set(listOf(mcVersion))
+    gameVersions.set(supportedMcVersions)
     loaders.set(listOf("fabric", "quilt"))
     dependencies {
         required.project("fabric-language-kotlin")
