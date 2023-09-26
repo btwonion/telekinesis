@@ -13,6 +13,8 @@
     "BlockMixinMixin",
     "EnderDragonEntityMixinMixin",
     "FishingBobberEntityMixinMixin",
+    "LevelExperienceOrbAccessor",
+    "LevelExperienceOrbEntityMixin",
     "LivingEntityMixinMixin",
     "PlantBlockMixinMixin"
   ]

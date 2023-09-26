@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
 import dev.nyon.telekinesis.utils.PlayerUtils;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
+import net.levelz.init.ConfigInit;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,6 +37,7 @@ public class LivingEntityMixinMixin {
         Vec3 pos,
         int amount
     ) {
+        if (ConfigInit.CONFIG.useIndependentExp) return true;
         if (!(instance.getLastAttacker() instanceof ServerPlayer _serverPlayer)) return true;
         final var hasTelekinesis = TelekinesisUtils.handleTelekinesis(
             TelekinesisPolicy.ExpDrops,
