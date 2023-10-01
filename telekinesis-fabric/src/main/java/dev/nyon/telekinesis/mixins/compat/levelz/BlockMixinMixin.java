@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
 import dev.nyon.telekinesis.utils.PlayerUtils;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
+import net.levelz.access.PlayerSyncAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -89,7 +90,7 @@ public abstract class BlockMixinMixin {
             TelekinesisPolicy.ExpDrops,
             serverPlayer,
             null,
-            serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, amount));
+            serverPlayer -> ((PlayerSyncAccess) serverPlayer).addLevelExperience(amount));
         return !hasTelekinesis;
     }
 

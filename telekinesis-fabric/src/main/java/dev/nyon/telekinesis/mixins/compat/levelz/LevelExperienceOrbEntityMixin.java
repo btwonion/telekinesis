@@ -2,8 +2,8 @@ package dev.nyon.telekinesis.mixins.compat.levelz;
 
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.PlayerUtils;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
+import net.levelz.access.PlayerSyncAccess;
 import net.levelz.entity.LevelExperienceOrbEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,7 +40,8 @@ public class LevelExperienceOrbEntityMixin {
             TelekinesisPolicy.ExpDrops,
             _serverPlayer,
             null,
-            serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, expOrb.getExperienceAmount())
+            serverPlayer -> ((LevelExperienceOrbAccessor) expOrb).invokeGetClumpedMap()
+                .forEach((value, amount) -> ((PlayerSyncAccess) serverPlayer).addLevelExperience(value * amount))
         );
         return !hasTelekinesis;
     }

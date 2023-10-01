@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
 import dev.nyon.telekinesis.utils.PlayerUtils;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
+import net.levelz.access.PlayerSyncAccess;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
@@ -42,7 +43,7 @@ public class EnderDragonEntityMixinMixin {
             TelekinesisPolicy.ExpDrops,
             _serverPlayer,
             null,
-            serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, amount));
+            serverPlayer -> ((PlayerSyncAccess) serverPlayer).addLevelExperience(amount));
         return !hasTelekinesis;
     }
 
@@ -67,7 +68,7 @@ public class EnderDragonEntityMixinMixin {
             TelekinesisPolicy.ExpDrops,
             _serverPlayer,
             null,
-            serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, amount));
+            serverPlayer -> ((PlayerSyncAccess) serverPlayer).addLevelExperience(amount));
         return !hasTelekinesis;
     }
 }

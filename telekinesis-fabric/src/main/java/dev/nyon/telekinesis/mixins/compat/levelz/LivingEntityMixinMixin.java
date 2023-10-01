@@ -3,9 +3,8 @@ package dev.nyon.telekinesis.mixins.compat.levelz;
 import com.bawnorton.mixinsquared.TargetHandler;
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.PlayerUtils;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
-import net.levelz.init.ConfigInit;
+import net.levelz.access.PlayerSyncAccess;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,13 +36,14 @@ public class LivingEntityMixinMixin {
         Vec3 pos,
         int amount
     ) {
-        if (ConfigInit.CONFIG.useIndependentExp) return true;
         if (!(instance.getLastAttacker() instanceof ServerPlayer _serverPlayer)) return true;
+        System.out.println("wtf" + amount);
+        System.out.println(amount);
         final var hasTelekinesis = TelekinesisUtils.handleTelekinesis(
             TelekinesisPolicy.ExpDrops,
             _serverPlayer,
             null,
-            serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, amount));
+            serverPlayer -> ((PlayerSyncAccess) serverPlayer).addLevelExperience(amount));
         return !hasTelekinesis;
     }
 }
