@@ -20,7 +20,7 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.3.2"
+val majorVersion = "2.3.3"
 val mcVersion = "1.20.2"
 val supportedMcVersions = listOf("1.20", "1.20.1", "1.20.2")
 version = "$majorVersion-1.20"
