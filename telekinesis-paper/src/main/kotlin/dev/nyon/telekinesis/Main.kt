@@ -8,7 +8,7 @@ import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_20_R1.CraftServer
+import org.bukkit.craftbukkit.v1_20_R2.CraftServer
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.plugin.java.JavaPlugin
 import kotlin.io.path.createFile
@@ -52,7 +52,7 @@ private fun addToBukkitRegistry() {
 @Suppress("unchecked_cast")
 private fun addToMinecraftRegistry() {
     val server = (Bukkit.getServer() as CraftServer).server
-    val enchantmentRegistry = server.registryAccess().registryOrThrow(Registries.ENCHANTMENT) as MappedRegistry
+    val enchantmentRegistry = server.registryAccess().registryOrThrow(Registries.ENCHANTMENT) as MappedRegistry<net.minecraft.world.item.enchantment.Enchantment>
     val enchantmentRegistryClass = enchantmentRegistry.javaClass
     val frozenField = enchantmentRegistryClass.getDeclaredField("l") // l - frozen  MappedRegistry
     frozenField.isAccessible = true

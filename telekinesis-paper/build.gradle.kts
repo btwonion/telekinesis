@@ -19,7 +19,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.3.2"
-val mcVersion = "1.20.1"
+val mcVersion = "1.20.2"
 version = "$majorVersion-$mcVersion"
 description = "Adds an telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
@@ -93,7 +93,7 @@ modrinth {
     versionName.set(projectVersionName)
     versionType.set("release")
     uploadFile.set(tasks.reobfJar.get().outputJar)
-    gameVersions.set(listOf("1.20", "1.20.1"))
+    gameVersions.set(listOf("1.20.2"))
     loaders.set(listOf("paper", "folia"))
     changelog.set(changelogText)
     syncBodyFrom.set(file("../README.md").readText())
