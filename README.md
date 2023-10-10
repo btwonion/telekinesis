@@ -10,6 +10,10 @@ This mod/plugin adds the telekinesis enchantment, allowing you to instantly move
 - vehicle drops (fabric only)
 - fishing drops (fabric only)
 
+## Compatibility
+The paper module of telekinesis is as of Minecraft version 1.20.2 discontinued cause of the lack of ability to
+register the enchantment.
+
 ## Configuration
 
 The configuration file can be found in the client/server directory.
