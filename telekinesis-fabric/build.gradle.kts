@@ -42,24 +42,25 @@ repositories {
     maven("https://maven.terraformersmc.com/releases")
     maven("https://maven.parchmentmc.org/")
     maven("https://jitpack.io")
+    maven("https://oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:$mcVersion")
     mappings(loom.layered {
-        parchment("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip")
+        parchment("org.parchmentmc.data:parchment-1.20.2:2023.10.22@zip")
         officialMojangMappings()
     })
-    modImplementation("net.fabricmc:fabric-loader:0.14.22")
+    modImplementation("net.fabricmc:fabric-loader:0.14.24")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.10.10+kotlin.1.9.10")
-    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.0.3+1.20")
+    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.2.1+$mcVersion")
     modImplementation("com.terraformersmc:modmenu:7.2.2")
     //modImplementation("net.fabricmc.fabric-api:fabric-api:0.89.0+1.20.2") // Not necessary, just here for testing purposes
 
-    include(implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")!!)
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.1-beta.2")!!)!!)
+    include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
 
-    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-rc.5")!!)!!)
-    include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.0.2")!!)!!)
+    include(implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")!!)
 
     // Integration
     //modImplementation("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth
