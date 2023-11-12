@@ -12,7 +12,7 @@ This mod/plugin adds the telekinesis enchantment, allowing you to instantly move
 
 ## Compatibility
 The paper module of telekinesis is as of Minecraft version 1.20.2 discontinued cause of the lack of ability to
-register the enchantment.
+register the enchantment (I will figure a way out when I have time to, but it seems like this step is linked with way more reflection than before.)
 
 ## Configuration
 
