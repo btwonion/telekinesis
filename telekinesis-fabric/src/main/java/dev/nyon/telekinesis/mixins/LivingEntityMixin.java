@@ -39,9 +39,7 @@ public abstract class LivingEntityMixin {
             TelekinesisPolicy.ExpDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
-            player -> {
-                PlayerUtils.addExpToPlayer(player, amount);
-            }
+            player -> PlayerUtils.addExpToPlayer(player, amount)
         );
 
         return !hasTelekinesis;

@@ -43,9 +43,7 @@ public abstract class FishingHookMixin {
                 TelekinesisPolicy.ExpDrops,
                 _serverPlayer,
                 stack,
-                serverPlayer -> {
-                    PlayerUtils.addExpToPlayer(serverPlayer, expOrb.getValue());
-                }
+                serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, expOrb.getValue())
             );
 
             return !hasTelekinesis;

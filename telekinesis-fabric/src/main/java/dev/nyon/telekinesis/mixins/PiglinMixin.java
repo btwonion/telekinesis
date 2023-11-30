@@ -28,11 +28,9 @@ public class PiglinMixin {
         boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
             TelekinesisPolicy.MobDrops,
             damageSource,
-            player -> {
-                instance.forEach(item -> {
-                    if (!player.addItem(item)) piglin.spawnAtLocation(item);
-                });
-            }
+            player -> instance.forEach(item -> {
+                if (!player.addItem(item)) piglin.spawnAtLocation(item);
+            })
         );
 
         if (!hasTelekinesis) instance.forEach(piglin::spawnAtLocation);
