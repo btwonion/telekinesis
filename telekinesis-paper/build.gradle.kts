@@ -103,12 +103,12 @@ githubRelease {
     token(findProperty("github.token")?.toString())
 
     val split = githubRepo.split("/")
-    owner(split[0])
-    repo(split[1])
-    releaseName(projectVersionName)
-    tagName(projectVersionName)
-    body(changelogText)
-    targetCommitish("master")
+    owner  = split[0]
+    repo = split[1]
+    releaseName = projectVersionName
+    tagName = projectVersionName
+    body = changelogText
+    targetCommitish = "master"
     setReleaseAssets(tasks.reobfJar.get().outputJar)
 }
 

@@ -13,7 +13,6 @@ plugins {
     id("com.github.breadmoirai.github-release")
 
     id("fabric-loom")
-    id("io.github.juuxel.loom-quiltflower")
 
     `maven-publish`
     signing
@@ -21,9 +20,9 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.3.3"
-val mcVersion = "1.20.2"
-val supportedMcVersions = listOf("1.20", "1.20.1", "1.20.2")
-version = "$majorVersion-1.20"
+val mcVersion = "1.20.3-rc1"
+val supportedMcVersions = listOf("1.20.3-rc1")
+version = "$majorVersion-1.20.3"
 description = "Adds a telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -51,21 +50,22 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-1.20.2:2023.10.22@zip")
         officialMojangMappings()
     })
-    modImplementation("net.fabricmc:fabric-loader:0.14.24")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.10+kotlin.1.9.10")
-    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.2.1+$mcVersion")
-    modImplementation("com.terraformersmc:modmenu:7.2.2")
-    //modImplementation("net.fabricmc.fabric-api:fabric-api:0.89.0+1.20.2") // Not necessary, just here for testing purposes
+    implementation("org.vineflower:vineflower:1.9.3")
+    modImplementation("net.fabricmc:fabric-loader:0.15.0")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.15+kotlin.1.9.21")
+    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.2.1+1.20.2")
+    modImplementation("com.terraformersmc:modmenu:9.0.0-pre.1")
 
-    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.1-beta.2")!!)!!)
+    modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:0.91.1+1.20.3") // Not necessary, just here for testing purposes
+
     include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
 
     include(implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")!!)
 
     // Integration
-    //modImplementation("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth
-    //modImplementation("maven.modrinth:MpzVLzy5:9kJblF2V") // better nether by quickueck
-    modImplementation("maven.modrinth:EFtixeiF:Gcai736Z") // levelz by Globox1997
+    modCompileOnly("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth
+    modCompileOnly("maven.modrinth:MpzVLzy5:9kJblF2V") // better nether by quickueck
+    modCompileOnly("maven.modrinth:EFtixeiF:Gcai736Z") // levelz by Globox1997
 }
 
 tasks {
@@ -136,13 +136,13 @@ modrinth {
 githubRelease {
     token(findProperty("github.token")?.toString())
 
-    val split = githubRepo.split("/")
-    owner(split[0])
-    repo(split[1])
-    releaseName(projectVersionname)
-    tagName(projectVersionname)
-    body(changelogText)
-    targetCommitish("master")
+    val (rowner, rrepo) = githubRepo.split("/")
+    owner = rowner
+    repo = rrepo
+    releaseName = projectVersionname
+    tagName = projectVersionname
+    body = changelogText
+    targetCommitish = "master"
     setReleaseAssets(tasks["remapJar"])
 }
 
