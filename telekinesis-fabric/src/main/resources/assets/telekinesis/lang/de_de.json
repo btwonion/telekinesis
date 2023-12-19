@@ -1,9 +1,9 @@
 {
   "menu.telekinesis.name": "telekinesis",
   "menu.telekinesis.config.general": "Allgemein",
-  "menu.telekinesis.config.general.onbydefault": "immer an",
+  "menu.telekinesis.config.general.onbydefault": "Immer an",
   "menu.telekinesis.config.general.onbydefault.description": "Entscheidet, ob Telekinesis immer an sein sollte, auch ohne das Enchantment.",
-  "menu.telekinesis.config.general.onlywhilesneaking": "nur beim sneaken",
+  "menu.telekinesis.config.general.onlywhilesneaking": "Nur beim sneaken",
   "menu.telekinesis.config.general.onlywhilesneaking.description": "Entscheidet, ob Telekinesis nur funktionieren sollte, wenn man sneakt.",
   "menu.telekinesis.config.general.enchantment": "Enchantment",
   "menu.telekinesis.config.general.enchantment.description1": "Entscheidet, ob das Enchantment registriert werden soll.",
