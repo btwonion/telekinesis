@@ -8,7 +8,6 @@
     "AbstractHorseMixin",
     "AllayMixin",
     "BlockMixin",
-    "BuiltInRegistriesMixin",
     "CatalystBlockAccessor",
     "ChestBoatMixin",
     "DropExperienceBlockAccessor",

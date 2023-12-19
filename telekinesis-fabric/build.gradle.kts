@@ -20,9 +20,9 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.3.3"
-val mcVersion = "1.20.3-rc1"
-val supportedMcVersions = listOf("1.20.3-rc1")
-version = "$majorVersion-1.20.3"
+val mcVersion = "1.20.4"
+val supportedMcVersions = listOf("1.20.3", "1.20.4")
+version = "$majorVersion-1.20.4"
 description = "Adds a telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -51,9 +51,9 @@ dependencies {
         officialMojangMappings()
     })
     implementation("org.vineflower:vineflower:1.9.3")
-    modImplementation("net.fabricmc:fabric-loader:0.15.0")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.15+kotlin.1.9.21")
-    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.2.1+1.20.2")
+    modImplementation("net.fabricmc:fabric-loader:0.15.3")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.16+kotlin.1.9.21")
+    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.3.1+1.20.4")
     modImplementation("com.terraformersmc:modmenu:9.0.0-pre.1")
 
     modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:0.91.1+1.20.3") // Not necessary, just here for testing purposes

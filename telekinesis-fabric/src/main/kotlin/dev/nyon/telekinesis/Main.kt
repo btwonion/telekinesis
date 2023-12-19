@@ -5,4 +5,4 @@ package dev.nyon.telekinesis
 import net.minecraft.server.MinecraftServer
 
 var server: MinecraftServer? = null
-val telekinesis = TelekinesisEnchantment()
+lateinit var telekinesisEnchantment: TelekinesisEnchantment

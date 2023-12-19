@@ -18,9 +18,9 @@
   "version": "${version}",
   "environment": "*",
   "depends": {
-    "fabric-language-kotlin": ">=1.10.15+kotlin.1.9.21",
-    "yet_another_config_lib_v3": ">=3.2.0+1.20",
-    "minecraft": ">=1.20.3-rc.1"
+    "fabric-language-kotlin": ">=1.10.16+kotlin.1.9.21",
+    "yet_another_config_lib_v3": ">=3.3.1+1.20.4",
+    "minecraft": ">=1.20.3"
   },
   "suggests": {
     "modmenu": ">=9.0.0"
