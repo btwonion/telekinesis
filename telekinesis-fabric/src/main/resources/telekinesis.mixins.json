@@ -11,6 +11,7 @@
     "CatalystBlockAccessor",
     "ChestBoatMixin",
     "DropExperienceBlockAccessor",
+    "EnchantmentsMixin",
     "EnderManMixin",
     "FishingHookMixin",
     "InventoryMixin",
