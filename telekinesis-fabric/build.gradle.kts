@@ -47,12 +47,12 @@ repositories {
 dependencies {
     minecraft("com.mojang:minecraft:$mcVersion")
     mappings(loom.layered {
-        parchment("org.parchmentmc.data:parchment-1.20.2:2023.10.22@zip")
+        parchment("org.parchmentmc.data:parchment-1.20.3:2023.12.31@zip")
         officialMojangMappings()
     })
     implementation("org.vineflower:vineflower:1.9.3")
     modImplementation("net.fabricmc:fabric-loader:0.15.3")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.16+kotlin.1.9.21")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.17+kotlin.1.9.22")
     modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.3.1+1.20.4")
     modImplementation("com.terraformersmc:modmenu:9.0.0-pre.1")
 
@@ -60,7 +60,7 @@ dependencies {
 
     include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
 
-    include(implementation("com.akuleshov7:ktoml-core-jvm:0.5.0")!!)
+    include(implementation("com.akuleshov7:ktoml-core-jvm:0.5.1")!!)
 
     // Integration
     modCompileOnly("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth
@@ -88,7 +88,7 @@ tasks {
                 "name" to modName,
                 "description" to modDescription,
                 "version" to project.version,
-                "github" to githubRepo,
+                "github" to githubRepo
             )
         }
     }

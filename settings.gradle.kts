@@ -10,5 +10,5 @@ pluginManagement {
     }
 }
 
-include("telekinesis-paper")
+//include("telekinesis-paper")
 include("telekinesis-fabric")
