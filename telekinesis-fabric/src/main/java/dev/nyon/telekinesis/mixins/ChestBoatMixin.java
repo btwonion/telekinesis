@@ -23,14 +23,18 @@ public class ChestBoatMixin {
             target = "Lnet/minecraft/world/entity/vehicle/ChestBoat;getDropItem()Lnet/minecraft/world/item/Item;"
         )
     )
-    private Item changeDroppedItem(Item original, DamageSource damageSource) {
+    private Item changeDroppedItem(
+        Item original,
+        DamageSource damageSource
+    ) {
         final var attacker = damageSource.getEntity();
         if (!(attacker instanceof ServerPlayer)) return original;
 
         AtomicReference<Item> toReturn = new AtomicReference<>(original);
 
         TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.VehicleDrops, damageSource, player -> {
-            if (player.addItem(original.asItem().getDefaultInstance())) toReturn.set(ItemStack.EMPTY.getItem());
+            if (player.addItem(original.asItem()
+                .getDefaultInstance())) toReturn.set(ItemStack.EMPTY.getItem());
         });
 
         return toReturn.get();

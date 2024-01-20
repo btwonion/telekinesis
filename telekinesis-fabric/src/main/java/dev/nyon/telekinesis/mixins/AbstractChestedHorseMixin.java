@@ -19,18 +19,20 @@ public class AbstractChestedHorseMixin {
             target = "Lnet/minecraft/world/entity/animal/horse/AbstractChestedHorse;spawnAtLocation(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
-    public boolean redirectEquipmentDrop(AbstractChestedHorse instance, ItemLike item) {
+    public boolean redirectEquipmentDrop(
+        AbstractChestedHorse instance,
+        ItemLike item
+    ) {
         final var attacker = instance.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-            TelekinesisPolicy.MobDrops,
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
             player -> {
-                if (!player.addItem(item.asItem().getDefaultInstance())) instance.spawnAtLocation(item);
-            }
-        );
+                if (!player.addItem(item.asItem()
+                    .getDefaultInstance())) instance.spawnAtLocation(item);
+            });
 
         return !hasTelekinesis;
     }

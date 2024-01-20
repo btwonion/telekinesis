@@ -19,18 +19,19 @@ public class AbstractHorseMixin {
             target = "Lnet/minecraft/world/entity/animal/horse/AbstractHorse;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
-    public boolean redirectEquipmentDrop(AbstractHorse instance, ItemStack stack) {
+    public boolean redirectEquipmentDrop(
+        AbstractHorse instance,
+        ItemStack stack
+    ) {
         final var attacker = instance.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-            TelekinesisPolicy.MobDrops,
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
             player -> {
                 if (!player.addItem(stack)) instance.spawnAtLocation(stack);
-            }
-        );
+            });
 
         return !hasTelekinesis;
     }

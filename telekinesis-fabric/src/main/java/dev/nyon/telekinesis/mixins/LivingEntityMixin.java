@@ -31,16 +31,18 @@ public abstract class LivingEntityMixin {
             target = "Lnet/minecraft/world/entity/ExperienceOrb;award(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;I)V"
         )
     )
-    public boolean redirectExp(ServerLevel world, Vec3 pos, int amount) {
+    public boolean redirectExp(
+        ServerLevel world,
+        Vec3 pos,
+        int amount
+    ) {
         final var attacker = livingEntity.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-            TelekinesisPolicy.ExpDrops,
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.ExpDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
-            player -> PlayerUtils.addExpToPlayer(player, amount)
-        );
+            player -> PlayerUtils.addExpToPlayer(player, amount));
 
         return !hasTelekinesis;
     }
@@ -52,15 +54,17 @@ public abstract class LivingEntityMixin {
             target = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootParams;JLjava/util/function/Consumer;)V"
         )
     )
-    public void redirectCommonDrops(Args args, DamageSource damageSource, boolean bl) {
+    public void redirectCommonDrops(
+        Args args,
+        DamageSource damageSource,
+        boolean bl
+    ) {
         args.<Consumer<ItemStack>>set(2, item -> {
-            boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-                TelekinesisPolicy.MobDrops,
+            boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
                 damageSource,
                 player -> {
                     if (!player.addItem(item)) livingEntity.spawnAtLocation(item);
-                }
-            );
+                });
 
             if (!hasTelekinesis) livingEntity.spawnAtLocation(item);
         });

@@ -27,18 +27,19 @@ public class AllayMixin {
             target = "Lnet/minecraft/world/entity/animal/allay/Allay;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
-    public boolean redirectEquipmentDrop(Allay instance, ItemStack stack) {
+    public boolean redirectEquipmentDrop(
+        Allay instance,
+        ItemStack stack
+    ) {
         final var attacker = instance.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-            TelekinesisPolicy.MobDrops,
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
             player -> {
                 if (!player.addItem(stack)) instance.spawnAtLocation(stack);
-            }
-        );
+            });
 
         return !hasTelekinesis;
     }
@@ -50,21 +51,22 @@ public class AllayMixin {
             target = "Ljava/util/List;forEach(Ljava/util/function/Consumer;)V"
         )
     )
-    public void redirectInventoryDrops(List<ItemStack> instance, Consumer<ItemStack> consumer) {
+    public void redirectInventoryDrops(
+        List<ItemStack> instance,
+        Consumer<ItemStack> consumer
+    ) {
         final var attacker = allay.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) {
             instance.forEach(consumer);
             return;
         }
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-            TelekinesisPolicy.MobDrops,
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
             player -> instance.forEach(item -> {
                 if (!player.addItem(item)) consumer.accept(item);
-            })
-        );
+            }));
 
         if (!hasTelekinesis) instance.forEach(consumer);
     }

@@ -23,6 +23,7 @@
     "SheepMixin",
     "SnowgolemMixin",
     "StriderMixin",
+    "SweetBerryBushBlockMixin",
     "VehicleEntityMixin",
     "WitherBossMixin"
   ],

@@ -20,13 +20,21 @@ public class MobMixin {
             target = "Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
-    public boolean redirectEquipmentDrop(Mob instance, ItemStack stack, DamageSource damageSource, int lootingMultiplier, boolean allowDrops) {
+    public boolean redirectEquipmentDrop(
+        Mob instance,
+        ItemStack stack,
+        DamageSource damageSource,
+        int lootingMultiplier,
+        boolean allowDrops
+    ) {
         final var attacker = damageSource.getEntity();
         if (!(attacker instanceof ServerPlayer)) return true;
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops, damageSource, player -> {
-            if (!player.addItem(stack)) instance.spawnAtLocation(stack);
-        });
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
+            damageSource,
+            player -> {
+                if (!player.addItem(stack)) instance.spawnAtLocation(stack);
+            });
 
         return !hasTelekinesis;
     }

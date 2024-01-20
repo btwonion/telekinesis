@@ -19,7 +19,7 @@ plugins {
 }
 
 group = "dev.nyon"
-val majorVersion = "2.3.5"
+val majorVersion = "2.4.0"
 val mcVersion = "1.20.4"
 val supportedMcVersions = listOf("1.20.3", "1.20.4")
 version = "$majorVersion-1.20.4"
@@ -51,7 +51,7 @@ dependencies {
         officialMojangMappings()
     })
     implementation("org.vineflower:vineflower:1.9.3")
-    modImplementation("net.fabricmc:fabric-loader:0.15.3")
+    modImplementation("net.fabricmc:fabric-loader:0.15.6")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.10.17+kotlin.1.9.22")
     modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.3.1+1.20.4")
     modImplementation("com.terraformersmc:modmenu:9.0.0-pre.1")

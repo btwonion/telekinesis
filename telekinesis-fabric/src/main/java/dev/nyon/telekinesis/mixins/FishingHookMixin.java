@@ -39,25 +39,21 @@ public abstract class FishingHookMixin {
         if (!(getPlayerOwner() instanceof ServerPlayer _serverPlayer)) return true;
 
         if (entity instanceof ExperienceOrb expOrb) {
-            final var hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-                TelekinesisPolicy.ExpDrops,
+            final var hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.ExpDrops,
                 _serverPlayer,
                 stack,
-                serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, expOrb.getValue())
-            );
+                serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, expOrb.getValue()));
 
             return !hasTelekinesis;
         }
 
         if (entity instanceof ItemEntity itemEntity) {
-            final var hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-                TelekinesisPolicy.FishingDrops,
+            final var hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.FishingDrops,
                 _serverPlayer,
                 stack,
                 serverPlayer -> {
                     if (!serverPlayer.addItem(itemEntity.getItem())) instance.addFreshEntity(itemEntity);
-                }
-            );
+                });
 
             return !hasTelekinesis;
         }

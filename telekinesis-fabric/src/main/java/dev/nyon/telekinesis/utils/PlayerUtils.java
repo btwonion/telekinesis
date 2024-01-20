@@ -9,13 +9,21 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import java.util.Map;
 
 public class PlayerUtils {
-    public static void addExpToPlayer(Player player, Integer exp) {
+    public static void addExpToPlayer(
+        Player player,
+        Integer exp
+    ) {
         var remainingExp = repairPlayerItems(player, exp);
         if (remainingExp > 0) player.giveExperiencePoints(remainingExp);
     }
 
-    private static int repairPlayerItems(Player player, Integer exp) {
-        Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, player, ItemStack::isDamaged);
+    private static int repairPlayerItems(
+        Player player,
+        Integer exp
+    ) {
+        Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING,
+            player,
+            ItemStack::isDamaged);
         if (entry != null) {
             ItemStack itemStack = entry.getValue();
             int j = Math.min(exp * 2, itemStack.getDamageValue());

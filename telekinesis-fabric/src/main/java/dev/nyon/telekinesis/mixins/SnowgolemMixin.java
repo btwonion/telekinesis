@@ -23,20 +23,25 @@ public class SnowgolemMixin {
             target = "Lnet/minecraft/world/entity/animal/SnowGolem;shear(Lnet/minecraft/sounds/SoundSource;)V"
         )
     )
-    public void manipulateWoolDrops(SnowGolem instance, SoundSource soundSource, Player player, InteractionHand interactionHand) {
-        instance.level().playSound(null, instance, SoundEvents.SNOW_GOLEM_SHEAR, soundSource, 1.0F, 1.0F);
-        if (!instance.level().isClientSide()) {
+    public void manipulateWoolDrops(
+        SnowGolem instance,
+        SoundSource soundSource,
+        Player player,
+        InteractionHand interactionHand
+    ) {
+        instance.level()
+            .playSound(null, instance, SoundEvents.SNOW_GOLEM_SHEAR, soundSource, 1.0F, 1.0F);
+        if (!instance.level()
+            .isClientSide()) {
             instance.setPumpkin(false);
 
             ItemStack item = new ItemStack(Items.CARVED_PUMPKIN);
 
-            boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-                TelekinesisPolicy.ShearingDrops,
+            boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.ShearingDrops,
                 player,
                 serverPlayer -> {
                     if (!serverPlayer.addItem(item)) instance.spawnAtLocation(item, 1.7F);
-                }
-            );
+                });
 
             if (!hasTelekinesis) instance.spawnAtLocation(item, 1.7F);
         }

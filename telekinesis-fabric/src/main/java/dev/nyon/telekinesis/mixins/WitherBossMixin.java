@@ -20,13 +20,21 @@ public abstract class WitherBossMixin {
             target = "net/minecraft/world/entity/boss/wither/WitherBoss.spawnAtLocation (Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
-    protected ItemEntity redirectEquipmentDrop(WitherBoss instance, ItemLike stack, Operation<ItemEntity> original) {
+    protected ItemEntity redirectEquipmentDrop(
+        WitherBoss instance,
+        ItemLike stack,
+        Operation<ItemEntity> original
+    ) {
         final var attacker = instance.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return original.call(instance, stack);
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops, serverPlayer, null, player -> {
-            if (!player.addItem(stack.asItem().getDefaultInstance())) instance.spawnAtLocation(stack);
-        });
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
+            serverPlayer,
+            null,
+            player -> {
+                if (!player.addItem(stack.asItem()
+                    .getDefaultInstance())) instance.spawnAtLocation(stack);
+            });
 
         if (!hasTelekinesis) return original.call(instance, stack);
         else return null;

@@ -23,11 +23,17 @@ public abstract class EnchantmentsMixin {
         method = "register",
         at = @At("RETURN")
     )
-    private static void registerTelekinesis(String identifier, Enchantment enchantment, CallbackInfoReturnable<Enchantment> cir) {
+    private static void registerTelekinesis(
+        String identifier,
+        Enchantment enchantment,
+        CallbackInfoReturnable<Enchantment> cir
+    ) {
         if (!isTelekinesisRegistered) {
             MainKt.setTelekinesis(new TelekinesisEnchantment());
             isTelekinesisRegistered = true;
-            Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation("telekinesis", "telekinesis"), MainKt.getTelekinesis());
+            Registry.register(BuiltInRegistries.ENCHANTMENT,
+                new ResourceLocation("telekinesis", "telekinesis"),
+                MainKt.getTelekinesis());
         }
     }
 }

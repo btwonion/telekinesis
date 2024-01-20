@@ -22,16 +22,20 @@ public class PiglinMixin {
             target = "Ljava/util/List;forEach(Ljava/util/function/Consumer;)V"
         )
     )
-    public void redirectDrops(List<ItemStack> instance, Consumer consumer, DamageSource damageSource, int i, boolean bl) {
+    public void redirectDrops(
+        List<ItemStack> instance,
+        Consumer consumer,
+        DamageSource damageSource,
+        int i,
+        boolean bl
+    ) {
         var piglin = (Piglin) (Object) this;
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-            TelekinesisPolicy.MobDrops,
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
             damageSource,
             player -> instance.forEach(item -> {
                 if (!player.addItem(item)) piglin.spawnAtLocation(item);
-            })
-        );
+            }));
 
         if (!hasTelekinesis) instance.forEach(piglin::spawnAtLocation);
     }

@@ -20,18 +20,21 @@ public class InventoryMixin {
             target = "Lnet/minecraft/world/entity/player/Player;drop(Lnet/minecraft/world/item/ItemStack;ZZ)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
-    public boolean redirectEquipmentDrop(Player instance, ItemStack stack, boolean throwRandomly, boolean retainOwnership) {
+    public boolean redirectEquipmentDrop(
+        Player instance,
+        ItemStack stack,
+        boolean throwRandomly,
+        boolean retainOwnership
+    ) {
         final var attacker = instance.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-            TelekinesisPolicy.MobDrops,
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
             player -> {
                 if (!player.addItem(stack)) instance.spawnAtLocation(stack);
-            }
-        );
+            });
 
         return !hasTelekinesis;
     }

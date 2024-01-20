@@ -15,19 +15,32 @@ import java.util.function.Consumer;
 
 public class TelekinesisUtils {
 
-    public static boolean handleTelekinesisBlock(TelekinesisPolicy neededPolicy, Entity entity, ItemStack tool, Consumer<ServerPlayer> consumer) {
+    public static boolean handleTelekinesisBlock(
+        TelekinesisPolicy neededPolicy,
+        Entity entity,
+        ItemStack tool,
+        Consumer<ServerPlayer> consumer
+    ) {
         if (!(entity instanceof ServerPlayer serverPlayer)) return false;
         return handleTelekinesis(neededPolicy, serverPlayer, tool, consumer);
     }
 
-    public static boolean handleTelekinesis(TelekinesisPolicy neededPolicy, LivingEntity target, Consumer<ServerPlayer> consumer) {
+    public static boolean handleTelekinesis(
+        TelekinesisPolicy neededPolicy,
+        LivingEntity target,
+        Consumer<ServerPlayer> consumer
+    ) {
         LivingEntity attacker = target.getLastAttacker();
         if (attacker == null) return false;
         if (!(attacker instanceof ServerPlayer serverPlayer)) return false;
         return handleTelekinesis(neededPolicy, serverPlayer, null, consumer);
     }
 
-    public static boolean handleTelekinesis(TelekinesisPolicy neededPolicy, DamageSource source, Consumer<ServerPlayer> consumer) {
+    public static boolean handleTelekinesis(
+        TelekinesisPolicy neededPolicy,
+        DamageSource source,
+        Consumer<ServerPlayer> consumer
+    ) {
         if (source == null) return false;
         Entity attacker = source.getEntity();
         if (attacker == null) return false;
@@ -36,7 +49,12 @@ public class TelekinesisUtils {
     }
 
 
-    public static boolean handleTelekinesis(TelekinesisPolicy neededPolicy, ServerPlayer player, @Nullable ItemStack itemStack, Consumer<ServerPlayer> consumer) {
+    public static boolean handleTelekinesis(
+        TelekinesisPolicy neededPolicy,
+        ServerPlayer player,
+        @Nullable ItemStack itemStack,
+        Consumer<ServerPlayer> consumer
+    ) {
         if (!neededPolicy.isEnabled()) return false;
         if (!playerMeetsConditions(neededPolicy, player, itemStack)) return false;
 
@@ -44,15 +62,23 @@ public class TelekinesisUtils {
         return true;
     }
 
-    private static boolean playerMeetsConditions(TelekinesisPolicy policy, ServerPlayer player, @Nullable ItemStack itemStack) {
+    private static boolean playerMeetsConditions(
+        TelekinesisPolicy policy,
+        ServerPlayer player,
+        @Nullable ItemStack itemStack
+    ) {
         boolean conditionsMet = false;
 
-        boolean isEnabledByDefault = TelekinesisConfigKt.getConfig().getOnByDefault();
+        boolean isEnabledByDefault = TelekinesisConfigKt.getConfig()
+            .getOnByDefault();
 
-        boolean hasArmorTelekinesis = player.getInventory().armor.stream().allMatch(item -> EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), item) > 0);
-        boolean hasMainHandTelekinesis = (itemStack != null && EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), itemStack) > 0) ||
-            EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), player.getMainHandItem()) > 0;
-        boolean hasOffHandTelekinesis = EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), player.getOffhandItem()) > 0;
+        boolean hasArmorTelekinesis = player.getInventory().armor.stream()
+            .allMatch(item -> EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), item) > 0);
+        boolean hasMainHandTelekinesis = (itemStack != null && EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(),
+            itemStack) > 0) || EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(),
+            player.getMainHandItem()) > 0;
+        boolean hasOffHandTelekinesis = EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(),
+            player.getOffhandItem()) > 0;
 
         if (isEnabledByDefault) conditionsMet = true;
         else switch (policy) {
@@ -62,7 +88,8 @@ public class TelekinesisUtils {
             case BlockDrops -> conditionsMet = hasMainHandTelekinesis;
         }
 
-        if (TelekinesisConfigKt.getConfig().getOnlyOnSneak() && !player.isCrouching()) conditionsMet = false;
+        if (TelekinesisConfigKt.getConfig()
+            .getOnlyOnSneak() && !player.isCrouching()) conditionsMet = false;
 
         return conditionsMet;
     }
