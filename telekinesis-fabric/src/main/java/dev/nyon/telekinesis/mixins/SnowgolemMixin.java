@@ -41,7 +41,8 @@ public class SnowgolemMixin {
                 player,
                 serverPlayer -> {
                     if (!serverPlayer.addItem(item)) instance.spawnAtLocation(item, 1.7F);
-                });
+                }
+            );
 
             if (!hasTelekinesis) instance.spawnAtLocation(item, 1.7F);
         }

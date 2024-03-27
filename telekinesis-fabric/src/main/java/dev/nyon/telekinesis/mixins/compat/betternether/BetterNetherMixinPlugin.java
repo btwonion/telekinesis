@@ -20,12 +20,19 @@ public class BetterNetherMixinPlugin implements IMixinConfigPlugin {
     }
 
     @Override
-    public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return FabricLoader.getInstance().isModLoaded("betternether");
+    public boolean shouldApplyMixin(
+        String targetClassName,
+        String mixinClassName
+    ) {
+        return FabricLoader.getInstance()
+            .isModLoaded("betternether");
     }
 
     @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+    public void acceptTargets(
+        Set<String> myTargets,
+        Set<String> otherTargets
+    ) {
     }
 
     @Override
@@ -34,10 +41,20 @@ public class BetterNetherMixinPlugin implements IMixinConfigPlugin {
     }
 
     @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    public void preApply(
+        String targetClassName,
+        ClassNode targetClass,
+        String mixinClassName,
+        IMixinInfo mixinInfo
+    ) {
     }
 
     @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    public void postApply(
+        String targetClassName,
+        ClassNode targetClass,
+        String mixinClassName,
+        IMixinInfo mixinInfo
+    ) {
     }
 }

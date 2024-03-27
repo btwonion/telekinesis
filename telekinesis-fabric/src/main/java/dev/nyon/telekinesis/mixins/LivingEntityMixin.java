@@ -1,6 +1,6 @@
 package dev.nyon.telekinesis.mixins;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
 import dev.nyon.telekinesis.utils.PlayerUtils;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
@@ -42,7 +42,8 @@ public abstract class LivingEntityMixin {
         boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.ExpDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
-            player -> PlayerUtils.addExpToPlayer(player, amount));
+            player -> PlayerUtils.addExpToPlayer(player, amount)
+        );
 
         return !hasTelekinesis;
     }
@@ -64,7 +65,8 @@ public abstract class LivingEntityMixin {
                 damageSource,
                 player -> {
                     if (!player.addItem(item)) livingEntity.spawnAtLocation(item);
-                });
+                }
+            );
 
             if (!hasTelekinesis) livingEntity.spawnAtLocation(item);
         });

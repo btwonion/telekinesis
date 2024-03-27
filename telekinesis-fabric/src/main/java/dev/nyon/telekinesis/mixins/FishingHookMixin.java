@@ -1,6 +1,6 @@
 package dev.nyon.telekinesis.mixins;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
 import dev.nyon.telekinesis.utils.PlayerUtils;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
@@ -42,7 +42,8 @@ public abstract class FishingHookMixin {
             final var hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.ExpDrops,
                 _serverPlayer,
                 stack,
-                serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, expOrb.getValue()));
+                serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, expOrb.getValue())
+            );
 
             return !hasTelekinesis;
         }
@@ -53,7 +54,8 @@ public abstract class FishingHookMixin {
                 stack,
                 serverPlayer -> {
                     if (!serverPlayer.addItem(itemEntity.getItem())) instance.addFreshEntity(itemEntity);
-                });
+                }
+            );
 
             return !hasTelekinesis;
         }

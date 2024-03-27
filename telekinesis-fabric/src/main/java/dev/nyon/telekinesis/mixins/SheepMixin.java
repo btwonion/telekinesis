@@ -65,10 +65,12 @@ public abstract class SheepMixin {
                         entity.setDeltaMovement(entity.getDeltaMovement()
                             .add((random.nextFloat() - random.nextFloat()) * 0.1F,
                                 random.nextFloat() * 0.05F,
-                                (random.nextFloat() - random.nextFloat()) * 0.1F));
+                                (random.nextFloat() - random.nextFloat()) * 0.1F
+                            ));
                     }
                 }
-            });
+            }
+        );
 
         if (!hasTelekinesis) dropAllNormally(i, instance);
     }
@@ -83,7 +85,8 @@ public abstract class SheepMixin {
             entity.setDeltaMovement(entity.getDeltaMovement()
                 .add((random.nextFloat() - random.nextFloat()) * 0.1F,
                     random.nextFloat() * 0.05F,
-                    (random.nextFloat() - random.nextFloat()) * 0.1F));
+                    (random.nextFloat() - random.nextFloat()) * 0.1F
+                ));
         }
     }
 }

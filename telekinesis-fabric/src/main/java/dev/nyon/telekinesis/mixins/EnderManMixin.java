@@ -1,9 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
-import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.TelekinesisUtils;
-import net.minecraft.server.level.ServerPlayer;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import dev.nyon.telekinesis.utils.EntityUtils;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.item.ItemStack;
@@ -27,15 +25,6 @@ public class EnderManMixin {
         int lootingMultiplier,
         boolean allowDrops
     ) {
-        final var attacker = damageSource.getEntity();
-        if (!(attacker instanceof ServerPlayer)) return true;
-
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
-            damageSource,
-            player -> {
-                if (!player.addItem(stack)) instance.spawnAtLocation(stack);
-            });
-
-        return !hasTelekinesis;
+        return EntityUtils.spawnAtLocationInject(instance, stack);
     }
 }

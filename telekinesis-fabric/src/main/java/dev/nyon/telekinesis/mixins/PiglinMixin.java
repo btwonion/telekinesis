@@ -35,7 +35,8 @@ public class PiglinMixin {
             damageSource,
             player -> instance.forEach(item -> {
                 if (!player.addItem(item)) piglin.spawnAtLocation(item);
-            }));
+            })
+        );
 
         if (!hasTelekinesis) instance.forEach(piglin::spawnAtLocation);
     }

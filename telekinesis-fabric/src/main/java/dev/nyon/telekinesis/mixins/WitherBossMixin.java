@@ -34,7 +34,8 @@ public abstract class WitherBossMixin {
             player -> {
                 if (!player.addItem(stack.asItem()
                     .getDefaultInstance())) instance.spawnAtLocation(stack);
-            });
+            }
+        );
 
         if (!hasTelekinesis) return original.call(instance, stack);
         else return null;

@@ -88,7 +88,8 @@ public abstract class BlockMixin {
                 if (block instanceof InfestedBlock infestedBlock)
                     infestedBlock.spawnAfterBreak(blockState, serverLevel, blockPos, itemStack, true);
                 PlayerUtils.addExpToPlayer(player, expToAdd);
-            });
+            }
+        );
 
         if (hasTelekinesis) ci.cancel();
     }

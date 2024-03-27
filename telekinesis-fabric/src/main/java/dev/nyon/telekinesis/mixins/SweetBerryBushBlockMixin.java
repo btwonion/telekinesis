@@ -1,11 +1,10 @@
 package dev.nyon.telekinesis.mixins;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -19,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(SweetBerryBushBlock.class)
 public class SweetBerryBushBlockMixin {
     @WrapWithCondition(
-        method = "use",
+        method = "useWithoutItem",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/level/block/SweetBerryBushBlock;popResource(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)V"
@@ -29,21 +28,21 @@ public class SweetBerryBushBlockMixin {
         Level level,
         BlockPos blockPos,
         ItemStack itemStack,
-        BlockState state,
+        BlockState blockState,
         Level _level,
-        BlockPos pos,
+        BlockPos _blockPos,
         Player player,
-        InteractionHand hand,
-        BlockHitResult hit
+        BlockHitResult blockHitResult
     ) {
         if (!(player instanceof ServerPlayer serverPlayer)) return true;
 
         boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.BlockDrops,
             serverPlayer,
-            serverPlayer.getItemInHand(hand),
+            serverPlayer.getMainHandItem(),
             cPlayer -> {
-                if (!player.addItem(itemStack)) Block.popResource(level, pos, itemStack);
-            });
+                if (!player.addItem(itemStack)) Block.popResource(level, blockPos, itemStack);
+            }
+        );
 
         return !hasTelekinesis;
     }
