@@ -56,6 +56,8 @@ dependencies {
     modCompileOnly("dev.isxander.yacl:yet-another-config-lib-fabric:3.3.1+1.20.4")
     modImplementation("com.terraformersmc:modmenu:10.0.0-alpha.3")
 
+    modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:0.96.13+1.20.5")
+
     include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
 
     include(implementation("com.akuleshov7:ktoml-core-jvm:0.5.1")!!)
