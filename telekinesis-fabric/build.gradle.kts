@@ -18,7 +18,7 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.4.0"
-val mcVersion = "24w13a"
+val mcVersion = "1.20.5-pre4"
 val supportedMcVersions = listOf(mcVersion)
 version = "$majorVersion-$mcVersion"
 description = "Adds a telekinesis enchantment to minecraft"
@@ -40,23 +40,24 @@ repositories {
     maven("https://maven.parchmentmc.org/")
     maven("https://jitpack.io")
     maven("https://oss.sonatype.org/content/repositories/snapshots/")
+    maven("https://maven.isxander.dev/snapshots") // remove in stable release
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:$mcVersion")
     mappings(
         loom.layered {
-            parchment("org.parchmentmc.data:parchment-1.20.4:2024.02.25@zip")
+            parchment("org.parchmentmc.data:parchment-1.20.4:2024.04.14@zip")
             officialMojangMappings()
-        },
+        }
     )
     implementation("org.vineflower:vineflower:1.9.3")
-    modImplementation("net.fabricmc:fabric-loader:0.15.7")
+    modImplementation("net.fabricmc:fabric-loader:0.15.10")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.10.19+kotlin.1.9.23")
-    modCompileOnly("dev.isxander.yacl:yet-another-config-lib-fabric:3.3.1+1.20.4")
+    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.3.3+1.20.4+update.1.20.5-SNAPSHOT+update.1.20.5-SNAPSHOT")
     modImplementation("com.terraformersmc:modmenu:10.0.0-alpha.3")
 
-    modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:0.96.13+1.20.5")
+    modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:0.97.3+1.20.5")
 
     include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
 
@@ -88,7 +89,7 @@ tasks {
                 "name" to modName,
                 "description" to modDescription,
                 "version" to project.version,
-                "github" to githubRepo,
+                "github" to githubRepo
             )
         }
     }
@@ -103,11 +104,11 @@ tasks {
     }
 
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "21"
     }
 
     withType<JavaCompile> {
-        options.release.set(17)
+        options.release.set(21)
     }
 
     loom {
