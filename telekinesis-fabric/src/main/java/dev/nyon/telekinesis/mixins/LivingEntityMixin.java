@@ -61,12 +61,9 @@ public abstract class LivingEntityMixin {
         boolean bl
     ) {
         args.<Consumer<ItemStack>>set(2, item -> {
-            boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
-                damageSource,
-                player -> {
-                    if (!player.addItem(item)) livingEntity.spawnAtLocation(item);
-                }
-            );
+            boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops, damageSource, player -> {
+                if (!player.addItem(item)) livingEntity.spawnAtLocation(item);
+            });
 
             if (!hasTelekinesis) livingEntity.spawnAtLocation(item);
         });

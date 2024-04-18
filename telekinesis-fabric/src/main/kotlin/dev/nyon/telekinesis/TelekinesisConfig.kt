@@ -59,8 +59,9 @@ lateinit var configPath: Path
 fun saveConfig() = configPath.writeText(Toml.encodeToString(TelekinesisConfig.serializer(), config))
 
 fun loadConfig() {
-    configPath = FabricLoader.getInstance().configDir.toAbsolutePath().resolve("telekinesis.toml")
-        .also { if (!it.exists()) it.createFile() }
+    configPath =
+        FabricLoader.getInstance().configDir.toAbsolutePath().resolve("telekinesis.toml")
+            .also { if (!it.exists()) it.createFile() }
 
     if (configPath.readText().isEmpty()) {
         saveConfig()

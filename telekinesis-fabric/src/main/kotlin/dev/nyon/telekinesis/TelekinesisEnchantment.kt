@@ -17,8 +17,8 @@ class TelekinesisEnchantment : Enchantment(
         dynamicCost(25, 25),
         dynamicCost(75, 25),
         5,
-        *EquipmentSlot.entries.toTypedArray(),
-    ),
+        *EquipmentSlot.entries.toTypedArray()
+    )
 ) {
     override fun getFullname(i: Int): Component =
         Component.translatable("enchantment.telekinesis.telekinesis.name").withStyle(Style.EMPTY.withColor(0xFFB64C))

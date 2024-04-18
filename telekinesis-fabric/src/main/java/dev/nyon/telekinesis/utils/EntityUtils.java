@@ -8,16 +8,25 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class EntityUtils {
 
-    public static boolean spawnAtLocationInject(LivingEntity entity, ItemLike item) {
-        return spawnAtLocationInject(entity, item.asItem().getDefaultInstance());
+    public static boolean spawnAtLocationInject(
+        LivingEntity entity,
+        ItemLike item
+    ) {
+        return spawnAtLocationInject(
+            entity,
+            item.asItem()
+                .getDefaultInstance()
+        );
     }
 
-    public static boolean spawnAtLocationInject(LivingEntity entity, ItemStack item) {
+    public static boolean spawnAtLocationInject(
+        LivingEntity entity,
+        ItemStack item
+    ) {
         final var attacker = entity.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
 
@@ -32,7 +41,10 @@ public class EntityUtils {
         return !hasTelekinesis;
     }
 
-    public static Item getDropItemInject(Item original, DamageSource source) {
+    public static Item getDropItemInject(
+        Item original,
+        DamageSource source
+    ) {
         final var attacker = source.getEntity();
         if (!(attacker instanceof ServerPlayer)) return original;
 

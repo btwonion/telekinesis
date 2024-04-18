@@ -52,8 +52,7 @@ public class AllayMixin {
             return;
         }
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(
-            TelekinesisPolicy.MobDrops,
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
             player -> instance.forEach(item -> {
