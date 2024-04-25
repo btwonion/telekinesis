@@ -75,16 +75,14 @@ public class TelekinesisUtils {
         boolean hasArmorTelekinesis = player.getInventory().armor.stream()
             .allMatch(item -> EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), item) > 0);
         boolean hasMainHandTelekinesis = (itemStack != null && EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(),
-            itemStack) > 0) || EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(),
-            player.getMainHandItem()) > 0;
-        boolean hasOffHandTelekinesis = EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(),
-            player.getOffhandItem()) > 0;
+            itemStack
+        ) > 0) || EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), player.getMainHandItem()) > 0;
+        boolean hasOffHandTelekinesis = EnchantmentHelper.getItemEnchantmentLevel(MainKt.getTelekinesis(), player.getOffhandItem()) > 0;
 
         if (isEnabledByDefault) conditionsMet = true;
         else switch (policy) {
             case ExpDrops -> conditionsMet = hasArmorTelekinesis || hasMainHandTelekinesis || hasOffHandTelekinesis;
-            case MobDrops, ShearingDrops, VehicleDrops, FishingDrops ->
-                conditionsMet = hasMainHandTelekinesis || hasOffHandTelekinesis;
+            case MobDrops, ShearingDrops, VehicleDrops, FishingDrops -> conditionsMet = hasMainHandTelekinesis || hasOffHandTelekinesis;
             case BlockDrops -> conditionsMet = hasMainHandTelekinesis;
         }
 

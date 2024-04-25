@@ -1,8 +1,6 @@
 @file:Suppress("SpellCheckingInspection")
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.nio.file.Path
-import kotlin.io.path.notExists
 import kotlin.io.path.readText
 
 plugins {
@@ -20,9 +18,9 @@ plugins {
 
 group = "dev.nyon"
 val majorVersion = "2.4.0"
-val mcVersion = "1.20.4"
-val supportedMcVersions = listOf("1.20.3", "1.20.4")
-version = "$majorVersion-1.20.4"
+val mcVersion = "1.20.5-pre4"
+val supportedMcVersions = listOf(mcVersion)
+version = "$majorVersion-$mcVersion"
 description = "Adds a telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
@@ -42,30 +40,33 @@ repositories {
     maven("https://maven.parchmentmc.org/")
     maven("https://jitpack.io")
     maven("https://oss.sonatype.org/content/repositories/snapshots/")
+    maven("https://maven.isxander.dev/snapshots") // remove in stable release
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:$mcVersion")
-    mappings(loom.layered {
-        parchment("org.parchmentmc.data:parchment-1.20.3:2023.12.31@zip")
-        officialMojangMappings()
-    })
+    mappings(
+        loom.layered {
+            parchment("org.parchmentmc.data:parchment-1.20.4:2024.04.14@zip")
+            officialMojangMappings()
+        }
+    )
     implementation("org.vineflower:vineflower:1.9.3")
-    modImplementation("net.fabricmc:fabric-loader:0.15.6")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.17+kotlin.1.9.22")
-    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.3.1+1.20.4")
-    modImplementation("com.terraformersmc:modmenu:9.0.0-pre.1")
+    modImplementation("net.fabricmc:fabric-loader:0.15.10")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.19+kotlin.1.9.23")
+    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.3.3+1.20.4+update.1.20.5-SNAPSHOT+update.1.20.5-SNAPSHOT")
+    modImplementation("com.terraformersmc:modmenu:10.0.0-alpha.3")
 
-    modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:0.91.3+1.20.4") // Not necessary, just here for testing purposes
+    modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:0.97.3+1.20.5")
 
     include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
 
     include(implementation("com.akuleshov7:ktoml-core-jvm:0.5.1")!!)
 
     // Integration
-    modCompileOnly("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth
-    modCompileOnly("maven.modrinth:MpzVLzy5:9kJblF2V") // better nether by quickueck
-    modCompileOnly("maven.modrinth:EFtixeiF:Gcai736Z") // levelz by Globox1997
+    // modCompileOnly("maven.modrinth:abooMhox:c2klaSgQ") // tree-harvester by ricksouth wait for 1.20.5
+    // modCompileOnly("maven.modrinth:MpzVLzy5:9kJblF2V") // better nether by quickueck wait for 1.20.5
+    // modCompileOnly("maven.modrinth:EFtixeiF:Gcai736Z") // levelz by Globox1997 wait for 1.20.5
 }
 
 tasks {
@@ -103,23 +104,29 @@ tasks {
     }
 
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "21"
     }
 
     withType<JavaCompile> {
-        options.release.set(17)
+        options.release.set(21)
+    }
+
+    loom {
+        accessWidenerPath = file("src/main/resources/telekinesis.accesswidener")
     }
 }
 
-val changelogFile: Path = rootDir.toPath().resolve("changelogs/fabric-$version.md")
-val changelogText = if (changelogFile.notExists()) "" else changelogFile.readText()
-val projectVersionname = "fabric-${project.version}"
+val changelogText =
+    buildString {
+        append("# v${project.version}\n")
+        rootDir.toPath().resolve("changelog.md").readText().also { append(it) }
+    }
 
 modrinth {
     token.set(findProperty("modrinth.token")?.toString())
     projectId.set("LLfA8jAD")
-    versionNumber.set(projectVersionname)
-    versionName.set(projectVersionname)
+    versionNumber.set("v${project.version}")
+    versionName.set("v${project.version}")
     versionType.set("release")
     uploadFile.set(tasks["remapJar"])
     gameVersions.set(supportedMcVersions)
@@ -139,8 +146,8 @@ githubRelease {
     val (rowner, rrepo) = githubRepo.split("/")
     owner = rowner
     repo = rrepo
-    releaseName = projectVersionname
-    tagName = projectVersionname
+    releaseName = "v${project.version}"
+    tagName = "v${project.version}"
     body = changelogText
     targetCommitish = "master"
     setReleaseAssets(tasks["remapJar"])

@@ -1,7 +1,8 @@
 package dev.nyon.telekinesis.mixins;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
+import dev.nyon.telekinesis.utils.EntityUtils;
 import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.animal.allay.Allay;
@@ -31,17 +32,7 @@ public class AllayMixin {
         Allay instance,
         ItemStack stack
     ) {
-        final var attacker = instance.getLastAttacker();
-        if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
-
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
-            serverPlayer,
-            serverPlayer.getMainHandItem(),
-            player -> {
-                if (!player.addItem(stack)) instance.spawnAtLocation(stack);
-            });
-
-        return !hasTelekinesis;
+        return EntityUtils.spawnAtLocationInject(instance, stack);
     }
 
     @Redirect(
@@ -66,7 +57,8 @@ public class AllayMixin {
             serverPlayer.getMainHandItem(),
             player -> instance.forEach(item -> {
                 if (!player.addItem(item)) consumer.accept(item);
-            }));
+            })
+        );
 
         if (!hasTelekinesis) instance.forEach(consumer);
     }

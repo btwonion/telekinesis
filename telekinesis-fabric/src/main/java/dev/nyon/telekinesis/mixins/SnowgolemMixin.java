@@ -37,11 +37,9 @@ public class SnowgolemMixin {
 
             ItemStack item = new ItemStack(Items.CARVED_PUMPKIN);
 
-            boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.ShearingDrops,
-                player,
-                serverPlayer -> {
-                    if (!serverPlayer.addItem(item)) instance.spawnAtLocation(item, 1.7F);
-                });
+            boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.ShearingDrops, player, serverPlayer -> {
+                if (!serverPlayer.addItem(item)) instance.spawnAtLocation(item, 1.7F);
+            });
 
             if (!hasTelekinesis) instance.spawnAtLocation(item, 1.7F);
         }

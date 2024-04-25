@@ -69,26 +69,20 @@ public abstract class BlockMixin {
         if (!(level instanceof ServerLevel serverLevel)) return;
         Block block = blockState.getBlock();
         if (EnchantmentHelper.hasSilkTouch(itemStack)) return;
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesisBlock(TelekinesisPolicy.ExpDrops,
-            entity,
-            itemStack,
-            player -> {
-                int expToAdd = 0;
-                if (block instanceof DropExperienceBlock expBlock)
-                    expToAdd = ((DropExperienceBlockAccessor) expBlock).getXpRange()
-                        .sample(level.random);
-                if (block instanceof RedStoneOreBlock) expToAdd = 1 + level.random.nextInt(5);
-                if (block instanceof SculkCatalystBlock catalystBlock)
-                    expToAdd = ((CatalystBlockAccessor) catalystBlock).getXpRange()
-                        .sample(level.random);
-                if (block instanceof SculkSensorBlock || block instanceof SculkShriekerBlock)
-                    expToAdd = ConstantInt.of(5)
-                        .sample(level.random);
-                if (block instanceof SpawnerBlock) expToAdd = level.random.nextInt(15) + level.random.nextInt(15);
-                if (block instanceof InfestedBlock infestedBlock)
-                    infestedBlock.spawnAfterBreak(blockState, serverLevel, blockPos, itemStack, true);
-                PlayerUtils.addExpToPlayer(player, expToAdd);
-            });
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesisBlock(TelekinesisPolicy.ExpDrops, entity, itemStack, player -> {
+            int expToAdd = 0;
+            if (block instanceof DropExperienceBlock expBlock) expToAdd = ((DropExperienceBlockAccessor) expBlock).getXpRange()
+                .sample(level.random);
+            if (block instanceof RedStoneOreBlock) expToAdd = 1 + level.random.nextInt(5);
+            if (block instanceof SculkCatalystBlock catalystBlock) expToAdd = ((CatalystBlockAccessor) catalystBlock).getXpRange()
+                .sample(level.random);
+            if (block instanceof SculkSensorBlock || block instanceof SculkShriekerBlock) expToAdd = ConstantInt.of(5)
+                .sample(level.random);
+            if (block instanceof SpawnerBlock) expToAdd = level.random.nextInt(15) + level.random.nextInt(15);
+            if (block instanceof InfestedBlock infestedBlock)
+                infestedBlock.spawnAfterBreak(blockState, serverLevel, blockPos, itemStack, true);
+            PlayerUtils.addExpToPlayer(player, expToAdd);
+        });
 
         if (hasTelekinesis) ci.cancel();
     }

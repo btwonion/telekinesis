@@ -1,9 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
-import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.TelekinesisUtils;
-import net.minecraft.server.level.ServerPlayer;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import dev.nyon.telekinesis.utils.EntityUtils;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,16 +21,6 @@ public class AbstractHorseMixin {
         AbstractHorse instance,
         ItemStack stack
     ) {
-        final var attacker = instance.getLastAttacker();
-        if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
-
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
-            serverPlayer,
-            serverPlayer.getMainHandItem(),
-            player -> {
-                if (!player.addItem(stack)) instance.spawnAtLocation(stack);
-            });
-
-        return !hasTelekinesis;
+        return EntityUtils.spawnAtLocationInject(instance, stack);
     }
 }

@@ -18,12 +18,12 @@
   "version": "${version}",
   "environment": "*",
   "depends": {
-    "fabric-language-kotlin": ">=1.10.17+kotlin.1.9.22",
+    "fabric-language-kotlin": ">=1.10.19+kotlin.1.9.23",
     "yet_another_config_lib_v3": ">=3.3.1+1.20.4",
-    "minecraft": ">=1.20.3"
+    "minecraft": ">1.20.4"
   },
   "suggests": {
-    "modmenu": ">=9.0.0"
+    "modmenu": ">=10.0.0-alpha.3"
   },
   "entrypoints": {
     "main": [
@@ -40,11 +40,9 @@
     ]
   },
   "mixins": [
-    "telekinesis.mixins.json",
-    "compat.treeharvester.mixins.json",
-    "compat.betternether.mixins.json",
-    "compat.levelz.mixins.json"
+    "telekinesis.mixins.json"
   ],
+  "accessWidener": "telekinesis.accesswidener",
   "custom": {
     "modmenu": {
       "links": {

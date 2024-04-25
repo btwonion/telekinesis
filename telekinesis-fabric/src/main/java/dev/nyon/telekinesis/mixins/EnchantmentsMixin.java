@@ -31,9 +31,7 @@ public abstract class EnchantmentsMixin {
         if (!isTelekinesisRegistered) {
             MainKt.setTelekinesis(new TelekinesisEnchantment());
             isTelekinesisRegistered = true;
-            Registry.register(BuiltInRegistries.ENCHANTMENT,
-                new ResourceLocation("telekinesis", "telekinesis"),
-                MainKt.getTelekinesis());
+            Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation("telekinesis", "telekinesis"), MainKt.getTelekinesis());
         }
     }
 }

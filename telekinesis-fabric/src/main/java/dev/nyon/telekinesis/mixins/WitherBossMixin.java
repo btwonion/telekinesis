@@ -28,13 +28,10 @@ public abstract class WitherBossMixin {
         final var attacker = instance.getLastAttacker();
         if (!(attacker instanceof ServerPlayer serverPlayer)) return original.call(instance, stack);
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
-            serverPlayer,
-            null,
-            player -> {
-                if (!player.addItem(stack.asItem()
-                    .getDefaultInstance())) instance.spawnAtLocation(stack);
-            });
+        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops, serverPlayer, null, player -> {
+            if (!player.addItem(stack.asItem()
+                .getDefaultInstance())) instance.spawnAtLocation(stack);
+        });
 
         if (!hasTelekinesis) return original.call(instance, stack);
         else return null;

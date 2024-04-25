@@ -24,7 +24,10 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.translatable("menu.telekinesis.config.general.onbydefault"))
-                    .description(OptionDescription.of(Component.translatable("menu.telekinesis.config.general.onbydefault.description")))
+                    .description(
+                        OptionDescription
+                            .of(Component.translatable("menu.telekinesis.config.general.onbydefault.description"))
+                    )
                     .binding(config.onByDefault, { config.onByDefault }, { config.onByDefault = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -33,7 +36,12 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.translatable("menu.telekinesis.config.general.onlywhilesneaking"))
-                    .description(OptionDescription.of(Component.translatable("menu.telekinesis.config.general.onlywhilesneaking.description")))
+                    .description(
+                        OptionDescription
+                            .of(
+                                Component.translatable("menu.telekinesis.config.general.onlywhilesneaking.description")
+                            )
+                    )
                     .binding(config.onlyOnSneak, { config.onlyOnSneak }, { config.onlyOnSneak = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -56,7 +64,10 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.translatable("menu.telekinesis.config.general.blockdrops"))
-                    .description(OptionDescription.of(Component.translatable("menu.telekinesis.config.general.blockdrops.description")))
+                    .description(
+                        OptionDescription
+                            .of(Component.translatable("menu.telekinesis.config.general.blockdrops.description"))
+                    )
                     .binding(config.blockDrops, { config.blockDrops }, { config.blockDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -65,7 +76,10 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.translatable("menu.telekinesis.config.general.expdrops"))
-                    .description(OptionDescription.of(Component.translatable("menu.telekinesis.config.general.expdrops.description")))
+                    .description(
+                        OptionDescription
+                            .of(Component.translatable("menu.telekinesis.config.general.expdrops.description"))
+                    )
                     .binding(config.expDrops, { config.expDrops }, { config.expDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -74,7 +88,10 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.translatable("menu.telekinesis.config.general.mobdrops"))
-                    .description(OptionDescription.of(Component.translatable("menu.telekinesis.config.general.mobdrops.description")))
+                    .description(
+                        OptionDescription
+                            .of(Component.translatable("menu.telekinesis.config.general.mobdrops.description"))
+                    )
                     .binding(config.mobDrops, { config.mobDrops }, { config.mobDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -83,7 +100,10 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.translatable("menu.telekinesis.config.general.vehicledrops"))
-                    .description(OptionDescription.of(Component.translatable("menu.telekinesis.config.general.vehicledrops.description")))
+                    .description(
+                        OptionDescription
+                            .of(Component.translatable("menu.telekinesis.config.general.vehicledrops.description"))
+                    )
                     .binding(config.vehicleDrops, { config.vehicleDrops }, { config.vehicleDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -92,7 +112,10 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.translatable("menu.telekinesis.config.general.shearingdrops"))
-                    .description(OptionDescription.of(Component.translatable("menu.telekinesis.config.general.shearingdrops.description")))
+                    .description(
+                        OptionDescription
+                            .of(Component.translatable("menu.telekinesis.config.general.shearingdrops.description"))
+                    )
                     .binding(config.shearingDrops, { config.shearingDrops }, { config.shearingDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)
@@ -101,7 +124,10 @@ fun YetAnotherConfigLib.Builder.appendOptionCategory() {
             .option(
                 Option.createBuilder<Boolean>()
                     .name(Component.translatable("menu.telekinesis.config.general.fishingdrops"))
-                    .description(OptionDescription.of(Component.translatable("menu.telekinesis.config.general.fishingdrops.description")))
+                    .description(
+                        OptionDescription
+                            .of(Component.translatable("menu.telekinesis.config.general.fishingdrops.description"))
+                    )
                     .binding(config.fishingDrops, { config.fishingDrops }, { config.fishingDrops = it })
                     .controller {
                         TickBoxControllerBuilder.create(it)

@@ -21,9 +21,7 @@ public class PlayerUtils {
         Player player,
         Integer exp
     ) {
-        Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING,
-            player,
-            ItemStack::isDamaged);
+        Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, player, ItemStack::isDamaged);
         if (entry != null) {
             ItemStack itemStack = entry.getValue();
             int j = Math.min(exp * 2, itemStack.getDamageValue());
