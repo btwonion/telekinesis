@@ -4,26 +4,43 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import kotlin.io.path.readText
 
 plugins {
-    kotlin("jvm")
-    kotlin("plugin.serialization")
+    kotlin("jvm") version "1.9.24"
+    kotlin("plugin.serialization") version "1.9.24"
+    id("fabric-loom") version "1.6-SNAPSHOT"
 
-    id("com.modrinth.minotaur")
-    id("com.github.breadmoirai.github-release")
-
-    id("fabric-loom")
+    id("me.modmuss50.mod-publish-plugin") version "0.5.+"
 
     `maven-publish`
     signing
 }
 
+val featureVersion = "2.4.1"
+val mcVersion = property("mcVersion")!!.toString()
+val mcVersionRange = property("mcVersionRange")!!.toString()
+version = "$featureVersion-$mcVersion"
+
 group = "dev.nyon"
-val majorVersion = "2.4.0"
-val mcVersion = "1.20.5-pre4"
-val supportedMcVersions = listOf(mcVersion)
-version = "$majorVersion-$mcVersion"
-description = "Adds a telekinesis enchantment to minecraft"
 val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
+
+loom {
+    if (stonecutter.current.isActive) {
+        runConfigs.all {
+            ideConfigGenerated(true)
+            runDir("../../run")
+        }
+
+        project.tasks.register("runActive") {
+            group = "mod"
+
+            dependsOn(tasks.named("runClient"))
+        }
+    }
+
+    mixin { useLegacyMixinAp = false }
+
+    accessWidenerPath = file("../../src/main/resources/telekinesis.accesswidener")
+}
 
 repositories {
     mavenCentral()
@@ -35,29 +52,30 @@ repositories {
             includeGroup("maven.modrinth")
         }
     }
+    maven("https://maven.terraformersmc.com")
+    maven("https://maven.parchmentmc.org")
+    maven("https://repo.nyon.dev/releases")
     maven("https://maven.isxander.dev/releases")
-    maven("https://maven.terraformersmc.com/releases")
-    maven("https://maven.parchmentmc.org/")
-    maven("https://jitpack.io")
     maven("https://oss.sonatype.org/content/repositories/snapshots/")
-    maven("https://maven.isxander.dev/snapshots") // remove in stable release
+    maven("https://jitpack.io")
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:$mcVersion")
     mappings(
         loom.layered {
-            parchment("org.parchmentmc.data:parchment-1.20.4:2024.04.14@zip")
+            parchment("org.parchmentmc.data:parchment-${property("deps.parchment")}@zip")
             officialMojangMappings()
         }
     )
-    implementation("org.vineflower:vineflower:1.9.3")
-    modImplementation("net.fabricmc:fabric-loader:0.15.10")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.19+kotlin.1.9.23")
-    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.3.3+1.20.4+update.1.20.5-SNAPSHOT+update.1.20.5-SNAPSHOT")
-    modImplementation("com.terraformersmc:modmenu:10.0.0-alpha.3")
 
-    modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:0.97.3+1.20.5")
+    implementation("org.vineflower:vineflower:1.10.1")
+    modImplementation("net.fabricmc:fabric-loader:0.15.11")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fapi")!!}")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.20+kotlin.1.9.24")
+
+    modImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")!!}")
+    modImplementation("com.terraformersmc:modmenu:${property("deps.modMenu")!!}")
 
     include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
 
@@ -69,88 +87,83 @@ dependencies {
     // modCompileOnly("maven.modrinth:EFtixeiF:Gcai736Z") // levelz by Globox1997 wait for 1.20.5
 }
 
+val javaVersion = property("javaVer")!!.toString()
 tasks {
     processResources {
         val modId = "telekinesis"
-        val modName = "Telekinesis"
-        val modDescription = "Adds an telekinesis enchantment"
+        val modName = "telekinesis"
+        val modDescription = "Adds a telekinesis enchantment to minecraft"
 
-        inputs.property("id", modId)
-        inputs.property("group", project.group)
-        inputs.property("name", modName)
-        inputs.property("description", modDescription)
-        inputs.property("version", project.version)
-        inputs.property("github", githubRepo)
-
-        filesMatching(listOf("fabric.mod.json")) {
-            expand(
+        val props =
+            mapOf(
                 "id" to modId,
-                "group" to project.group,
                 "name" to modName,
                 "description" to modDescription,
                 "version" to project.version,
-                "github" to githubRepo
+                "github" to githubRepo,
+                "mc" to mcVersionRange
             )
+
+        props.forEach(inputs::property)
+
+        filesMatching("fabric.mod.json") {
+            expand(props)
         }
     }
 
     register("releaseMod") {
         group = "publishing"
 
-        dependsOn("modrinth")
-        dependsOn("modrinthSyncBody")
-        dependsOn("githubRelease")
+        dependsOn("publishMods")
         dependsOn("publish")
     }
 
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "21"
-    }
-
     withType<JavaCompile> {
-        options.release.set(21)
+        options.release = javaVersion.toInt()
     }
 
-    loom {
-        accessWidenerPath = file("src/main/resources/telekinesis.accesswidener")
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = javaVersion
     }
 }
 
 val changelogText =
     buildString {
         append("# v${project.version}\n")
-        rootDir.toPath().resolve("changelog.md").readText().also { append(it) }
+        file("../../../changelog.md").readText().also { append(it) }
     }
 
-modrinth {
-    token.set(findProperty("modrinth.token")?.toString())
-    projectId.set("LLfA8jAD")
-    versionNumber.set("v${project.version}")
-    versionName.set("v${project.version}")
-    versionType.set("release")
-    uploadFile.set(tasks["remapJar"])
-    gameVersions.set(supportedMcVersions)
-    loaders.set(listOf("fabric", "quilt"))
-    dependencies {
-        required.project("fabric-language-kotlin")
-        required.project("yacl")
-        required.project("modmenu")
+val supportedMcVersions: List<String> = property("supportedMcVersions")!!.toString().split(',').map(String::trim).filter(String::isNotEmpty)
+
+publishMods {
+    displayName = "v${project.version}"
+    file = tasks.remapJar.get().archiveFile
+    changelog = changelogText
+    type = STABLE
+    modLoaders.addAll("fabric", "quilt")
+
+    modrinth {
+        projectId = "LLfA8jAD"
+        accessToken = providers.environmentVariable("MODRINTH_API_KEY")
+        minecraftVersions.addAll(supportedMcVersions)
+
+        requires { slug = "fabric-api" }
+        requires { slug = "yacl" }
+        requires { slug  = "fabric-language-kotlin" }
+        optional { slug = "modmenu" }
     }
-    changelog.set(changelogText)
-    syncBodyFrom.set(file("../README.md").readText())
-}
 
-githubRelease {
-    token(findProperty("github.token")?.toString())
+    github {
+        repository = githubRepo
+        accessToken = providers.environmentVariable("GITHUB_TOKEN")
+        commitish = "master"
+    }
 
-    val (rowner, rrepo) = githubRepo.split("/")
-    owner = rowner
-    repo = rrepo
-    releaseName = "v${project.version}"
-    tagName = "v${project.version}"
-    body = changelogText
-    targetCommitish = "master"
-    setReleaseAssets(tasks["remapJar"])
+    discord {
+        webhookUrl = providers.environmentVariable("DISCORD_WEBHOOK")
+        username = "Release Notifier"
+        content = "# A new version of Telekinesis released!\n$changelogText"
+    }
 }
 
 publishing {
@@ -158,26 +171,46 @@ publishing {
         maven {
             name = "nyon"
             url = uri("https://repo.nyon.dev/releases")
-            credentials(PasswordCredentials::class)
-            authentication {
-                create<BasicAuthentication>("basic")
+            credentials {
+                username = providers.environmentVariable("NYON_USERNAME").orNull
+                password = providers.environmentVariable("NYON_PASSWORD").orNull
             }
         }
     }
     publications {
         create<MavenPublication>("maven") {
             groupId = "dev.nyon"
-            artifactId = "telekinesis-fabric"
-            version = "${project.version}"
+            artifactId = "telekinesis"
+            version = project.version.toString()
             from(components["java"])
         }
     }
 }
 
-signing {
-    sign(publishing.publications)
-}
-
 java {
     withSourcesJar()
+
+    javaVersion.toInt()
+        .let { JavaVersion.values()[it - 1] }
+        .let {
+            sourceCompatibility = it
+            targetCompatibility = it
+        }
 }
+
+kotlin {
+    jvmToolchain(javaVersion.toInt())
+}
+
+/*
+signing {
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    useGpgCmd()
+    if (signingKey != null && signingPassword != null) {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+    sign(publishing.publications)
+}
+ */
+

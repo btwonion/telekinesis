@@ -1,2 +1,1 @@
-- update to 1.20.5
-  - no config screen cause of yacl at the moment
+- support 1.20.1, 1.20.4, 1.20.6
