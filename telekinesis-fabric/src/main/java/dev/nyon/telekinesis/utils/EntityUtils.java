@@ -28,13 +28,18 @@ public class EntityUtils {
         ItemStack item
     ) {
         final var attacker = entity.getLastAttacker();
+
+        return spawnAtLocationAttacker(attacker, item);
+    }
+
+    public static boolean spawnAtLocationAttacker(LivingEntity attacker, ItemStack item) {
         if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
 
         boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
             serverPlayer,
             serverPlayer.getMainHandItem(),
             player -> {
-                if (!player.addItem(item)) entity.spawnAtLocation(item);
+                if (!player.addItem(item)) attacker.spawnAtLocation(item);
             }
         );
 

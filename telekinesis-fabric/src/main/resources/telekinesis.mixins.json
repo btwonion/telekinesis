@@ -6,8 +6,10 @@
   "mixins": [
     "AbstractChestedHorseMixin",
     "AbstractHorseMixin",
+    "AbstractMinecartMixin",
     "AllayMixin",
     "BlockMixin",
+    "BoatMixin",
     "CatalystBlockAccessor",
     "ChestBoatMixin",
     "DropExperienceBlockAccessor",
@@ -16,6 +18,7 @@
     "FishingHookMixin",
     "InventoryMixin",
     "LivingEntityMixin",
+    "MinecartTNTMixin",
     "MinecraftServerMixin",
     "MobMixin",
     "PiglinMixin",

@@ -3,12 +3,13 @@ package dev.nyon.telekinesis.mixins;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.nyon.telekinesis.utils.EntityUtils;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.vehicle.VehicleEntity;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(VehicleEntity.class)
+@Pseudo
+@Mixin(targets = "net.minecraft.world.entity.vehicle.VehicleEntity")
 public class VehicleEntityMixin {
 
     @ModifyExpressionValue(
