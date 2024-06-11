@@ -1,53 +1,56 @@
 {
-  "schemaVersion": 1,
-  "id": "${id}",
-  "name": "${name}",
-  "description": "${description}",
-  "contact": {
-    "issues": "https://github.com/btwonion/telekinesis/issues",
-    "sources": "https://github.com/btwonion/telekinesis"
-  },
-  "icon": "assets/telekinesis/icon.png",
-  "authors": [
-    "btwonion"
-  ],
-  "contributors": [],
-  "license": [
-    "GNU General Public License v3.0"
-  ],
-  "version": "${version}",
-  "environment": "*",
-  "depends": {
-    "fabric-language-kotlin": ">=1.10.20+kotlin.1.9.24",
-    "yet_another_config_lib_v3": "*",
-    "minecraft": "${mc}"
-  },
-  "suggests": {
-    "modmenu": "*"
-  },
-  "entrypoints": {
-    "main": [
-      {
-        "adapter": "kotlin",
-        "value": "dev.nyon.telekinesis.MainKt::init"
-      }
+    "schemaVersion": 1,
+    "id": "${id}",
+    "name": "${name}",
+    "description": "${description}",
+    "contact": {
+        "issues": "https://github.com/btwonion/telekinesis/issues",
+        "sources": "https://github.com/btwonion/telekinesis"
+    },
+    "icon": "assets/telekinesis/icon.png",
+    "authors": [
+        "btwonion"
     ],
-    "modmenu": [
-      {
-        "adapter": "kotlin",
-        "value": "dev.nyon.telekinesis.ModMenuImpl"
-      }
-    ]
-  },
-  "mixins": [
-    "telekinesis.mixins.json"
-  ],
-  "accessWidener": "telekinesis.accesswidener",
-  "custom": {
-    "modmenu": {
-      "links": {
-        "modmenu.discord": "https://discord.gg/pmHTtZnMd3"
-      }
+    "contributors": [],
+    "license": [
+        "GNU General Public License v3.0"
+    ],
+    "version": "${version}",
+    "environment": "*",
+    "depends": {
+        "fabric-language-kotlin": ">=1.11.0+kotlin.2.0.0",
+        "yet_another_config_lib_v3": "*",
+        "minecraft": "${mc}"
+    },
+    "suggests": {
+        "modmenu": "*"
+    },
+    "entrypoints": {
+        "fabric-datagen": [
+            "dev.nyon.telekinesis.TelekinesisEnchantmentGenerator"
+        ],
+        "main": [
+            {
+                "adapter": "kotlin",
+                "value": "dev.nyon.telekinesis.MainKt::init"
+            }
+        ],
+        "modmenu": [
+            {
+                "adapter": "kotlin",
+                "value": "dev.nyon.telekinesis.ModMenuImpl"
+            }
+        ]
+    },
+    "mixins": [
+        "telekinesis.mixins.json"
+    ],
+    "accessWidener": "telekinesis.accesswidener",
+    "custom": {
+        "modmenu": {
+            "links": {
+                "modmenu.discord": "https://discord.gg/pmHTtZnMd3"
+            }
+        }
     }
-  }
 }

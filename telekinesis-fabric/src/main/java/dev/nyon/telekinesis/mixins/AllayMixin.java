@@ -1,25 +1,21 @@
 package dev.nyon.telekinesis.mixins;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.EntityUtils;
-import dev.nyon.telekinesis.utils.TelekinesisUtils;
-import net.minecraft.server.level.ServerPlayer;
+import dev.nyon.telekinesis.utils.MixinHelper;
 import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 @Mixin(Allay.class)
 public class AllayMixin {
 
     @Unique
-    final Allay allay = (Allay) (Object) this;
+    final Allay instance = (Allay) (Object) this;
 
     @WrapWithCondition(
         method = "dropEquipment",
@@ -28,38 +24,23 @@ public class AllayMixin {
             target = "Lnet/minecraft/world/entity/animal/allay/Allay;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
         )
     )
-    public boolean redirectEquipmentDrop(
+    public boolean modifyEquipmentDrop(
         Allay instance,
         ItemStack stack
     ) {
-        return EntityUtils.spawnAtLocationInject(instance, stack);
+        return MixinHelper.entityDropEquipmentSingle(instance, stack);
     }
 
-    @Redirect(
+    @ModifyExpressionValue(
         method = "dropEquipment",
         at = @At(
             value = "INVOKE",
-            target = "Ljava/util/List;forEach(Ljava/util/function/Consumer;)V"
+            target = "Lnet/minecraft/world/SimpleContainer;removeAllItems()Ljava/util/List;"
         )
     )
-    public void redirectInventoryDrops(
-        List<ItemStack> instance,
-        Consumer<ItemStack> consumer
+    public List<ItemStack> modifyEquipmentDrops(
+        List<ItemStack> original
     ) {
-        final var attacker = allay.getLastAttacker();
-        if (!(attacker instanceof ServerPlayer serverPlayer)) {
-            instance.forEach(consumer);
-            return;
-        }
-
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops,
-            serverPlayer,
-            serverPlayer.getMainHandItem(),
-            player -> instance.forEach(item -> {
-                if (!player.addItem(item)) consumer.accept(item);
-            })
-        );
-
-        if (!hasTelekinesis) instance.forEach(consumer);
+        return MixinHelper.entityDropEquipmentMultiple(instance, original);
     }
 }

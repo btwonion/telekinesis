@@ -2,10 +2,9 @@
 
 package dev.nyon.telekinesis
 
-import net.minecraft.server.MinecraftServer
-
-var server: MinecraftServer? = null
+/*? if <=1.20.6 {*//*
 lateinit var telekinesis: TelekinesisEnchantment
+*//*?}*/
 
 fun init() {
     loadConfig()

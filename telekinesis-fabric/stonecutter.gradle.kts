@@ -1,7 +1,20 @@
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.buildJsonArray
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonArray
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
+import java.time.Instant
+
 plugins {
     id("dev.kikugie.stonecutter")
 }
-stonecutter active "1.20.1" /* [SC] DO NOT EDIT */
+stonecutter active "1.21" /* [SC] DO NOT EDIT */
 
 stonecutter registerChiseled
     tasks.register("buildAllVersions", stonecutter.chiseled) {
@@ -14,3 +27,77 @@ stonecutter registerChiseled
         group = "mod"
         ofTask("releaseMod")
     }
+
+private data class Field(val name: String, val value: String, val inline: Boolean)
+
+private data class Embed(
+    val title: String, val description: String, val timestamp: String, val color: Int, val fields: List<Field>
+)
+
+private data class DiscordWebhook(
+    val username: String, val avatarUrl: String, val embeds: List<Embed>
+)
+
+tasks.register("postUpdate") {
+    group = "mod"
+
+    val version = project(stonecutter.versions.first().project).version.toString()
+    val featureVersion = version.split('-').first()
+
+    val url = providers.environmentVariable("DISCORD_WEBHOOK").orNull ?: return@register
+    val changelogText = rootProject.file("changelog.md").readText()
+    val webhook = DiscordWebhook(
+        username = "${rootProject.name} Release Notifier",
+        avatarUrl = "https://raw.githubusercontent.com/btwonion/skylper/master/src/main/resources/assets/skylper/icon/icon.png",
+        embeds = listOf(
+            Embed(
+                title = "v$featureVersion of ${rootProject.name} released!",
+                description = "# Changelog\n$changelogText",
+                timestamp = Instant.now().toString(),
+                color = 0xff0080,
+                fields = listOf(
+                    Field(
+                        "Supported versions", stonecutter.versions.joinToString { it.version }, false
+                    ),
+                    Field("Modrinth", "https://modrinth.com/mod/telekinesis", true),
+                    Field("GitHub", "https://github.com/btwonion/telekinesis", true)
+                ),
+            )
+        )
+    )
+
+    @OptIn(ExperimentalSerializationApi::class)
+    val embedsJson = buildJsonArray {
+        webhook.embeds.map { embed ->
+            add(buildJsonObject {
+                put("title", embed.title)
+                put("description", embed.description)
+                put("timestamp", embed.timestamp)
+                put("color", embed.color)
+                putJsonArray("fields") {
+                    addAll(embed.fields.map { field ->
+                        buildJsonObject {
+                            put("name", field.name)
+                            put("value", field.value)
+                            put("inline", field.inline)
+                        }
+                    })
+                }
+            })
+        }
+    }
+
+    val json = buildJsonObject {
+        put("username", webhook.username)
+        put("avatar_url", webhook.avatarUrl)
+        put("embeds", embedsJson)
+    }
+
+    val jsonString = Json.encodeToString(json)
+    val response = HttpClient.newHttpClient().send(
+        HttpRequest.newBuilder(URI.create(url)).header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(jsonString)).build(), HttpResponse.BodyHandlers.ofString()
+    )
+
+    println(response.body())
+}

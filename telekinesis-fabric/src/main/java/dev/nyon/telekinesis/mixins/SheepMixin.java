@@ -1,7 +1,6 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

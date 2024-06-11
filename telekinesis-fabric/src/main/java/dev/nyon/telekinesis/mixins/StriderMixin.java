@@ -1,8 +1,9 @@
 package dev.nyon.telekinesis.mixins;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import dev.nyon.telekinesis.utils.EntityUtils;
+import dev.nyon.telekinesis.utils.MixinHelper;
 import net.minecraft.world.entity.monster.Strider;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,6 +22,6 @@ public class StriderMixin {
         Strider instance,
         ItemLike item
     ) {
-        return EntityUtils.spawnAtLocationInject(instance, item);
+        return MixinHelper.entityDropEquipmentSingle(instance, new ItemStack(item));
     }
 }

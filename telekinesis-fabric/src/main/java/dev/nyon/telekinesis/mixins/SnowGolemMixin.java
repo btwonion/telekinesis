@@ -1,7 +1,6 @@
 package dev.nyon.telekinesis.mixins;
 
 import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(SnowGolem.class)
-public class SnowgolemMixin {
+public class SnowGolemMixin {
 
     @Redirect(
         method = "mobInteract",

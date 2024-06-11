@@ -1,7 +1,8 @@
 package dev.nyon.telekinesis.mixins;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import dev.nyon.telekinesis.utils.EntityUtils;
+import dev.nyon.telekinesis.utils.MixinHelper;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.item.ItemStack;
@@ -20,11 +21,11 @@ public class EnderManMixin {
     )
     public boolean redirectEquipmentDrop(
         EnderMan instance,
-        ItemStack stack,
+        ItemStack itemStack,
+        ServerLevel serverLevel,
         DamageSource damageSource,
-        int lootingMultiplier,
-        boolean allowDrops
+        boolean bl
     ) {
-        return EntityUtils.spawnAtLocationInject(instance, stack);
+        return MixinHelper.entityCustomDeathLootSingle(damageSource, itemStack);
     }
 }

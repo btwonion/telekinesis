@@ -1,89 +1,118 @@
 package dev.nyon.telekinesis.mixins;
 
-import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.PlayerUtils;
-import dev.nyon.telekinesis.utils.TelekinesisUtils;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import dev.nyon.telekinesis.DropEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mixin(Block.class)
 public abstract class BlockMixin {
 
-    @ModifyArgs(
+    @Unique
+    private static final ThreadLocal<ServerPlayer> threadLocal = new ThreadLocal<>();
+
+    @ModifyExpressionValue(
         method = "dropResources(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V",
         at = @At(
             value = "INVOKE",
-            target = "Ljava/util/List;forEach(Ljava/util/function/Consumer;)V"
+            target = "Lnet/minecraft/world/level/block/Block;getDrops(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)Ljava/util/List;"
         )
     )
-    private static void redirectDrops(
-        Args args,
-        BlockState blockState,
+    private static List<ItemStack> modifyDrops(
+        List<ItemStack> original,
+        BlockState state,
         Level level,
-        BlockPos blockPos,
-        @Nullable BlockEntity blockEntity,
-        @Nullable Entity entity,
-        ItemStack itemStack
+        BlockPos pos,
+        @Nullable
+        BlockEntity blockEntity,
+        @Nullable
+        Entity entity,
+        ItemStack tool
     ) {
-        args.<Consumer<ItemStack>>set(0, item -> {
-            if (!TelekinesisUtils.handleTelekinesisBlock(TelekinesisPolicy.BlockDrops, entity, itemStack, player -> {
-                if (!player.addItem(item)) Block.popResource(level, blockPos, item);
-            })) Block.popResource(level, blockPos, item);
-        });
+        if (!(entity instanceof ServerPlayer player)) return original;
+
+        ArrayList<ItemStack> mutableList = new ArrayList<>(original);
+        DropEvent.INSTANCE.getEvent()
+            .invoker()
+            .invoke(mutableList, new MutableInt(0), player, tool);
+
+        return mutableList;
     }
 
-    @Inject(
+    @WrapOperation(
         method = "dropResources(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/level/block/state/BlockState;spawnAfterBreak(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;Z)V"
-        ),
-        cancellable = true
+        )
     )
-    private static void manipulateDrops(
-        BlockState blockState,
-        Level level,
+    private static void checkForPlayerBreak(
+        BlockState instance,
+        ServerLevel serverLevel,
         BlockPos blockPos,
-        BlockEntity blockEntity,
-        Entity entity,
         ItemStack itemStack,
-        CallbackInfo ci
+        boolean b,
+        Operation<Void> original,
+        BlockState state,
+        Level level,
+        BlockPos pos,
+        @Nullable
+        BlockEntity blockEntity,
+        @Nullable
+        Entity entity,
+        ItemStack tool
     ) {
-        if (!(level instanceof ServerLevel serverLevel)) return;
-        Block block = blockState.getBlock();
-        if (EnchantmentHelper.hasSilkTouch(itemStack)) return;
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesisBlock(TelekinesisPolicy.ExpDrops, entity, itemStack, player -> {
-            int expToAdd = 0;
-            if (block instanceof DropExperienceBlock expBlock) expToAdd = ((DropExperienceBlockAccessor) expBlock).getXpRange()
-                .sample(level.random);
-            if (block instanceof RedStoneOreBlock) expToAdd = 1 + level.random.nextInt(5);
-            if (block instanceof SculkCatalystBlock catalystBlock) expToAdd = ((CatalystBlockAccessor) catalystBlock).getXpRange()
-                .sample(level.random);
-            if (block instanceof SculkSensorBlock || block instanceof SculkShriekerBlock) expToAdd = ConstantInt.of(5)
-                .sample(level.random);
-            if (block instanceof SpawnerBlock) expToAdd = level.random.nextInt(15) + level.random.nextInt(15);
-            if (block instanceof InfestedBlock infestedBlock)
-                infestedBlock.spawnAfterBreak(blockState, serverLevel, blockPos, itemStack, true);
-            PlayerUtils.addExpToPlayer(player, expToAdd);
-        });
+        if (!(entity instanceof ServerPlayer player)) return;
 
-        if (hasTelekinesis) ci.cancel();
+        ServerPlayer previous = threadLocal.get();
+        threadLocal.set(player);
+        try {
+            original.call(instance, serverLevel, blockPos, itemStack, b);
+        } finally {
+            threadLocal.set(previous);
+        }
+    }
+
+    @ModifyExpressionValue(
+        method = "tryDropExperience",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;processBlockExperience(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;I)I"
+        )
+    )
+    private int modifyExp(
+        int original,
+        ServerLevel level,
+        BlockPos pos,
+        ItemStack heldItem,
+        IntProvider amount
+    ) {
+        ServerPlayer player = threadLocal.get();
+        if (player == null) return original;
+
+        MutableInt mutableInt = new MutableInt(original);
+        DropEvent.INSTANCE.getEvent()
+            .invoker()
+            .invoke(new ArrayList<>(), mutableInt, player, heldItem);
+
+        return mutableInt.getValue();
     }
 }

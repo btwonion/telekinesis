@@ -2,8 +2,6 @@ package dev.nyon.telekinesis.mixins;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.PlayerUtils;
-import dev.nyon.telekinesis.utils.TelekinesisUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;

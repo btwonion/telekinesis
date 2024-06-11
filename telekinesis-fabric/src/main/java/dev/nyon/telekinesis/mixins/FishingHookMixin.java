@@ -1,64 +1,55 @@
 package dev.nyon.telekinesis.mixins;
 
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import dev.nyon.telekinesis.TelekinesisPolicy;
-import dev.nyon.telekinesis.utils.PlayerUtils;
-import dev.nyon.telekinesis.utils.TelekinesisUtils;
+import com.llamalad7.mixinextras.injector.ModifyReceiver;
+import dev.nyon.telekinesis.DropEvent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mixin(FishingHook.class)
 public abstract class FishingHookMixin {
+
+    @ModifyReceiver(
+        method = "retrieve",
+        at = @At(
+            value = "INVOKE",
+            target = "Ljava/util/List;iterator()Ljava/util/Iterator;"
+        )
+    )
+    public List<ItemStack> modifyFishingDrops(
+        List<ItemStack> instance,
+        ItemStack fishingHook
+    ) {
+        if (!(getPlayerOwner() instanceof ServerPlayer player)) return instance;
+
+        ArrayList<ItemStack> mutableList = new ArrayList<>(instance);
+        mutableList.removeIf(item -> {
+            ArrayList<ItemStack> singleList = new ArrayList<>(List.of(item));
+            DropEvent.INSTANCE.getEvent()
+                .invoker()
+                .invoke(singleList, new MutableInt(syncronizedRandom.nextInt(6) + 1), player, fishingHook);
+            return singleList.isEmpty();
+        });
+
+        return mutableList;
+    }
 
     @Shadow
     @Nullable
     public abstract Player getPlayerOwner();
 
-    @WrapWithCondition(
-        method = "retrieve",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"
-        )
-    )
-    private boolean redirectFishingHookDrops(
-        Level instance,
-        Entity entity,
-        ItemStack stack
-    ) {
-        if (!(getPlayerOwner() instanceof ServerPlayer _serverPlayer)) return true;
-
-        if (entity instanceof ExperienceOrb expOrb) {
-            final var hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.ExpDrops,
-                _serverPlayer,
-                stack,
-                serverPlayer -> PlayerUtils.addExpToPlayer(serverPlayer, expOrb.getValue())
-            );
-
-            return !hasTelekinesis;
-        }
-
-        if (entity instanceof ItemEntity itemEntity) {
-            final var hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.FishingDrops,
-                _serverPlayer,
-                stack,
-                serverPlayer -> {
-                    if (!serverPlayer.addItem(itemEntity.getItem())) instance.addFreshEntity(itemEntity);
-                }
-            );
-
-            return !hasTelekinesis;
-        }
-        return true;
-    }
+    @Shadow
+    @Final
+    private RandomSource syncronizedRandom;
 }

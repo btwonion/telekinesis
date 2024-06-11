@@ -1,20 +1,22 @@
 package dev.nyon.telekinesis
 
+/*? if <1.21 {*//*
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.entity.EquipmentSlot
-/*? >1.20.5 {*//*
+*//*?}*/
+/*? >1.20.5 {*/
 import net.minecraft.tags.ItemTags
-*//*?} else {*/
+/*?} else {*//*
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.MobType
 import net.minecraft.world.item.enchantment.EnchantmentCategory
-/*?}*/
+*//*?}*/
 
 
 
-/*? >1.20.5 {*//*
+/*? if =1.20.6 {*//*
 class TelekinesisEnchantment : Enchantment(
     definition(
         ItemTags.DURABILITY_ENCHANTABLE,
@@ -29,7 +31,7 @@ class TelekinesisEnchantment : Enchantment(
     override fun getFullname(i: Int): Component =
         Component.translatable("enchantment.telekinesis.telekinesis.name").withStyle(Style.EMPTY.withColor(0xFFB64C))
 }
-*//*?} else {*/
+*//*?} elif <1.20.5 {*//*
 class TelekinesisEnchantment : Enchantment(
     Rarity.RARE, EnchantmentCategory.BREAKABLE, listOf(EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND).toTypedArray()
 ) {
@@ -46,4 +48,4 @@ class TelekinesisEnchantment : Enchantment(
     override fun getFullname(i: Int): Component =
         Component.translatable("enchantment.telekinesis.telekinesis.name").withStyle(Style.EMPTY.withColor(0xFFB64C))
 }
-/*?}*/
+*//*?}*/
