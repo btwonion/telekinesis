@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.EnchantmentTagProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
@@ -20,13 +21,15 @@ class TelekinesisEnchantmentGenerator : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(generator: FabricDataGenerator) {/*? if >=1.21 {*/
         val pack = generator.createPack()
 
-        pack.addProvider(::EnchantmentProvider)/*?}*/
+        pack.addProvider(::EnchantmentProvider)
+        pack.addProvider(::TelekinesisTagProvider)
+    /*?}*/
     }
 
     override fun buildRegistry(registryBuilder: RegistrySetBuilder) {
         registryBuilder.add(Registries.ENCHANTMENT) { context ->
             val enchantmentDefinition: EnchantmentDefinition = Enchantment.definition(
-                context.lookup(Registries.ITEM).getOrThrow(ItemTags.DURABILITY_ENCHANTABLE),
+                context.lookup(Registries.ITEM).getOrThrow(ItemTags.DURABILITY_ENCHANTABLE), // TODO: only tools!!
                 2,
                 1,
                 dynamicCost(25, 25),
@@ -36,13 +39,19 @@ class TelekinesisEnchantmentGenerator : DataGeneratorEntrypoint {
             )
 
             context.register(
-                ResourceKey.create(
-                    Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("telekinesis", "telekinesis")
-                ), Enchantment.enchantment(enchantmentDefinition).build(
+                ResourceKey.create(Registries.ENCHANTMENT, enchantmentId), Enchantment.enchantment(enchantmentDefinition).build(
                     ResourceLocation.fromNamespaceAndPath("telekinesis", "telekinesis.name")
                 )
             )
         }
+    }
+}
+
+private class TelekinesisTagProvider(
+    output: FabricDataOutput, completableFuture: CompletableFuture<HolderLookup.Provider>
+) : EnchantmentTagProvider(output, completableFuture) {
+    override fun addTags(registries: HolderLookup.Provider) {
+        getOrCreateTagBuilder(tagKey).add(enchantmentId)
     }
 }
 

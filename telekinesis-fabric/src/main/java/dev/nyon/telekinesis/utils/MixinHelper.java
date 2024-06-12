@@ -3,10 +3,12 @@ package dev.nyon.telekinesis.utils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import dev.nyon.telekinesis.DropEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.vehicle.ChestBoat;
+import net.minecraft.world.entity.Shearable;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.VehicleEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +29,18 @@ public class MixinHelper {
             .invoke(mutableList, new MutableInt(0), player, player.getMainHandItem());
 
         return !mutableList.isEmpty();
+    }
+
+    public static int modifyExpressionValuePlayerExp(
+        ServerPlayer player,
+        int exp
+    ) {
+        MutableInt mutableInt = new MutableInt(exp);
+        DropEvent.INSTANCE.getEvent()
+            .invoker()
+            .invoke(new ArrayList<>(), mutableInt, player, player.getMainHandItem());
+
+        return mutableInt.getValue();
     }
 
     public static boolean entityDropEquipmentSingle(
@@ -107,6 +121,27 @@ public class MixinHelper {
         threadLocal.set(player);
         try {
             original.call(instance, item);
+        } finally {
+            threadLocal.set(previous);
+        }
+    }
+
+    public static void prepareShearableServerPlayer(
+        Shearable instance,
+        SoundSource source,
+        Operation<Void> original,
+        Player _player,
+        ThreadLocal<ServerPlayer> threadLocal
+    ) {
+        if (!(_player instanceof ServerPlayer player)) {
+            original.call(instance, source);
+            return;
+        }
+
+        ServerPlayer previous = threadLocal.get();
+        threadLocal.set(player);
+        try {
+            original.call(instance, source);
         } finally {
             threadLocal.set(previous);
         }

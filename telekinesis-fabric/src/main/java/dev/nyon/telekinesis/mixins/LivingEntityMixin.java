@@ -1,69 +1,67 @@
 package dev.nyon.telekinesis.mixins;
 
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import dev.nyon.telekinesis.TelekinesisPolicy;
-import net.minecraft.server.level.ServerLevel;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import dev.nyon.telekinesis.DropEvent;
+import dev.nyon.telekinesis.utils.MixinHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
-    @Unique
-    final LivingEntity livingEntity = (LivingEntity) (Object) this;
 
-    @WrapWithCondition(
+    @ModifyExpressionValue(
         method = "dropExperience",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/ExperienceOrb;award(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;I)V"
+            target = "Lnet/minecraft/world/entity/LivingEntity;getExperienceReward(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;)I"
         )
     )
-    public boolean redirectExp(
-        ServerLevel world,
-        Vec3 pos,
-        int amount
+    public int redirectExp(
+        int original,
+        Entity entity
     ) {
-        final var attacker = livingEntity.getLastAttacker();
-        if (!(attacker instanceof ServerPlayer serverPlayer)) return true;
+        if (!(entity instanceof ServerPlayer player)) return original;
 
-        boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.ExpDrops,
-            serverPlayer,
-            serverPlayer.getMainHandItem(),
-            player -> PlayerUtils.addExpToPlayer(player, amount)
-        );
-
-        return !hasTelekinesis;
+        return MixinHelper.modifyExpressionValuePlayerExp(player, original);
     }
 
-    @ModifyArgs(
+    @ModifyArg(
         method = "dropFromLootTable",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootParams;JLjava/util/function/Consumer;)V"
-        )
+        ),
+        index = 2
     )
-    public void redirectCommonDrops(
-        Args args,
-        DamageSource damageSource,
-        boolean bl
+    public Consumer<ItemStack> redirectCommonDrops(
+        LootParams params,
+        long seed,
+        Consumer<ItemStack> original
     ) {
-        args.<Consumer<ItemStack>>set(2, item -> {
-            boolean hasTelekinesis = TelekinesisUtils.handleTelekinesis(TelekinesisPolicy.MobDrops, damageSource, player -> {
-                if (!player.addItem(item)) livingEntity.spawnAtLocation(item);
-            });
+        DamageSource source = params.getParamOrNull(LootContextParams.DAMAGE_SOURCE);
+        if (source == null || !(source.getEntity() instanceof ServerPlayer player)) return original;
 
-            if (!hasTelekinesis) livingEntity.spawnAtLocation(item);
-        });
+        return item -> {
+            ArrayList<ItemStack> mutableList = new ArrayList<>(List.of(item));
+            DropEvent.INSTANCE.getEvent()
+                .invoker()
+                .invoke(mutableList, new MutableInt(0), player, player.getMainHandItem());
+
+            if (!mutableList.isEmpty()) original.accept(item);
+        };
     }
 }

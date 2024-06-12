@@ -1,5 +1,9 @@
 package dev.nyon.telekinesis.mixins;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import dev.nyon.telekinesis.utils.MixinHelper;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.vehicle.MinecartTNT;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -7,6 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.Item;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
  /*?}*/
 
@@ -14,18 +19,23 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MinecartTNTMixin {
 
     /*? if >1.20.2 {*/
-    @ModifyExpressionValue(
+    @Unique
+    private static final ThreadLocal<ServerPlayer> threadLocal = new ThreadLocal<>();
+
+    @WrapOperation(
         method = "destroy(Lnet/minecraft/world/damagesource/DamageSource;)V",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/vehicle/MinecartTNT;getDropItem()Lnet/minecraft/world/item/Item;"
+            target = "Lnet/minecraft/world/entity/vehicle/MinecartTNT;destroy(Lnet/minecraft/world/item/Item;)V"
         )
     )
-    private Item changeDroppedItem(
-        Item original,
-        DamageSource damageSource
+    private void checkForPlayer(
+        MinecartTNT instance,
+        Item dropItem,
+        Operation<Void> original,
+        DamageSource source
     ) {
-        return EntityUtils.getDropItemInject(original, damageSource);
+        MixinHelper.prepareVehicleServerPlayer(instance, dropItem, original, source, threadLocal);
     }
     /*?}*/
 }

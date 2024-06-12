@@ -1,5 +1,11 @@
 package dev.nyon.telekinesis
 
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+
+
+
 /*? if <1.21 {*//*
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
@@ -49,3 +55,6 @@ class TelekinesisEnchantment : Enchantment(
         Component.translatable("enchantment.telekinesis.telekinesis.name").withStyle(Style.EMPTY.withColor(0xFFB64C))
 }
 *//*?}*/
+
+val tagKey = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("telekinesis", "auto_move"))
+val enchantmentId = ResourceLocation.fromNamespaceAndPath("telekinesis", "telekinesis")

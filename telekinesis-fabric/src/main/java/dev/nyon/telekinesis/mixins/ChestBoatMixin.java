@@ -25,7 +25,7 @@ public class ChestBoatMixin {
         method = "destroy(Lnet/minecraft/world/damagesource/DamageSource;)V",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/vehicle/VehicleEntity;destroy(Lnet/minecraft/world/item/Item;)V"
+            target = "Lnet/minecraft/world/entity/vehicle/ChestBoat;destroy(Lnet/minecraft/world/item/Item;)V"
         )
     )
     private void checkForPlayer(
