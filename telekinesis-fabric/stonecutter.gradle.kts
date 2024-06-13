@@ -98,6 +98,4 @@ tasks.register("postUpdate") {
         HttpRequest.newBuilder(URI.create(url)).header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(jsonString)).build(), HttpResponse.BodyHandlers.ofString()
     )
-
-    println(response.body())
 }

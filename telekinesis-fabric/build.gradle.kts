@@ -14,7 +14,7 @@ plugins {
     signing
 }
 
-val featureVersion = "2.4.1"
+val featureVersion = "3.0.0"
 val mcVersion = property("mcVersion")!!.toString()
 val mcVersionRange = property("mcVersionRange")!!.toString()
 version = "$featureVersion-$mcVersion"
@@ -83,7 +83,7 @@ dependencies {
 
     include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
 
-    include(implementation("com.akuleshov7:ktoml-core-jvm:0.5.1")!!)
+    include(modImplementation("dev.nyon:konfig:2.0.1-1.20.4")!!)
 }
 
 val javaVersion = property("javaVer")!!.toString()

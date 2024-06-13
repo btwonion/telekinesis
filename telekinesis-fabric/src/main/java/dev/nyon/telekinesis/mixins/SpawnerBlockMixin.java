@@ -16,10 +16,10 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.ArrayList;
 
+import static dev.nyon.telekinesis.utils.MixinHelper.threadLocal;
+
 @Mixin(SpawnerBlock.class)
 public class SpawnerBlockMixin {
-    @Unique
-    private static final ThreadLocal<ServerPlayer> threadLocal = new ThreadLocal<>();
 
     @ModifyArgs(
         method = "spawnAfterBreak",

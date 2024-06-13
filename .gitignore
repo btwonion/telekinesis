@@ -4,4 +4,4 @@
 !run/mods/
 **/build/
 .kotlin
-**/generated
+**/.cache

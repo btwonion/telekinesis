@@ -23,11 +23,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dev.nyon.telekinesis.utils.MixinHelper.threadLocal;
+
 @Mixin(Block.class)
 public abstract class BlockMixin {
-
-    @Unique
-    private static final ThreadLocal<ServerPlayer> threadLocal = new ThreadLocal<>();
 
     @ModifyExpressionValue(
         method = "dropResources(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V",

@@ -11,15 +11,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+
+import static dev.nyon.telekinesis.utils.MixinHelper.threadLocal;
 
 @Pseudo
 @Mixin(targets = "net.minecraft.world.entity.vehicle.VehicleEntity")
 public class VehicleEntityMixin {
-
-    @Unique
-    private static final ThreadLocal<ServerPlayer> threadLocal = new ThreadLocal<>();
 
     @WrapOperation(
         method = "destroy(Lnet/minecraft/world/damagesource/DamageSource;)V",
@@ -34,7 +32,7 @@ public class VehicleEntityMixin {
         Operation<Void> original,
         DamageSource source
     ) {
-        MixinHelper.prepareVehicleServerPlayer(instance, dropItem, original, source, threadLocal);
+        MixinHelper.prepareVehicleServerPlayer(instance, dropItem, original, source);
     }
 
     @WrapWithCondition(

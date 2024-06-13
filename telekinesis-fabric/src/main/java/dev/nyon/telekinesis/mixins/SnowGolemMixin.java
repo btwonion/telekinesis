@@ -15,11 +15,10 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
+import static dev.nyon.telekinesis.utils.MixinHelper.threadLocal;
+
 @Mixin(SnowGolem.class)
 public class SnowGolemMixin {
-
-    @Unique
-    private static final ThreadLocal<ServerPlayer> threadLocal = new ThreadLocal<>();
 
     @WrapOperation(
         method = "mobInteract",
@@ -34,7 +33,7 @@ public class SnowGolemMixin {
         Operation<Void> original,
         Player _player
     ) {
-        MixinHelper.prepareShearableServerPlayer(instance, source, original, _player, threadLocal);
+        MixinHelper.prepareShearableServerPlayer(instance, source, original, _player);
     }
 
     @ModifyArg(

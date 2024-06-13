@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class MixinHelper {
+    public static final ThreadLocal<ServerPlayer> threadLocal = new ThreadLocal<>();
+
     public static boolean wrapWithConditionPlayerItemSingle(
         ServerPlayer player,
         ItemStack item
@@ -109,8 +111,7 @@ public class MixinHelper {
         VehicleEntity instance,
         Item item,
         Operation<Void> original,
-        DamageSource source,
-        ThreadLocal<ServerPlayer> threadLocal
+        DamageSource source
     ) {
         if (!(source.getEntity() instanceof ServerPlayer player)) {
             original.call(instance, item);
@@ -130,8 +131,7 @@ public class MixinHelper {
         Shearable instance,
         SoundSource source,
         Operation<Void> original,
-        Player _player,
-        ThreadLocal<ServerPlayer> threadLocal
+        Player _player
     ) {
         if (!(_player instanceof ServerPlayer player)) {
             original.call(instance, source);

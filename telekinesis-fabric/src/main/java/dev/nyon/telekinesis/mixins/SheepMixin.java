@@ -12,14 +12,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+
+import static dev.nyon.telekinesis.utils.MixinHelper.threadLocal;
 
 @Mixin(Sheep.class)
 public abstract class SheepMixin {
-
-    @Unique
-    private static final ThreadLocal<ServerPlayer> threadLocal = new ThreadLocal<>();
 
     @WrapOperation(
         method = "mobInteract",
@@ -35,7 +33,7 @@ public abstract class SheepMixin {
         Player _player,
         InteractionHand hand
     ) {
-        MixinHelper.prepareShearableServerPlayer(instance, source, original, _player, threadLocal);
+        MixinHelper.prepareShearableServerPlayer(instance, source, original, _player);
     }
 
     @ModifyExpressionValue(
