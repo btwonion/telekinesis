@@ -1,4 +1,4 @@
-import dev.kikugie.stonecutter.gradle.StonecutterSettings
+import dev.kikugie.stonecutter.StonecutterSettings
 
 rootProject.name = "telekinesis"
 
@@ -9,12 +9,11 @@ pluginManagement {
         maven("https://server.bbkr.space/artifactory/libs-release/")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://maven.kikugie.dev/releases")
-        maven("https://maven.kikugie.dev/snapshots")
     }
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.3.9"
+    id("dev.kikugie.stonecutter") version "0.4"
 }
 
 buildscript {
@@ -34,5 +33,5 @@ extensions.configure<StonecutterSettings> {
         versions("1.20.1", "1.20.4", "1.20.6", "1.21")
         vcsVersion = "1.20.6"
     }
-    create(project(":telekinesis-fabric"))
+    create(":telekinesis-fabric")
 }

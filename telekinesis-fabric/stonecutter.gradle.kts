@@ -1,10 +1,6 @@
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.buildJsonArray
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.put
-import kotlinx.serialization.json.putJsonArray
+import kotlinx.serialization.json.*
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -16,17 +12,15 @@ plugins {
 }
 stonecutter active "1.21" /* [SC] DO NOT EDIT */
 
-stonecutter registerChiseled
-    tasks.register("buildAllVersions", stonecutter.chiseled) {
-        group = "mod"
-        ofTask("build")
-    }
+stonecutter registerChiseled tasks.register("buildAllVersions", stonecutter.chiseled) {
+    group = "mod"
+    ofTask("build")
+}
 
-stonecutter registerChiseled
-    tasks.register("releaseAllVersions", stonecutter.chiseled) {
-        group = "mod"
-        ofTask("releaseMod")
-    }
+stonecutter registerChiseled tasks.register("releaseAllVersions", stonecutter.chiseled) {
+    group = "mod"
+    ofTask("releaseMod")
+}
 
 private data class Field(val name: String, val value: String, val inline: Boolean)
 
@@ -94,7 +88,7 @@ tasks.register("postUpdate") {
     }
 
     val jsonString = Json.encodeToString(json)
-    val response = HttpClient.newHttpClient().send(
+    HttpClient.newHttpClient().send(
         HttpRequest.newBuilder(URI.create(url)).header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(jsonString)).build(), HttpResponse.BodyHandlers.ofString()
     )
