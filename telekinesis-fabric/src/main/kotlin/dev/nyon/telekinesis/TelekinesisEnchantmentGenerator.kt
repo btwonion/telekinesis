@@ -2,7 +2,8 @@ package dev.nyon.telekinesis
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
+/*? if >=1.21 {*/
+/*import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.EnchantmentTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -15,18 +16,21 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantment.EnchantmentDefinition
 import net.minecraft.world.item.enchantment.Enchantment.dynamicCost
 import java.util.concurrent.CompletableFuture
+*//*?}*/
 
 class TelekinesisEnchantmentGenerator : DataGeneratorEntrypoint {
-    override fun onInitializeDataGenerator(generator: FabricDataGenerator) {/*? if >=1.21 {*/
-        val pack = generator.createPack()
+    override fun onInitializeDataGenerator(generator: FabricDataGenerator) {
+        /*? if >=1.21 {*/
+        /*val pack = generator.createPack()
 
         pack.addProvider(::EnchantmentProvider)
-        pack.addProvider(::TelekinesisEnchantmentTagProvider)/*?}*/
+        pack.addProvider(::TelekinesisEnchantmentTagProvider)
+        *//*?}*/
     }
 }
 
 /*? if >=1.21 {*/
-private class TelekinesisEnchantmentTagProvider(
+/*private class TelekinesisEnchantmentTagProvider(
     output: FabricDataOutput, completableFuture: CompletableFuture<HolderLookup.Provider>
 ) : EnchantmentTagProvider(output, completableFuture) {
     override fun addTags(registries: HolderLookup.Provider) {
@@ -47,7 +51,7 @@ private class EnchantmentProvider(
             2,
             1,
             dynamicCost(25, 25),
-            dynamicCost(75, 25),
+            dynamicCost(75, 75),
             7,
             EquipmentSlotGroup.HAND
         )
@@ -58,4 +62,4 @@ private class EnchantmentProvider(
         entries.add(ResourceKey.create(Registries.ENCHANTMENT, telekinesisEnchantmentId), enchantment)
     }
 }
-/*?}*/
+*//*?}*/

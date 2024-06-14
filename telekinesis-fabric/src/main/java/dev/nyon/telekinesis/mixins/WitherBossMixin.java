@@ -4,7 +4,6 @@ import dev.nyon.telekinesis.utils.MixinHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -23,7 +22,7 @@ public abstract class WitherBossMixin {
         )
     )
     protected void redirectEquipmentDrop(
-        Args args, ServerLevel serverLevel, DamageSource damageSource, boolean bl
+        Args args, /*? if >=1.21 {*/ /*ServerLevel serverLevel, DamageSource damageSource, boolean bl *//*?} else {*/ DamageSource damageSource, int looting, boolean hitByPlayer /*?}*/
     ) {
         ItemLike original = args.get(0);
 

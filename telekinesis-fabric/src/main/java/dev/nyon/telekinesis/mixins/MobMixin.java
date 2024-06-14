@@ -22,14 +22,13 @@ public class MobMixin {
     public boolean modifyCustomDeathLoot(
         Mob instance,
         ItemStack itemStack,
-        ServerLevel serverLevel,
-        DamageSource damageSource,
-        boolean bl
+        /*? if >=1.21 {*/ /*ServerLevel serverLevel, DamageSource damageSource, boolean bl *//*?} else {*/ DamageSource damageSource, int looting, boolean hitByPlayer /*?}*/
     ) {
         return MixinHelper.entityCustomDeathLootSingle(damageSource, itemStack);
     }
 
-    @WrapWithCondition(
+    /*? if >=1.21 {*/
+    /*@WrapWithCondition(
         method = "dropPreservedEquipment(Ljava/util/function/Predicate;)Ljava/util/Set;",
         at = @At(
             value = "INVOKE",
@@ -42,4 +41,5 @@ public class MobMixin {
     ) {
         return MixinHelper.entityDropEquipmentSingle(instance, itemStack);
     }
+    *//*?}*/
 }

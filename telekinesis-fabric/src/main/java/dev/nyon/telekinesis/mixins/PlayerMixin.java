@@ -18,7 +18,7 @@ import java.util.List;
 @Mixin(Player.class)
 public class PlayerMixin {
 
-    @Shadow
+    /*? if >=1.20.5 {*//*@Shadow*//*?} else {*/ @Unique /*?}*/
     @Final
     Inventory inventory;
     @Unique

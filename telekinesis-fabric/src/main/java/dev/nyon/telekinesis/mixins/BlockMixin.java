@@ -78,7 +78,10 @@ public abstract class BlockMixin {
         Entity entity,
         ItemStack tool
     ) {
-        if (!(entity instanceof ServerPlayer player)) return;
+        if (!(entity instanceof ServerPlayer player)) {
+            original.call(instance, serverLevel, blockPos, itemStack, b);
+            return;
+        }
 
         ServerPlayer previous = threadLocal.get();
         threadLocal.set(player);
@@ -93,7 +96,7 @@ public abstract class BlockMixin {
         method = "tryDropExperience",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;processBlockExperience(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;I)I"
+            target = /*? if >=1.21 {*//* "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;processBlockExperience(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;I)I" *//*?} else {*/ "Lnet/minecraft/util/valueproviders/IntProvider;sample(Lnet/minecraft/util/RandomSource;)I" /*?}*/
         )
     )
     private int modifyExp(

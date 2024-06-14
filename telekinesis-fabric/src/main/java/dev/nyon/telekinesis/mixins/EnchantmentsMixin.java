@@ -1,7 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
 /*? if <1.21 {*/
-/*import dev.nyon.telekinesis.MainKt;
+import dev.nyon.telekinesis.MainKt;
 import dev.nyon.telekinesis.TelekinesisEnchantment;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-*//*?}*/
+/*?}*/
 import net.minecraft.world.item.enchantment.Enchantments;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class EnchantmentsMixin {
 
     /*? if <1.21 {*/
-    /*@Unique
+    @Unique
     private static boolean isTelekinesisRegistered = false;
 
     @Inject(
@@ -37,5 +37,5 @@ public abstract class EnchantmentsMixin {
             Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation("telekinesis", "telekinesis"), MainKt.getTelekinesis());
         }
     }
-    *//*?}*/
+    /*?}*/
 }

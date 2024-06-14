@@ -1,32 +1,29 @@
 package dev.nyon.telekinesis.mixins;
 
-import net.minecraft.world.entity.vehicle.AbstractMinecart;
-import org.spongepowered.asm.mixin.Mixin;
-
-/*? <=1.20.2 {*//*
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import dev.nyon.telekinesis.utils.EntityUtils;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import dev.nyon.telekinesis.utils.MixinHelper;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.item.Item;
+import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-*//*?}*/
 
 @Mixin(AbstractMinecart.class)
 public class AbstractMinecartMixin {
 
-    /*? <=1.20.2 {*//*
-    @WrapWithCondition(method = "destroy", at = @At(
-        value = "INVOKE",
-        target = "Lnet/minecraft/world/entity/vehicle/AbstractMinecart;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
-    ))
-    private boolean redirectMinecartDrops(
-        AbstractMinecart instance,
-        ItemStack itemStack,
+    /*? <=1.20.2 {*/
+    @ModifyExpressionValue(
+        method = "destroy",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/entity/vehicle/AbstractMinecart;getDropItem()Lnet/minecraft/world/item/Item;"
+        )
+    )
+    private Item redirectMinecartDrops(
+        Item original,
         DamageSource damageSource
     ) {
-        if (!(damageSource.getEntity() instanceof LivingEntity livingEntity)) return true;
-        return EntityUtils.spawnAtLocationAttacker(livingEntity, itemStack);
+        return MixinHelper.modifyExpressionValueOldVehicle(original, damageSource);
     }
-    *//*?}*/
+    /*?}*/
 }
