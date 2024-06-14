@@ -45,7 +45,6 @@
     "mixins": [
         "telekinesis.mixins.json"
     ],
-    "accessWidener": "telekinesis.accesswidener",
     "custom": {
         "modmenu": {
             "links": {
