@@ -73,8 +73,8 @@ public abstract class LivingEntityMixin {
         };
     }
 
-    /*? if <1.21 {*//*
-    @WrapOperation(
+    /*? if <1.21 {*/
+    /*@WrapOperation(
         method = "dropAllDeathLoot",
         at = @At(
             value = "INVOKE",
