@@ -3,17 +3,16 @@ package dev.nyon.telekinesis
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.enchantment.Enchantment
 
-
-
-/*? if <1.21 {*//*
-import net.minecraft.network.chat.Component
+/*? if <1.21 {*/
+/*import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.entity.EquipmentSlot
 *//*?}*/
 /*? >1.20.5 {*/
-import net.minecraft.tags.ItemTags
+
 /*?} else {*//*
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.MobType
@@ -22,8 +21,8 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory
 
 
 
-/*? if =1.20.6 {*//*
-class TelekinesisEnchantment : Enchantment(
+/*? if =1.20.6 {*/
+/*class TelekinesisEnchantment : Enchantment(
     definition(
         ItemTags.DURABILITY_ENCHANTABLE,
         2,
@@ -56,5 +55,5 @@ class TelekinesisEnchantment : Enchantment(
 }
 *//*?}*/
 
-val tagKey = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("telekinesis", "auto_move"))
-val enchantmentId = ResourceLocation.fromNamespaceAndPath("telekinesis", "telekinesis")
+val telekinesisEffectId: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("telekinesis", "auto_move"))
+val telekinesisEnchantmentId: ResourceLocation = ResourceLocation.fromNamespaceAndPath("telekinesis", "telekinesis")

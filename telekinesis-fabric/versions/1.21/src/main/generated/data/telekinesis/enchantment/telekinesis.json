@@ -13,8 +13,8 @@
     "per_level_above_first": 25
   },
   "slots": [
-    "any"
+    "hand"
   ],
-  "supported_items": "#minecraft:enchantable/durability",
+  "supported_items": "#c:tools",
   "weight": 2
 }

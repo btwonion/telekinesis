@@ -20,7 +20,7 @@ object DropEvent {
     @Suppress("unused")
     private val listener = event.register { items, exp, player, tool ->
         if (config.needSneak && !player.isCrouching) return@register
-        if (config.needEnchantment && !EnchantmentHelper.hasTag(tool, tagKey)) return@register
+        if (config.needEnchantment && !EnchantmentHelper.hasTag(tool, telekinesisEffectId)) return@register
 
         if (config.itemsAllowed) items.removeIf(player::addItem)
         if (config.expAllowed) {

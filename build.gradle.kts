@@ -4,7 +4,7 @@ plugins {
 
     id("me.modmuss50.mod-publish-plugin") version "0.5.+"
 
-    id("fabric-loom") version "1.6-SNAPSHOT" apply (false)
+    id("fabric-loom") version "1.7-SNAPSHOT" apply (false)
 
     id("io.papermc.paperweight.userdev") version "1.5.5" apply (false)
 

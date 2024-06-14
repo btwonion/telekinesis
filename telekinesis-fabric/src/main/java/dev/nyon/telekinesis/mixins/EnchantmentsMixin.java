@@ -1,7 +1,7 @@
 package dev.nyon.telekinesis.mixins;
 
-/*? if <1.21 {*//*
-import dev.nyon.telekinesis.MainKt;
+/*? if <1.21 {*/
+/*import dev.nyon.telekinesis.MainKt;
 import dev.nyon.telekinesis.TelekinesisEnchantment;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(Enchantments.class)
 public abstract class EnchantmentsMixin {
 
-    /*? if <1.21 {*//*
-    @Unique
+    /*? if <1.21 {*/
+    /*@Unique
     private static boolean isTelekinesisRegistered = false;
 
     @Inject(

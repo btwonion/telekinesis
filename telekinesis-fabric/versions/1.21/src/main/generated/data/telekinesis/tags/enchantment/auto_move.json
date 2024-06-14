@@ -1,5 +1,8 @@
 {
   "values": [
-    "telekinesis:telekinesis"
+    {
+      "id": "telekinesis:telekinesis",
+      "required": false
+    }
   ]
 }
