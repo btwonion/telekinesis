@@ -1,1 +1,4 @@
-- support 1.20.1, 1.20.4, 1.20.6
+- completely rework project
+- config is now in json and **NO** migration is applied!
+  - now consists of fewer sections - see readme
+- telekinesis only applies to tools now

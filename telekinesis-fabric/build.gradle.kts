@@ -14,7 +14,8 @@ plugins {
     signing
 }
 
-val featureVersion = "3.0.0"
+val beta: Int = 1 // Pattern is '1.0.0-beta1-1.20.6-pre.2'
+val featureVersion = "1.0.0${if (beta != null) "-beta$beta" else ""}"
 val mcVersion = property("mcVersion")!!.toString()
 val mcVersionRange = property("mcVersionRange")!!.toString()
 version = "$featureVersion-$mcVersion"
@@ -139,7 +140,7 @@ publishMods {
     displayName = "v${project.version}"
     file = tasks.remapJar.get().archiveFile
     changelog = changelogText
-    type = STABLE
+    type = if (beta != null) BETA else STABLE
     modLoaders.addAll("fabric", "quilt")
 
     modrinth {
@@ -185,9 +186,9 @@ java {
     withSourcesJar()
 
     javaVersion.toInt().let { JavaVersion.values()[it - 1] }.let {
-            sourceCompatibility = it
-            targetCompatibility = it
-        }
+        sourceCompatibility = it
+        targetCompatibility = it
+    }
 }
 
 /*

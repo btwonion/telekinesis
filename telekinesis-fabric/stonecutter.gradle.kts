@@ -36,7 +36,20 @@ tasks.register("postUpdate") {
     group = "mod"
 
     val version = project(stonecutter.versions.first().project).version.toString()
-    val featureVersion = version.split('-').first()
+    val hyphenCount = version.count { it == '-' }
+    val featureVersion = when (hyphenCount) {
+        1 -> version.split("-").first()
+        2 -> {
+            val split = version.split("-")
+            if (split.last().contains("rc") || split.last().contains("pre")) split.first()
+            else "${split.first()}-${split[1]}"
+        }
+        3 -> {
+            val split = version.split("-")
+            "${split.first()}-${split[1]}"
+        }
+        else -> return@register
+    }
 
     val url = providers.environmentVariable("DISCORD_WEBHOOK").orNull ?: return@register
     val changelogText = rootProject.file("changelog.md").readText()
