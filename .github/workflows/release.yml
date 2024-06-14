@@ -21,9 +21,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
       - name: Release with Gradle
-        uses: Wandalen/wretry.action@master
-        with:
-          command: ./gradlew releaseAllVersions --stacktrace
+        run: ./gradlew :telekinesis-fabric:releaseAllVersions --stacktrace
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MODRINTH_API_KEY: ${{ secrets.MODRINTH_API_KEY }}
