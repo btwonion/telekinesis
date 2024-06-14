@@ -35,17 +35,17 @@ public abstract class LivingEntityMixin {
         method = "dropExperience",
         at = @At(
             value = "INVOKE",
-            target = /*? if >=1.21 {*/ /*"Lnet/minecraft/world/entity/LivingEntity;getExperienceReward(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;)I" *//*?} else {*/ "Lnet/minecraft/world/entity/LivingEntity;getExperienceReward()I" /*?}*/
+            target = /*? if >=1.21 {*/ "Lnet/minecraft/world/entity/LivingEntity;getExperienceReward(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;)I" /*?} else {*/ /*"Lnet/minecraft/world/entity/LivingEntity;getExperienceReward()I" *//*?}*/
         )
     )
     public int redirectExp(
         int original
-        /*? if >=1.21*//* , Entity entity */
+        /*? if >=1.21*/ , Entity entity 
     ) {
-        /*? if >=1.21 {*//*
+        /*? if >=1.21 {*/
         if (!(entity instanceof ServerPlayer player)) return original;
-        *//*?} else {*/
-        ServerPlayer player = threadLocal.get();
+        /*?} else {*/
+        /*ServerPlayer player = threadLocal.get();
 
         return MixinHelper.modifyExpressionValuePlayerExp(player, original);
     }
@@ -76,7 +76,7 @@ public abstract class LivingEntityMixin {
         };
     }
 
-    /*? if <1.21 {*/
+    /^? if <1.21 {^/
     @WrapOperation(
         method = "dropAllDeathLoot",
         at = @At(
@@ -102,5 +102,6 @@ public abstract class LivingEntityMixin {
             threadLocal.set(previous);
         }
     }
-    /*?}*/
+    /^?}^/
 }
+*/

@@ -31,7 +31,7 @@ extensions.configure<StonecutterSettings> {
     centralScript = "build.gradle.kts"
     shared {
         versions("1.20.1", "1.20.4", "1.20.6", "1.21")
-        vcsVersion = "1.20.6"
+        vcsVersion = "1.21"
     }
     create(":telekinesis-fabric")
 }

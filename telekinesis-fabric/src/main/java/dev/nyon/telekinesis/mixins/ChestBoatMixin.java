@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class ChestBoatMixin {
 
     /*? if >1.20.2 {*/
-    /*@WrapOperation(
+    @WrapOperation(
         method = "destroy(Lnet/minecraft/world/damagesource/DamageSource;)V",
         at = @At(
             value = "INVOKE",
@@ -28,7 +28,7 @@ public abstract class ChestBoatMixin {
     ) {
         MixinHelper.prepareVehicleServerPlayer(instance, item, original, source);
     }
-    *//*?}*/
+    /*?}*/
 
     // TODO: boat inventory does still not work!!! as well as furnaces!!
 }

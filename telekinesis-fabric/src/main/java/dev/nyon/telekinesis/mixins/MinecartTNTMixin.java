@@ -7,16 +7,16 @@ import net.minecraft.world.entity.vehicle.MinecartTNT;
 import org.spongepowered.asm.mixin.Mixin;
 
 /*? if >1.20.2 {*/
-/*import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.injection.At;
- *//*?}*/
+ /*?}*/
 
 @Mixin(MinecartTNT.class)
 public class MinecartTNTMixin {
 
     /*? if >1.20.2 {*/
-    /*@WrapOperation(
+    @WrapOperation(
         method = "destroy(Lnet/minecraft/world/damagesource/DamageSource;)V",
         at = @At(
             value = "INVOKE",
@@ -31,5 +31,5 @@ public class MinecartTNTMixin {
     ) {
         MixinHelper.prepareVehicleServerPlayer(instance, dropItem, original, source);
     }
-    *//*?}*/
+    /*?}*/
 }

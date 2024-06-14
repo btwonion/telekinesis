@@ -22,13 +22,13 @@ public class EnderManMixin {
     public boolean redirectEquipmentDrop(
         EnderMan instance,
         ItemStack itemStack,
-        /*? if >=1.21 {*//*
+        /*? if >=1.21 {*/
         ServerLevel serverLevel,
         DamageSource damageSource,
         boolean bl
-        *//*?} else {*/
-        DamageSource damageSource, int looting, boolean hitByPlayer
-        /*?}*/
+        /*?} else {*/
+        /*DamageSource damageSource, int looting, boolean hitByPlayer
+        *//*?}*/
     ) {
         return MixinHelper.entityCustomDeathLootSingle(damageSource, itemStack);
     }

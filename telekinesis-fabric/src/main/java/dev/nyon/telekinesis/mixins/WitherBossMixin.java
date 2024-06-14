@@ -22,7 +22,7 @@ public abstract class WitherBossMixin {
         )
     )
     protected void redirectEquipmentDrop(
-        Args args, /*? if >=1.21 {*/ /*ServerLevel serverLevel, DamageSource damageSource, boolean bl *//*?} else {*/ DamageSource damageSource, int looting, boolean hitByPlayer /*?}*/
+        Args args, /*? if >=1.21 {*/ ServerLevel serverLevel, DamageSource damageSource, boolean bl /*?} else {*/ /*DamageSource damageSource, int looting, boolean hitByPlayer *//*?}*/
     ) {
         ItemLike original = args.get(0);
 

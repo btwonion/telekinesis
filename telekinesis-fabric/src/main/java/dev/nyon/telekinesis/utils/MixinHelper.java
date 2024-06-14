@@ -9,10 +9,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Shearable;
 import net.minecraft.world.entity.player.Player;
-/*? if >=1.20.4 {*//*
+/*? if >=1.20.4 {*/
 import net.minecraft.world.entity.vehicle.VehicleEntity;
 import net.minecraft.world.item.Item;
-*//*?}*/
+/*?}*/
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -97,7 +97,7 @@ public class MixinHelper {
             .invoke(mutableList,
                 new MutableInt(0),
                 player,
-                Objects.requireNonNullElseGet(/*? if >=1.21 {*//*source.getWeaponItem() *//*?} else {*/ player.getMainHandItem() /*?}*/, player::getMainHandItem)
+                Objects.requireNonNullElseGet(/*? if >=1.21 {*/source.getWeaponItem() /*?} else {*/ /*player.getMainHandItem() *//*?}*/, player::getMainHandItem)
             );
 
         return !mutableList.isEmpty();
@@ -116,13 +116,13 @@ public class MixinHelper {
             .invoke(mutableList,
                 new MutableInt(0),
                 player,
-                Objects.requireNonNullElseGet(/*? if >=1.21 {*//*source.getWeaponItem() *//*?} else {*/ player.getMainHandItem() /*?}*/, player::getMainHandItem)
+                Objects.requireNonNullElseGet(/*? if >=1.21 {*/source.getWeaponItem() /*?} else {*/ /*player.getMainHandItem() *//*?}*/, player::getMainHandItem)
             );
 
         return mutableList;
     }
 
-    /*? if >=1.20.4 {*//*
+    /*? if >=1.20.4 {*/
     public static void prepareVehicleServerPlayer(
         VehicleEntity instance,
         Item item,
@@ -142,7 +142,7 @@ public class MixinHelper {
             threadLocal.set(previous);
         }
     }
-    *//*?}*/
+    /*?}*/
 
     public static void prepareShearableServerPlayer(
         Shearable instance,

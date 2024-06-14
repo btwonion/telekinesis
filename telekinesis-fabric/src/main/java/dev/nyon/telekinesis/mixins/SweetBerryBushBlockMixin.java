@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class SweetBerryBushBlockMixin {
 
     @WrapWithCondition(
-        method = /*? >1.20.5 {*/ /*"useWithoutItem" *//*?} else {*/ "use" /*?}*/,
+        method = /*? >1.20.5 {*/ "useWithoutItem" /*?} else {*/ /*"use" *//*?}*/,
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/level/block/SweetBerryBushBlock;popResource(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)V"
@@ -32,7 +32,7 @@ public class SweetBerryBushBlockMixin {
         Level _level,
         BlockPos _blockPos,
         Player player,
-        /*? if <=1.20.4*/ InteractionHand hand,
+        /*? if <=1.20.4*/ /*InteractionHand hand,*/
         BlockHitResult blockHitResult
     ) {
         if (!(player instanceof ServerPlayer serverPlayer)) return true;

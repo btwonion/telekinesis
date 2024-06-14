@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(Boat.class)
 public class BoatMixin {
     /*? <=1.20.2 {*/
-    @ModifyExpressionValue(
+    /*@ModifyExpressionValue(
         method = "destroy(Lnet/minecraft/world/damagesource/DamageSource;)V",
         at = @At(
             value = "INVOKE",
@@ -24,5 +24,5 @@ public class BoatMixin {
     ) {
         return MixinHelper.modifyExpressionValueOldVehicle(original, damageSource);
     }
-    /*?}*/
+    *//*?}*/
 }

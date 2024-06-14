@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class AbstractMinecartMixin {
 
     /*? <=1.20.2 {*/
-    @ModifyExpressionValue(
+    /*@ModifyExpressionValue(
         method = "destroy",
         at = @At(
             value = "INVOKE",
@@ -25,5 +25,5 @@ public class AbstractMinecartMixin {
     ) {
         return MixinHelper.modifyExpressionValueOldVehicle(original, damageSource);
     }
-    /*?}*/
+    *//*?}*/
 }

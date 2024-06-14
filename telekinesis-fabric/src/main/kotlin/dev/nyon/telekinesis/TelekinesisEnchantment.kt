@@ -5,14 +5,14 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.entity.EquipmentSlot
 /*? if >=1.21 {*/
-/*
+
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 
 val telekinesisEffectId: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("telekinesis", "auto_move"))
 val telekinesisEnchantmentId: ResourceLocation = ResourceLocation.fromNamespaceAndPath("telekinesis", "telekinesis")
-*//*?}*/
+/*?}*/
 
 /*? if <1.21 && >=1.20.5 {*/
 /*import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -39,7 +39,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory
         Component.translatable("enchantment.telekinesis.telekinesis.name").withStyle(ChatFormatting.GRAY)
 }
 *//*?} elif <1.20.5 {*/
-class TelekinesisEnchantment : Enchantment(
+/*class TelekinesisEnchantment : Enchantment(
     Rarity.RARE, EnchantmentCategory.BREAKABLE, listOf(EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND).toTypedArray()
 ) {
     override fun getMinLevel(): Int = 1
@@ -54,4 +54,4 @@ class TelekinesisEnchantment : Enchantment(
     override fun getFullname(i: Int): Component =
         Component.translatable("enchantment.telekinesis.telekinesis.name").withStyle(ChatFormatting.GRAY)
 }
-/*?}*/
+*//*?}*/

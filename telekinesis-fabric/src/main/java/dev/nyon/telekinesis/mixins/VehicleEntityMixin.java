@@ -6,7 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.nyon.telekinesis.utils.MixinHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
-/*? if >=1.20.4*/ /*import net.minecraft.world.entity.vehicle.VehicleEntity;*/
+/*? if >=1.20.4*/ import net.minecraft.world.entity.vehicle.VehicleEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ import static dev.nyon.telekinesis.utils.MixinHelper.threadLocal;
 @Pseudo
 @Mixin(targets = "net.minecraft.world.entity.vehicle.VehicleEntity")
 public class VehicleEntityMixin {
-    /*? if >=1.20.4 {*//*
+    /*? if >=1.20.4 {*/
     @WrapOperation(
         method = "destroy(Lnet/minecraft/world/damagesource/DamageSource;)V",
         at = @At(
@@ -51,5 +51,5 @@ public class VehicleEntityMixin {
 
         return MixinHelper.wrapWithConditionPlayerItemSingle(player, itemStack);
     }
-    *//*?}*/
+    /*?}*/
 }
