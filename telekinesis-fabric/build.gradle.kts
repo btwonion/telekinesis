@@ -37,8 +37,6 @@ loom {
     }
 
     mixin { useLegacyMixinAp = false }
-
-    accessWidenerPath = rootProject.file("telekinesis-fabric/src/main/resources/telekinesis.accesswidener")
 }
 
 // Enable data generation for >1.20.6
