@@ -5,22 +5,19 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.entity.EquipmentSlot
 /*? if >=1.21 {*/
-
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 
 val telekinesisEffectId: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("telekinesis", "auto_move"))
 val telekinesisEnchantmentId: ResourceLocation = ResourceLocation.fromNamespaceAndPath("telekinesis", "telekinesis")
-/*?}*/
-
-/*? if <1.21 && >=1.20.5 {*/
+/*?} elif <1.21 && >=1.20.5 {*/
 /*import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-*//*?} else {*/
-import net.minecraft.world.damagesource.DamageSource
+*//*?} elif <=1.20.4 {*/
+/*import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.MobType
 import net.minecraft.world.item.enchantment.EnchantmentCategory
-/*?}*/
+*//*?}*/
 
 
 /*? if =1.20.6 {*/

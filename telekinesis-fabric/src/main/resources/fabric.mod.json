@@ -38,7 +38,7 @@
         "modmenu": [
             {
                 "adapter": "kotlin",
-                "value": "dev.nyon.telekinesis.ModMenuImpl"
+                "value": "dev.nyon.telekinesis.config.ModMenuImpl"
             }
         ]
     },

@@ -80,7 +80,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.0")
 
     modImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")!!}")
-    modCompileOnly("com.terraformersmc:modmenu:${property("deps.modMenu")!!}")
+    modImplementation("com.terraformersmc:modmenu:${property("deps.modMenu")!!}")
 
     include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
 

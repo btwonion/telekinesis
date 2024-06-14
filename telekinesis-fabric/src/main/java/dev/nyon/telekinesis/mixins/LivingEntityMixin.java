@@ -27,10 +27,6 @@ import static dev.nyon.telekinesis.utils.MixinHelper.threadLocal;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
-
-    @Shadow
-    protected abstract int increaseAirSupply(int currentAir);
-
     @ModifyExpressionValue(
         method = "dropExperience",
         at = @At(
@@ -40,12 +36,13 @@ public abstract class LivingEntityMixin {
     )
     public int redirectExp(
         int original
-        /*? if >=1.21*/ , Entity entity 
+        /*? if >=1.21*/, Entity entity
     ) {
         /*? if >=1.21 {*/
         if (!(entity instanceof ServerPlayer player)) return original;
         /*?} else {*/
         /*ServerPlayer player = threadLocal.get();
+        *//*?}*/
 
         return MixinHelper.modifyExpressionValuePlayerExp(player, original);
     }
@@ -76,7 +73,7 @@ public abstract class LivingEntityMixin {
         };
     }
 
-    /^? if <1.21 {^/
+    /*? if <1.21 {*//*
     @WrapOperation(
         method = "dropAllDeathLoot",
         at = @At(
@@ -102,6 +99,5 @@ public abstract class LivingEntityMixin {
             threadLocal.set(previous);
         }
     }
-    /^?}^/
+    *//*?}*/
 }
-*/
