@@ -55,7 +55,7 @@ tasks.register("postUpdate") {
     val changelogText = rootProject.file("changelog.md").readText()
     val webhook = DiscordWebhook(
         username = "${rootProject.name} Release Notifier",
-        avatarUrl = "https://raw.githubusercontent.com/btwonion/skylper/master/src/main/resources/assets/skylper/icon/icon.png",
+        avatarUrl = "https://raw.githubusercontent.com/btwonion/telekinesis/master/src/main/resources/assets/telekinesis/icon.png",
         embeds = listOf(
             Embed(
                 title = "v$featureVersion of ${rootProject.name} released!",
