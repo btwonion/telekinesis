@@ -1,0 +1,34 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "dev.nyon.telekinesis.mixins",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "AbstractChestedHorseMixin",
+        "AbstractHorseMixin",
+        "AbstractMinecartMixin",
+        "AllayMixin",
+        "BlockMixin",
+        "BoatMixin",
+        "ChestBoatMixin",
+        "EnchantmentsMixin",
+        "EnderManMixin",
+        "FishingHookMixin",
+        "LivingEntityMixin",
+        "MinecartTNTMixin",
+        "MobMixin",
+        "PiglinMixin",
+        "PigMixin",
+        "PlayerMixin",
+        "SheepMixin",
+        "SnowGolemMixin",
+        "SpawnerBlockMixin",
+        "StriderMixin",
+        "SweetBerryBushBlockMixin",
+        "VehicleEntityMixin",
+        "WitherBossMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+  }
+}

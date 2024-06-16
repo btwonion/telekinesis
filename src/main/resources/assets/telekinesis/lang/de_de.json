@@ -1,0 +1,13 @@
+{
+    "menu.telekinesis.name": "telekinesis",
+    "menu.telekinesis.config.general": "Allgemein",
+    "menu.telekinesis.config.general.needEnchantment": "Ohne Enchantment",
+    "menu.telekinesis.config.general.needEnchantment.description": "Entscheidet, ob Telekinesis auch ohne das Enchantment funktionieren soll.",
+    "menu.telekinesis.config.general.needSneak": "Nur beim sneaken",
+    "menu.telekinesis.config.general.needSneak.description": "Entscheidet, ob Telekinesis nur funktionieren soll, wenn man sneakt.",
+    "menu.telekinesis.config.general.expAllowed": "XP",
+    "menu.telekinesis.config.general.expAllowed.description": "Entscheidet, ob Telekinesis für auch für XP Drops funktionieren soll.",
+    "menu.telekinesis.config.general.itemsAllowed": "Items",
+    "menu.telekinesis.config.general.itemsAllowed.description": "Entscheidet, ob Telekinesis für auch für Item Drops funktionieren soll.",
+    "enchantment.telekinesis.telekinesis.name": "Telekinesis"
+}

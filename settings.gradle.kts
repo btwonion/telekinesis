@@ -1,4 +1,4 @@
-import dev.kikugie.stonecutter.gradle.StonecutterSettings
+import dev.kikugie.stonecutter.StonecutterSettings
 
 rootProject.name = "telekinesis"
 
@@ -7,25 +7,28 @@ pluginManagement {
         gradlePluginPortal()
         maven("https://maven.fabricmc.net/")
         maven("https://server.bbkr.space/artifactory/libs-release/")
-        maven("https://maven.quiltmc.org/repository/release/")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://maven.kikugie.dev/releases")
     }
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.3.5"
+    id("dev.kikugie.stonecutter") version "0.4"
 }
 
-//include("telekinesis-paper")
-include("telekinesis-fabric")
+buildscript {
+    repositories { mavenCentral() }
+    dependencies {
+        classpath("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0-RC")
+    }
+}
 
 extensions.configure<StonecutterSettings> {
     kotlinController = true
     centralScript = "build.gradle.kts"
     shared {
-        versions("1.20.1", "1.20.4", "1.20.6")
-        vcsVersion = "1.20.6"
+        versions("1.20.1", "1.20.4", "1.20.6", "1.21")
+        vcsVersion = "1.21"
     }
-    create(project(":telekinesis-fabric"))
+    create(rootProject)
 }
