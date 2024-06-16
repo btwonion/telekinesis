@@ -23,9 +23,6 @@ buildscript {
     }
 }
 
-//include("telekinesis-paper")
-include("telekinesis-fabric")
-
 extensions.configure<StonecutterSettings> {
     kotlinController = true
     centralScript = "build.gradle.kts"
@@ -33,5 +30,5 @@ extensions.configure<StonecutterSettings> {
         versions("1.20.1", "1.20.4", "1.20.6", "1.21")
         vcsVersion = "1.21"
     }
-    create(":telekinesis-fabric")
+    create(rootProject)
 }

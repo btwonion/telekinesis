@@ -1,9 +1,0 @@
-name: $name
-version: $version
-main: $main
-description: $description
-authors: $authors
-website: $website
-api-version: $apiVersion
-folia-supported: $foliaSupported
-loader: $loader
