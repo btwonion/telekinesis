@@ -8,7 +8,7 @@ The configuration file can be found in the client/server directory.
 -> configuration file: `/config/telekinesis.json`
 
 <details>
-<summary>telekinesis.toml</summary>
+<summary>telekinesis.json</summary>
 
 ```json
 {
