@@ -29,6 +29,4 @@ public abstract class ChestBoatMixin {
         MixinHelper.prepareVehicleServerPlayer(instance, item, original, source);
     }
     /*?}*/
-
-    // TODO: boat inventory does still not work!!! as well as furnaces!!
 }

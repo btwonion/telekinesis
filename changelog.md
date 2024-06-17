@@ -1,1 +1,1 @@
-- fix crash on player kill
+- fix null player from threadLocals

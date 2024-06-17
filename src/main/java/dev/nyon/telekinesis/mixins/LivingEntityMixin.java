@@ -42,6 +42,7 @@ public abstract class LivingEntityMixin {
         if (!(entity instanceof ServerPlayer player)) return original;
         /*?} else {*/
         /*ServerPlayer player = threadLocal.get();
+        if (player == null) return original;
         *//*?}*/
 
         return MixinHelper.modifyExpressionValuePlayerExp(player, original);
