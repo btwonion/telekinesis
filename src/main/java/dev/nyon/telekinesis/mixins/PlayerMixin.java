@@ -32,6 +32,7 @@ public class PlayerMixin {
         )
     )
     public void modifyEquipmentDrops(CallbackInfo ci) {
+        if (inventory == null) return;
         ArrayList<ItemStack> items = new ArrayList<>(inventory.items);
         List<ItemStack> processedItems = MixinHelper.entityDropEquipmentMultiple(instance, items);
         inventory.clearContent();
