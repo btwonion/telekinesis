@@ -1,2 +1,1 @@
-- fix bug on player death
-  - never try to mutate an immutable map - yeah im dumb
+- respect tool repair on exp add
