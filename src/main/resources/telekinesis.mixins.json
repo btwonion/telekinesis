@@ -26,7 +26,8 @@
         "StriderMixin",
         "SweetBerryBushBlockMixin",
         "VehicleEntityMixin",
-        "WitherBossMixin"
+        "WitherBossMixin",
+        "invokers.ExperienceOrbInvoker"
     ],
     "injectors": {
         "defaultRequire": 1

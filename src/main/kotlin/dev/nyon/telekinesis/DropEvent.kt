@@ -1,9 +1,11 @@
 package dev.nyon.telekinesis
 
 import dev.nyon.telekinesis.config.config
+import dev.nyon.telekinesis.mixins.invokers.ExperienceOrbInvoker
 import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import org.apache.commons.lang3.mutable.MutableInt
@@ -24,7 +26,10 @@ object DropEvent {
 
         if (config.itemsAllowed) items.removeIf(player::addItem)
         if (config.expAllowed) {
-            player.giveExperiencePoints(exp.value)
+            val fakeExperienceOrb = ExperienceOrb(player.level(), 0.0, 0.0, 0.0, 0)
+            @Suppress("KotlinConstantConditions")
+            val leftExp = (fakeExperienceOrb as ExperienceOrbInvoker).invokeRepairPlayerItems(player, exp.value)
+            player.giveExperiencePoints(leftExp)
             exp.setValue(0)
         }
     }
