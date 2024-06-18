@@ -33,7 +33,7 @@ public class PlayerMixin {
         ArrayList<ItemStack> items = new ArrayList<>(inventory.items);
         List<ItemStack> processedItems = MixinHelper.entityDropEquipmentMultiple(instance, items);
         inventory.clearContent();
-        inventory.items.addAll(processedItems);
+        processedItems.forEach(inventory::add);
         original.call(inventory);
     }
 }

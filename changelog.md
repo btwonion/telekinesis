@@ -1,1 +1,2 @@
-- fix null player from threadLocals
+- fix bug on player death
+  - never try to mutate an immutable map - yeah im dumb
