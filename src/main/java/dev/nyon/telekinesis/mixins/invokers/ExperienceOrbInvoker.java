@@ -2,6 +2,7 @@ package dev.nyon.telekinesis.mixins.invokers;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
@@ -10,7 +11,7 @@ public interface ExperienceOrbInvoker {
 
     @Invoker("repairPlayerItems")
     int invokeRepairPlayerItems(
-        ServerPlayer serverPlayer,
+        /*? if >=1.21 {*/ ServerPlayer serverPlayer /*?} else {*/ /*Player player *//*?}*/,
         int i
     );
 }

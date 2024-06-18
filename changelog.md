@@ -1,1 +1,2 @@
-- respect tool repair on exp add
+- fix ExperienceOrb mixin for <1.21
+  - multiversion support drives me crazy wtf

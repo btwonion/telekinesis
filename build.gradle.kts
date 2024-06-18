@@ -14,7 +14,7 @@ plugins {
     signing
 }
 
-val beta: Int = 5 // Pattern is '1.0.0-beta1-1.20.6-pre.2'
+val beta: Int = 6 // Pattern is '1.0.0-beta1-1.20.6-pre.2'
 val featureVersion = "3.0.0${if (beta != null) "-beta$beta" else ""}"
 val mcVersion = property("mcVersion")!!.toString()
 val mcVersionRange = property("mcVersionRange")!!.toString()
