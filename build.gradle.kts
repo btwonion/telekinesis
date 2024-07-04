@@ -36,6 +36,7 @@ loom {
         }
     }
 
+    accessWidenerPath = rootDir.resolve("src/main/resources/telekinesis.accesswidener")
     mixin { useLegacyMixinAp = false }
 }
 

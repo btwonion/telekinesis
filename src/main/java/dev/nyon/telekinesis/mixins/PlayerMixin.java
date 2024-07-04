@@ -30,10 +30,18 @@ public class PlayerMixin {
         Inventory inventory,
         Operation<Void> original
     ) {
-        ArrayList<ItemStack> items = new ArrayList<>(inventory.items);
-        List<ItemStack> processedItems = MixinHelper.entityDropEquipmentMultiple(instance, items);
-        inventory.clearContent();
-        processedItems.forEach(inventory::add);
+
+        for (List<ItemStack> list : inventory.compartments) {
+            for (int i = 0; i < list.size(); ++i) {
+                ItemStack itemStack = list.get(i);
+                if (!itemStack.isEmpty()) {
+                    ArrayList<ItemStack> singleItem = new ArrayList<>(List.of(itemStack));
+                    List<ItemStack> processedItems = MixinHelper.entityDropEquipmentMultiple(instance, singleItem);
+                    if (processedItems.isEmpty()) list.set(i, ItemStack.EMPTY);
+                }
+            }
+        }
+
         original.call(inventory);
     }
 }
