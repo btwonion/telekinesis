@@ -1,4 +1,4 @@
-@file:Suppress("SpellCheckingInspection", "SENSELESS_COMPARISON", "UnstableApiUsage")
+@file:Suppress("SpellCheckingInspection", "UnstableApiUsage")
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -14,7 +14,7 @@ plugins {
     signing
 }
 
-val beta: Int = 6 // Pattern is '1.0.0-beta1-1.20.6-pre.2'
+val beta: Int? = null // Pattern is '1.0.0-beta1-1.20.6-pre.2'
 val featureVersion = "3.0.0${if (beta != null) "-beta$beta" else ""}"
 val mcVersion = property("mcVersion")!!.toString()
 val mcVersionRange = property("mcVersionRange")!!.toString()

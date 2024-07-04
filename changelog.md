@@ -1,2 +1,1 @@
-- fix ExperienceOrb mixin for <1.21
-  - multiversion support drives me crazy wtf
+- fix players not dropping equipment correctly
