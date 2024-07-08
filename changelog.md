@@ -1,1 +1,1 @@
-- fix players not dropping equipment correctly
+- fix translations

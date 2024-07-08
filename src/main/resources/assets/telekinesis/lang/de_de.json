@@ -1,8 +1,8 @@
 {
     "menu.telekinesis.name": "telekinesis",
     "menu.telekinesis.config.general": "Allgemein",
-    "menu.telekinesis.config.general.needEnchantment": "Ohne Enchantment",
-    "menu.telekinesis.config.general.needEnchantment.description": "Entscheidet, ob Telekinesis auch ohne das Enchantment funktionieren soll.",
+    "menu.telekinesis.config.general.needEnchantment": "Enchantment benötigt",
+    "menu.telekinesis.config.general.needEnchantment.description": "Legt fest, ob Telekinesis nur mit einem Telekinesis verzauberten Werkzeug funktionieren soll.",
     "menu.telekinesis.config.general.needSneak": "Nur beim sneaken",
     "menu.telekinesis.config.general.needSneak.description": "Entscheidet, ob Telekinesis nur funktionieren soll, wenn man sneakt.",
     "menu.telekinesis.config.general.expAllowed": "XP",
