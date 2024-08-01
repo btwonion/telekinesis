@@ -1,6 +1,7 @@
 # telekinesis
 
-This mod/plugin adds the telekinesis enchantment, allowing you to instantly move drops into your inventory.
+This mod/plugin adds the telekinesis enchantment, allowing you to instantly move exp and item drops into your inventory.
+This includes the drops from mobs, vehicles and blocks.
 
 ## Configuration
 
@@ -12,7 +13,7 @@ The configuration file can be found in the client/server directory.
 
 ```json
 {
-    "version": 1, // Only for migration purposes, just ignore this.
+    "version": 1, // For migration purposes only, just ignore this.
     "config": {
         "needEnchantment": true, // Defines, whether telekinesis should without or with the enchantment on the tool.
         "needSneak": false, // Defines. whether the player should have to sneak in order to use telekinesis.
