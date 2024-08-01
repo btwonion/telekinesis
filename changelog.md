@@ -1,1 +1,1 @@
-- fix translations
+- fix enchantment not tradeable in >=1.20.6

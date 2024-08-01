@@ -11,6 +11,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantment.EnchantmentDefinition
@@ -34,7 +35,15 @@ private class TelekinesisEnchantmentTagProvider(
     output: FabricDataOutput, completableFuture: CompletableFuture<HolderLookup.Provider>
 ) : EnchantmentTagProvider(output, completableFuture) {
     override fun addTags(registries: HolderLookup.Provider) {
-        getOrCreateTagBuilder(telekinesisEffectId).addOptional(telekinesisEnchantmentId)
+        fun minecraftTagKey(value: String): TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("minecraft", value))
+        listOf(
+            getOrCreateTagBuilder(telekinesisEffectId),
+            getOrCreateTagBuilder(minecraftTagKey("tradeable")),
+            getOrCreateTagBuilder(minecraftTagKey("treasure")),
+            getOrCreateTagBuilder(minecraftTagKey("in_enchanting_table"))
+        ).forEach {
+            it.add(telekinesisEnchantmentId)
+        }
     }
 }
 
