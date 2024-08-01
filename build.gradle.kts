@@ -15,7 +15,7 @@ plugins {
 }
 
 val beta: Int? = null // Pattern is '1.0.0-beta1-1.20.6-pre.2'
-val featureVersion = "3.0.1${if (beta != null) "-beta$beta" else ""}"
+val featureVersion = "3.0.2${if (beta != null) "-beta$beta" else ""}"
 val mcVersion = property("mcVersion")!!.toString()
 val mcVersionRange = property("mcVersionRange")!!.toString()
 version = "$featureVersion-$mcVersion"
@@ -58,7 +58,7 @@ repositories {
         }
     }
     maven("https://maven.terraformersmc.com")
-    maven("https://maven.parchmentmc.org")
+    maven("https://maven.quiltmc.org/repository/release/")
     maven("https://repo.nyon.dev/releases")
     maven("https://maven.isxander.dev/releases")
     maven("https://maven.isxander.dev/snapshots")
@@ -68,13 +68,13 @@ repositories {
 dependencies {
     minecraft("com.mojang:minecraft:$mcVersion")
     mappings(loom.layered {
-        val parchment: String = property("deps.parchment").toString()
-        if (parchment.isNotEmpty()) parchment("org.parchmentmc.data:parchment-$parchment@zip")
+        val quiltMappings: String = property("deps.quiltmappings").toString()
+        if (quiltMappings.isNotEmpty()) mappings("org.quiltmc:quilt-mappings:$quiltMappings:intermediary-v2")
         officialMojangMappings()
     })
 
     implementation("org.vineflower:vineflower:1.10.1")
-    modImplementation("net.fabricmc:fabric-loader:0.15.11")
+    modImplementation("net.fabricmc:fabric-loader:0.16.0")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fapi")!!}")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.0")
 

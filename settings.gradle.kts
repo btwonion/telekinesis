@@ -7,7 +7,6 @@ pluginManagement {
         gradlePluginPortal()
         maven("https://maven.fabricmc.net/")
         maven("https://server.bbkr.space/artifactory/libs-release/")
-        maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://maven.kikugie.dev/releases")
     }
 }
