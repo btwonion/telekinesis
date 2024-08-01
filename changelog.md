@@ -1,1 +1,2 @@
 - fix enchantment not tradeable in >=1.20.6
+- use yacl 3.5.x for config creation
