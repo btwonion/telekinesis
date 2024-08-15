@@ -36,13 +36,14 @@ private class TelekinesisEnchantmentTagProvider(
 ) : EnchantmentTagProvider(output, completableFuture) {
     override fun addTags(registries: HolderLookup.Provider) {
         fun minecraftTagKey(value: String): TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("minecraft", value))
+        val enchantmentResourceKey = ResourceKey.create(Registries.ENCHANTMENT, telekinesisEnchantmentId)
         listOf(
             getOrCreateTagBuilder(telekinesisEffectId),
             getOrCreateTagBuilder(minecraftTagKey("tradeable")),
             getOrCreateTagBuilder(minecraftTagKey("treasure")),
-            getOrCreateTagBuilder(minecraftTagKey("in_enchanting_table"))
+            getOrCreateTagBuilder(minecraftTagKey("non_treasure"))
         ).forEach {
-            it.add(telekinesisEnchantmentId)
+            it.addOptional(enchantmentResourceKey)
         }
     }
 }
