@@ -1,1 +1,2 @@
-- fix enchantment not enchantable in enchanting table in >=1.20.6
+- also award player with exp orb gain stat
+- fix crash on tool repair with telekinesis (#17 by f-raZ0R)

@@ -19,17 +19,17 @@ object DropEvent {
         }
     }
 
-    @Suppress("unused")
+    @Suppress("unused", "KotlinConstantConditions")
     private val listener = event.register { items, exp, player, tool ->
         if (config.needSneak && !player.isCrouching) return@register
         if (config.needEnchantment && /*? if >=1.21 {*/ !EnchantmentHelper.hasTag(tool, telekinesisEffectId)/*?} else {*/ /*EnchantmentHelper.getItemEnchantmentLevel(telekinesis, tool) == 0 *//*?}*/) return@register
 
         if (config.itemsAllowed) items.removeIf(player::addItem)
         if (config.expAllowed) {
-            val fakeExperienceOrb = ExperienceOrb(player.level(), 0.0, 0.0, 0.0, 0)
-            @Suppress("KotlinConstantConditions")
+            val fakeExperienceOrb = ExperienceOrb(player.level(), 0.0, 0.0, 0.0, exp.value)
+            player.take(fakeExperienceOrb, 1)
             val leftExp = (fakeExperienceOrb as ExperienceOrbInvoker).invokeRepairPlayerItems(player, exp.value)
-            player.giveExperiencePoints(leftExp)
+            if (leftExp > 0) player.giveExperiencePoints(leftExp)
             exp.setValue(0)
         }
     }
