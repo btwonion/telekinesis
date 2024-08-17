@@ -1,3 +1,4 @@
 - also award player with exp orb gain stat
 - fix crash on tool repair with telekinesis (#17 by f-raZ0R)
 - fix infinitely dropping boats, without destroying them on <=1.20.2 (#16 by f-raZ0R)
+- update konfig, preventing a crash, when inner config does not match json format
