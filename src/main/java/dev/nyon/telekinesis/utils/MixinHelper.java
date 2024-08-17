@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 /*?}*/
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class MixinHelper {
             .invoker()
             .invoke(mutableList, new MutableInt(0), player, player.getMainHandItem());
 
-        if (mutableList.isEmpty()) return null;
+        if (mutableList.isEmpty()) return Items.AIR;
         else return original;
     }
 
