@@ -4,8 +4,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.0.0"
-    kotlin("plugin.serialization") version "2.0.0"
+    kotlin("jvm") version "2.0.10"
+    kotlin("plugin.serialization") version "2.0.10"
     id("fabric-loom") version "1.7-SNAPSHOT"
 
     id("me.modmuss50.mod-publish-plugin") version "0.5.+"
@@ -49,20 +49,11 @@ if (!listOf("1.20.1", "1.20.4", "1.20.6").contains(stonecutter.current.version))
 
 repositories {
     mavenCentral()
-    exclusiveContent {
-        forRepository {
-            maven("https://api.modrinth.com/maven")
-        }
-        filter {
-            includeGroup("maven.modrinth")
-        }
-    }
     maven("https://maven.terraformersmc.com")
     maven("https://maven.quiltmc.org/repository/release/")
     maven("https://repo.nyon.dev/releases")
     maven("https://maven.isxander.dev/releases")
-    maven("https://maven.isxander.dev/snapshots")
-    maven("https://jitpack.io")
+    maven("https://maven.bawnorton.com/releases")
 }
 
 dependencies {
@@ -76,14 +67,14 @@ dependencies {
     implementation("org.vineflower:vineflower:1.10.1")
     modImplementation("net.fabricmc:fabric-loader:0.16.0")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fapi")!!}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.0")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.12.0+kotlin.2.0.10")
 
     modImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")!!}")
     modImplementation("com.terraformersmc:modmenu:${property("deps.modMenu")!!}")
 
-    include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")!!)!!)
+    include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.2.0-beta.6")!!)!!)
 
-    include(modImplementation("dev.nyon:konfig:2.0.1-1.20.4")!!)
+    include(modImplementation("dev.nyon:konfig:2.0.2-1.20.4")!!)
 }
 
 val javaVersion = property("javaVer")!!.toString()
