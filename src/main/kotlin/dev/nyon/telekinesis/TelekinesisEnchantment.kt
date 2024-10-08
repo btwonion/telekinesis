@@ -1,9 +1,6 @@
 package dev.nyon.telekinesis
 
-import net.minecraft.ChatFormatting
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.entity.EquipmentSlot
 /*? if >=1.21 {*/
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -13,12 +10,17 @@ val telekinesisEffectId: TagKey<Enchantment> = TagKey.create(Registries.ENCHANTM
 val telekinesisEnchantmentId: ResourceLocation = ResourceLocation.fromNamespaceAndPath("telekinesis", "telekinesis")
 /*?} elif <1.21 && >=1.20.5 {*/
 /*import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
+import net.minecraft.world.entity.EquipmentSlot
 *//*?} elif <=1.20.4 {*/
 /*import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.MobType
 import net.minecraft.world.item.enchantment.EnchantmentCategory
+import net.minecraft.world.entity.EquipmentSlot
 *//*?}*/
-
 
 /*? if =1.20.6 {*/
 /*class TelekinesisEnchantment : Enchantment(

@@ -11,7 +11,7 @@ The configuration file can be found in the client/server directory.
 <details>
 <summary>telekinesis.json</summary>
 
-```json
+```json5
 {
     "version": 1, // For migration purposes only, just ignore this.
     "config": {
@@ -27,11 +27,9 @@ The configuration file can be found in the client/server directory.
 
 ### Other
 
-Currently supported versions are: 1.20.1, 1.20.4, 1.20.6 and 1.21. This can change in the future!
-
-If you need help with any of my mods, just join my [discord server](https://nyon.dev/discord)
+If you need help with any of my mods, just join my [discord server](https://nyon.dev/discord).
 
 #### Paper Compatibility
 
 The paper module of telekinesis is as of Minecraft version 1.20.2 discontinued cause of the lack of ability to
-register the enchantment (When Paper's registry modification api is merged I will continue.)
+register the enchantment.

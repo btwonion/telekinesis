@@ -15,13 +15,12 @@ plugins {
 }
 
 val beta: Int? = null // Pattern is '1.0.0-beta1-1.20.6-pre.2'
-val featureVersion = "3.0.4${if (beta != null) "-beta$beta" else ""}"
+val featureVersion = "3.0.5${if (beta != null) "-beta$beta" else ""}"
 val mcVersion = property("mcVersion")!!.toString()
 val mcVersionRange = property("mcVersionRange")!!.toString()
 version = "$featureVersion-$mcVersion"
 
 group = "dev.nyon"
-val projectAuthors = listOf("btwonion")
 val githubRepo = "btwonion/telekinesis"
 
 base {
@@ -53,7 +52,6 @@ repositories {
     maven("https://maven.quiltmc.org/repository/release/")
     maven("https://repo.nyon.dev/releases")
     maven("https://maven.isxander.dev/releases")
-    maven("https://maven.bawnorton.com/releases")
 }
 
 dependencies {
@@ -71,8 +69,6 @@ dependencies {
 
     modImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")!!}")
     modImplementation("com.terraformersmc:modmenu:${property("deps.modMenu")!!}")
-
-    include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.2.0-beta.6")!!)!!)
 
     include(modImplementation("dev.nyon:konfig:2.0.2-1.20.4")!!)
 }

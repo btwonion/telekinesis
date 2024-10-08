@@ -30,7 +30,7 @@ object DropEvent {
             player.take(fakeExperienceOrb, 1)
             val leftExp = (fakeExperienceOrb as ExperienceOrbInvoker).invokeRepairPlayerItems(player, exp.value)
             if (leftExp > 0) player.giveExperiencePoints(leftExp)
-            exp.setValue(0)
+            exp.value = 0
         }
     }
 }
