@@ -1,5 +1,3 @@
-import dev.kikugie.stonecutter.StonecutterSettings
-
 rootProject.name = "telekinesis"
 
 pluginManagement {
@@ -7,26 +5,26 @@ pluginManagement {
         gradlePluginPortal()
         maven("https://maven.fabricmc.net/")
         maven("https://server.bbkr.space/artifactory/libs-release/")
-        maven("https://maven.kikugie.dev/releases")
+        maven("https://maven.kikugie.dev/snapshots")
     }
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.4"
+    id("dev.kikugie.stonecutter") version "0.5-beta.3"
 }
 
 buildscript {
     repositories { mavenCentral() }
     dependencies {
-        classpath("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0-RC")
+        classpath("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     }
 }
 
-extensions.configure<StonecutterSettings> {
+stonecutter {
     kotlinController = true
     centralScript = "build.gradle.kts"
     shared {
-        versions("1.20.1", "1.20.4", "1.20.6", "1.21")
+        versions("1.20.1", "1.20.4", "1.20.6", "1.21", "1.21.2")
         vcsVersion = "1.21"
     }
     create(rootProject)

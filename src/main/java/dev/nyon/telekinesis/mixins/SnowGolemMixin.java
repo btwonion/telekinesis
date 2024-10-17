@@ -1,24 +1,27 @@
 package dev.nyon.telekinesis.mixins;
 
+/*? if <1.21.2 {*/
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.nyon.telekinesis.utils.MixinHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
-import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 import static dev.nyon.telekinesis.utils.MixinHelper.threadLocal;
+/*?}*/
+import net.minecraft.world.entity.animal.SnowGolem;
+import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(SnowGolem.class)
 public class SnowGolemMixin {
 
+    /*? if <1.21.2 {*/
     @WrapOperation(
         method = "mobInteract",
         at = @At(
@@ -49,4 +52,5 @@ public class SnowGolemMixin {
         if (MixinHelper.wrapWithConditionPlayerItemSingle(player, new ItemStack(original))) return original;
         else return Items.AIR;
     }
+    /*?}*/
 }

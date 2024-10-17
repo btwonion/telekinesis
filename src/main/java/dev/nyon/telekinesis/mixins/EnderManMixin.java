@@ -16,11 +16,12 @@ public class EnderManMixin {
         method = "dropCustomDeathLoot",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/monster/EnderMan;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
+            target = /*? if needsWorldNow {*//*"Lnet/minecraft/world/entity/monster/EnderMan;spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"*//*?} else {*/  "Lnet/minecraft/world/entity/monster/EnderMan;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;" /*?}*/
         )
     )
     public boolean redirectEquipmentDrop(
         EnderMan instance,
+        /*$ serverLevel {*//*$}*/
         ItemStack itemStack,
         /*? if >=1.21 {*/
         ServerLevel serverLevel,

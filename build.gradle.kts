@@ -4,18 +4,17 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.0.10"
-    kotlin("plugin.serialization") version "2.0.10"
-    id("fabric-loom") version "1.7-SNAPSHOT"
+    kotlin("jvm") version "2.0.21"
+    kotlin("plugin.serialization") version "2.0.21"
+    id("fabric-loom") version "1.8-SNAPSHOT"
 
-    id("me.modmuss50.mod-publish-plugin") version "0.5.+"
+    id("me.modmuss50.mod-publish-plugin") version "0.7.+"
 
     `maven-publish`
-    signing
 }
 
 val beta: Int? = null // Pattern is '1.0.0-beta1-1.20.6-pre.2'
-val featureVersion = "3.0.5${if (beta != null) "-beta$beta" else ""}"
+val featureVersion = "3.0.6${if (beta != null) "-beta$beta" else ""}"
 val mcVersion = property("mcVersion")!!.toString()
 val mcVersionRange = property("mcVersionRange")!!.toString()
 version = "$featureVersion-$mcVersion"
@@ -63,17 +62,17 @@ dependencies {
     })
 
     implementation("org.vineflower:vineflower:1.10.1")
-    modImplementation("net.fabricmc:fabric-loader:0.16.0")
+    modImplementation("net.fabricmc:fabric-loader:0.16.7")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fapi")!!}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.12.0+kotlin.2.0.10")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.12.3+kotlin.2.0.21")
 
-    modImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")!!}")
+    modCompileOnly("dev.isxander:yet-another-config-lib:${property("deps.yacl")!!}")
     modImplementation("com.terraformersmc:modmenu:${property("deps.modMenu")!!}")
 
     include(modImplementation("dev.nyon:konfig:2.0.2-1.20.4")!!)
 }
 
-val javaVersion = property("javaVer")!!.toString()
+val javaVersion = if (stonecutter.eval(mcVersion, ">=1.20.6")) 21 else 17
 tasks {
     processResources {
         val modId = "telekinesis"
@@ -109,7 +108,7 @@ tasks {
 
     withType<KotlinCompile> {
         compilerOptions {
-            jvmTarget = JvmTarget.fromTarget(javaVersion)
+            jvmTarget = JvmTarget.fromTarget(javaVersion.toString())
         }
     }
 }
@@ -135,8 +134,8 @@ publishMods {
         minecraftVersions.addAll(supportedMcVersions)
 
         requires { slug = "fabric-api" }
-        requires { slug = "yacl" }
         requires { slug = "fabric-language-kotlin" }
+        optional { slug = "yacl" }
         optional { slug = "modmenu" }
     }
 
@@ -176,16 +175,4 @@ java {
         targetCompatibility = it
     }
 }
-
-/*
-signing {
-    val signingKey: String? by project
-    val signingPassword: String? by project
-    useGpgCmd()
-    if (signingKey != null && signingPassword != null) {
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-    sign(publishing.publications)
-}
- */
 

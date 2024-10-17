@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.nyon.telekinesis.utils.MixinHelper;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 /*? if >=1.20.4*/ import net.minecraft.world.entity.vehicle.VehicleEntity;
@@ -18,7 +19,7 @@ import static dev.nyon.telekinesis.utils.MixinHelper.threadLocal;
 @Pseudo
 @Mixin(targets = "net.minecraft.world.entity.vehicle.VehicleEntity")
 public class VehicleEntityMixin {
-    /*? if >=1.20.4 {*/
+    /*? if >=1.20.4 && <1.21.2 {*/
     @WrapOperation(
         method = "destroy(Lnet/minecraft/world/damagesource/DamageSource;)V",
         at = @At(
@@ -51,5 +52,24 @@ public class VehicleEntityMixin {
 
         return MixinHelper.wrapWithConditionPlayerItemSingle(player, itemStack);
     }
-    /*?}*/
+    /*?} elif >=1.21.2 {*/
+
+    /*@WrapWithCondition(
+        method = "Lnet/minecraft/world/entity/vehicle/VehicleEntity;destroy(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/Item;)V",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/entity/vehicle/VehicleEntity;spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
+        )
+    )
+    private boolean replaceDropItem(
+        VehicleEntity instance,
+        ServerLevel world,
+        ItemStack itemStack
+    ) {
+        ServerPlayer player = threadLocal.get();
+        if (player == null) return true;
+
+        return MixinHelper.wrapWithConditionPlayerItemSingle(player, itemStack);
+    }
+    *//*?}*/
 }

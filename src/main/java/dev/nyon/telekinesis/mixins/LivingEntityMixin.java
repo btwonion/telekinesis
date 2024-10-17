@@ -3,8 +3,10 @@ package dev.nyon.telekinesis.mixins;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import dev.nyon.telekinesis.DropEvent;
 import dev.nyon.telekinesis.utils.MixinHelper;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -14,7 +16,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
@@ -36,6 +38,7 @@ public abstract class LivingEntityMixin {
     )
     public int redirectExp(
         int original
+        /*? if >=1.21.2 {*//*,ServerLevel level*//*?}*/
         /*? if >=1.21*/, Entity entity
     ) {
         /*? if >=1.21 {*/
@@ -48,20 +51,9 @@ public abstract class LivingEntityMixin {
         return MixinHelper.modifyExpressionValuePlayerExp(player, original);
     }
 
-    @ModifyArg(
-        method = "dropFromLootTable",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootParams;JLjava/util/function/Consumer;)V"
-        ),
-        index = 2
-    )
-    public Consumer<ItemStack> redirectCommonDrops(
-        LootParams params,
-        long seed,
-        Consumer<ItemStack> original
-    ) {
-        DamageSource source = params.getParamOrNull(LootContextParams.DAMAGE_SOURCE);
+    @Unique
+    private Consumer<ItemStack> replaceConsumer(LootParams params, Consumer<ItemStack> original) {
+        DamageSource source = params/*? if <1.21.2 {*/.getParamOrNull(LootContextParams.DAMAGE_SOURCE) /*?} else {*//*.contextMap().getOptional(LootContextParams.DAMAGE_SOURCE) *//*?}*/;
         if (source == null || !(source.getEntity() instanceof ServerPlayer player)) return original;
 
         return item -> {
@@ -73,6 +65,35 @@ public abstract class LivingEntityMixin {
             if (!mutableList.isEmpty()) original.accept(item);
         };
     }
+
+    @ModifyArg(
+        method = "dropFromLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;Z)V",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootParams;JLjava/util/function/Consumer;)V"
+        ),
+        index = 2
+    )
+    public Consumer<ItemStack> redirectCommonDrops(
+        LootParams params,
+        long seed,
+        Consumer<ItemStack> original
+    ) {
+        return replaceConsumer(params, original);
+    }
+
+    /*? if >=1.21.2 {*/
+    /*@ModifyArg(
+        method = "dropFromLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceKey;Ljava/util/function/Function;Ljava/util/function/BiConsumer;)Z",
+        at = @At(
+            value = "INVOKE",
+            target = "Ljava/util/List;forEach(Ljava/util/function/Consumer;)V"
+        )
+    )
+    public Consumer<ItemStack> redirectDropConsumer(Consumer<ItemStack> original, @Local(ordinal = 0) LootParams params) {
+        return replaceConsumer(params, original);
+    }
+    *//*?}*/
 
     /*? if <1.21 {*/
     /*@WrapOperation(

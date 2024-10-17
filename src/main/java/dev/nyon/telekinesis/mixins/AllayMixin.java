@@ -3,6 +3,7 @@ package dev.nyon.telekinesis.mixins;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import dev.nyon.telekinesis.utils.MixinHelper;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,11 +22,12 @@ public class AllayMixin {
         method = "dropEquipment",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/animal/allay/Allay;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
+            target = /*? if needsWorldNow {*//*"Lnet/minecraft/world/entity/animal/allay/Allay;spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"*//*?} else {*/  "Lnet/minecraft/world/entity/animal/allay/Allay;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;" /*?}*/
         )
     )
     public boolean modifyEquipmentDrop(
         Allay instance,
+        /*$ serverLevel {*//*$}*/
         ItemStack stack
     ) {
         return MixinHelper.entityDropEquipmentSingle(instance, stack);

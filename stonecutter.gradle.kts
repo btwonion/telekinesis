@@ -1,3 +1,4 @@
+import dev.kikugie.stonecutter.Identifier
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
@@ -11,6 +12,13 @@ plugins {
     id("dev.kikugie.stonecutter")
 }
 stonecutter active "1.21" /* [SC] DO NOT EDIT */
+
+stonecutter parameters {
+    val needsWorldNow = eval(stonecutter.current.version, ">=1.21.2")
+    const("needsWorldNow", needsWorldNow)
+
+    swaps["serverLevel"] = if (needsWorldNow) "ServerLevel level," else ""
+}
 
 stonecutter registerChiseled tasks.register("buildAllVersions", stonecutter.chiseled) {
     group = "mod"
@@ -65,7 +73,10 @@ tasks.register("postUpdate") {
                 color = 0xff0080,
                 fields = listOf(
                     Field(
-                        "Supported versions", stonecutter.versions.joinToString { it.version }, false
+                        "Supported versions",
+                        stonecutter.tree.nodes.map { it.property("vers.supportedMcVersions").toString().split(',') }
+                            .flatten().toSet().joinToString(),
+                        false
                     ),
                     Field("Modrinth", "https://modrinth.com/mod/telekinesis", true),
                     Field("GitHub", "https://github.com/btwonion/telekinesis", true)

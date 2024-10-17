@@ -16,11 +16,12 @@ public class MobMixin {
         method = "dropCustomDeathLoot",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
+            target = /*? if needsWorldNow {*//*"Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"*//*?} else {*/  "Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;" /*?}*/
         )
     )
     public boolean modifyCustomDeathLoot(
         Mob instance,
+        /*$ serverLevel {*//*$}*/
         ItemStack itemStack,
         /*? if >=1.21 {*/ ServerLevel serverLevel, DamageSource damageSource, boolean bl /*?} else {*/ /*DamageSource damageSource, int looting, boolean hitByPlayer *//*?}*/
     ) {
@@ -29,14 +30,15 @@ public class MobMixin {
 
     /*? if >=1.21 {*/
     @WrapWithCondition(
-        method = "dropPreservedEquipment(Ljava/util/function/Predicate;)Ljava/util/Set;",
+        method = /*? if needsWorldNow {*//*"dropPreservedEquipment(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Predicate;)Ljava/util/Set;"*//*?} else {*/  "dropPreservedEquipment(Ljava/util/function/Predicate;)Ljava/util/Set;" /*?}*/,
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
+            target = /*? if needsWorldNow {*//*"Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"*//*?} else {*/  "Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;" /*?}*/
         )
     )
     public boolean modifyCustomDeathLoot(
         Mob instance,
+        /*$ serverLevel {*//*$}*/
         ItemStack itemStack
     ) {
         return MixinHelper.entityDropEquipmentSingle(instance, itemStack);
