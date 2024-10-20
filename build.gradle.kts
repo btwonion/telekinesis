@@ -77,7 +77,7 @@ tasks {
     processResources {
         val modId = "telekinesis"
         val modName = "telekinesis"
-        val modDescription = "Adds a telekinesis enchantment to minecraft"
+        val modDescription = "Adds auto-pickup functionality to the player. Also know as telekinesis from Hypixel Skyblock."
 
         val props = mapOf(
             "id" to modId,
