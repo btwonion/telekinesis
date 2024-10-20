@@ -1,6 +1,6 @@
 # telekinesis
 
-Adds auto-pickup functionality to the player. Also know as telekinesis from Hypixel Skyblock.
+> Adds auto-pickup functionality to the player. Also know as telekinesis from Hypixel Skyblock.
 
 ## Functionality
 
