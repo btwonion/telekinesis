@@ -1,3 +1,1 @@
-- add support for 1.21.2
-- update kotlin and klf to 2.0.21
-- do not require yacl anymore
+- fix LivingEntityMixin for <1.21.2
