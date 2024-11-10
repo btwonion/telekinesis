@@ -11,12 +11,12 @@ With this mod you can automatically pickup drops, including experience, from mob
 ## Can I use the functionality without the enchantment?
 
 Yes, in the [config](#Configuration) you can change the `needEnchantment` option to `false`. If you want to only apply this 
-functionality while sneaking, you can also enable `needSneak` 
+functionality while sneaking, you can also enable `needSneak`.
 
 ## Where can I find the enchantment?
 
 You can trade the enchantment with villagers, enchant it in an enchanting table, or you can find it in treasures
-enchanting on tools.
+enchanted on tools.
 
 ## Configuration
 
