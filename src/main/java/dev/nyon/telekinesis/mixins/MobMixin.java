@@ -30,13 +30,13 @@ public class MobMixin {
 
     /*? if >=1.21 {*/
     @WrapWithCondition(
-        method = /*? if needsWorldNow {*//*"dropPreservedEquipment(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Predicate;)Ljava/util/Set;"*//*?} else {*/  "dropPreservedEquipment(Ljava/util/function/Predicate;)Ljava/util/Set;" /*?}*/,
+        method = /*? if needsWorldNow {*//*"Lnet/minecraft/world/entity/Mob;dropPreservedEquipment(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Predicate;)Ljava/util/Set;"*//*?} else {*/  "dropPreservedEquipment(Ljava/util/function/Predicate;)Ljava/util/Set;" /*?}*/,
         at = @At(
             value = "INVOKE",
             target = /*? if needsWorldNow {*//*"Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"*//*?} else {*/  "Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;" /*?}*/
         )
     )
-    public boolean modifyCustomDeathLoot(
+    public boolean modifyPreservedEquipment(
         Mob instance,
         /*$ serverLevel {*//*$}*/
         ItemStack itemStack

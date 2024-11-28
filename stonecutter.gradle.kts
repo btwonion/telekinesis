@@ -1,4 +1,3 @@
-import dev.kikugie.stonecutter.Identifier
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
@@ -14,7 +13,7 @@ plugins {
 stonecutter active "1.21" /* [SC] DO NOT EDIT */
 
 stonecutter parameters {
-    val needsWorldNow = eval(stonecutter.current.version, ">=1.21.2")
+    val needsWorldNow = eval(node!!.name, ">=1.21.2")
     const("needsWorldNow", needsWorldNow)
 
     swaps["serverLevel"] = if (needsWorldNow) "ServerLevel level," else ""

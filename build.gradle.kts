@@ -1,5 +1,6 @@
 @file:Suppress("SpellCheckingInspection", "UnstableApiUsage")
 
+import net.fabricmc.loom.configuration.FabricApiExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -40,11 +41,8 @@ loom {
 }
 
 // Enable data generation for >1.20.6
-if (!listOf("1.20.1", "1.20.4", "1.20.6").contains(stonecutter.current.version)) {
-    fabricApi {
-        configureDataGeneration()
-    }
-}
+val dataGen = stonecutter.eval(mcVersion, ">1.20.6")
+if (dataGen) fabricApi(FabricApiExtension::configureDataGeneration)
 
 repositories {
     mavenCentral()
@@ -63,11 +61,11 @@ dependencies {
     })
 
     implementation("org.vineflower:vineflower:1.10.1")
-    modImplementation("net.fabricmc:fabric-loader:0.16.7")
+    modImplementation("net.fabricmc:fabric-loader:0.16.9")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fapi")!!}")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.12.3+kotlin.2.0.21")
 
-    modCompileOnly("dev.isxander:yet-another-config-lib:${property("deps.yacl")!!}")
+    modImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")!!}")
     modImplementation("com.terraformersmc:modmenu:${property("deps.modMenu")!!}")
 
     include(modImplementation("dev.nyon:konfig:2.0.2-1.20.4")!!)
@@ -111,6 +109,10 @@ tasks {
         compilerOptions {
             jvmTarget = JvmTarget.fromTarget(javaVersion.toString())
         }
+    }
+
+    build {
+        if (dataGen) dependsOn("runDatagen")
     }
 }
 
