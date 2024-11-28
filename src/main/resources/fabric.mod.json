@@ -19,10 +19,10 @@
     "environment": "*",
     "depends": {
         "fabric-language-kotlin": ">=1.12.0+kotlin.2.0.10",
+        "yet_another_config_lib_v3": "*",
         "minecraft": "${mc}"
     },
     "suggests": {
-        "yet_another_config_lib_v3": "*",
         "modmenu": "*"
     },
     "entrypoints": {
