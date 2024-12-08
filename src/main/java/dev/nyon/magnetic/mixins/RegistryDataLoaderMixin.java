@@ -18,7 +18,7 @@ import net.minecraft.server.packs.resources.Resource;
 /*?}*/
 
 @Mixin(RegistryDataLoader.class)
-public class MappedRegistryMixin {
+public class RegistryDataLoaderMixin {
 
     /*? if >=1.21 {*/
     @Inject(
