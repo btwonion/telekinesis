@@ -138,7 +138,7 @@ publishMods {
 
         requires { slug = "fabric-api" }
         requires { slug = "fabric-language-kotlin" }
-        optional { slug = "yacl" }
+        requires { slug = "yacl" }
         optional { slug = "modmenu" }
     }
 
