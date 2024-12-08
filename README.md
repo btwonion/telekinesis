@@ -4,7 +4,9 @@
 
 ## Functionality
 
-Check out the [Gallery](https://modrinth.com/plugin/magnetic/gallery) for a preview.
+**Block drop auto-pickup preview**
+
+![Block drop auto-pickup preview](https://raw.githubusercontent.com/btwonion/magnetic/refs/heads/master/media/magnetic-showcase-cave.gif)
 
 With this mod you can automatically pick up drops, including experience, from mobs, blocks and other entities.
 
