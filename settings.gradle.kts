@@ -1,4 +1,4 @@
-rootProject.name = "telekinesis"
+rootProject.name = "magnetic"
 
 pluginManagement {
     repositories {

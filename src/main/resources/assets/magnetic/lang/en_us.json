@@ -1,0 +1,13 @@
+{
+    "yacl3.config.magnetic.title": "magnetic",
+    "yacl3.config.magnetic.category.general": "General",
+    "yacl3.config.magnetic.category.general.root.option.needEnchantment": "Need enchantment",
+    "yacl3.config.magnetic.category.general.root.option.needEnchantment.description": "Decides whether Magnetic should only work with the enchantment.",
+    "yacl3.config.magnetic.category.general.root.option.needSneak": "Only while sneaking",
+    "yacl3.config.magnetic.category.general.root.option.needSneak.description": "Decides whether players should have to sneak to use Magnetic.",
+    "yacl3.config.magnetic.category.general.root.option.expAllowed": "Exp drops",
+    "yacl3.config.magnetic.category.general.root.option.expAllowed.description": "Decides whether Magnetic should also work for exp drops.",
+    "yacl3.config.magnetic.category.general.root.option.itemsAllowed": "Items",
+    "yacl3.config.magnetic.category.general.root.option.itemsAllowed.description": "Decides whether Magnetic should also work for item drops.",
+    "enchantment.magnetic.magnetic.name": "Magnetic"
+}

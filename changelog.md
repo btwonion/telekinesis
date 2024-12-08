@@ -1,3 +1,1 @@
-- change icon
-- re-require yacl
-- rename doubled function name in MobMixin
+- rebrand mod to "magnetic"
