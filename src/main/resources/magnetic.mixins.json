@@ -15,6 +15,7 @@
         "EnderManMixin",
         "FishingHookMixin",
         "LivingEntityMixin",
+        "MappedRegistryMixin",
         "MinecartTNTMixin",
         "MobMixin",
         "PiglinMixin",

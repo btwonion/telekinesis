@@ -1,1 +1,2 @@
 - rebrand mod to "magnetic"
+- do not register telekinesis enchantment if "needEnchantment" is false
