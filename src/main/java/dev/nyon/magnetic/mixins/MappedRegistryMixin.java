@@ -1,33 +1,41 @@
 package dev.nyon.magnetic.mixins;
 
-import net.minecraft.core.MappedRegistry;
+import net.minecraft.resources.RegistryDataLoader;
 import org.spongepowered.asm.mixin.Mixin;
 /*? if >=1.21 {*/
+import com.google.gson.JsonElement;
+import com.mojang.serialization.Decoder;
 import dev.nyon.magnetic.MagneticEnchantmentKt;
 import dev.nyon.magnetic.config.ConfigKt;
-import net.minecraft.core.Holder;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.core.RegistrationInfo;
+import net.minecraft.core.WritableRegistry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.server.packs.resources.Resource;
 /*?}*/
 
-@Mixin(MappedRegistry.class)
-public class MappedRegistryMixin<T> {
+@Mixin(RegistryDataLoader.class)
+public class MappedRegistryMixin {
 
     /*? if >=1.21 {*/
     @Inject(
-        method = "register",
-        at = @At("HEAD")
+        method = "loadElementFromResource",
+        at = @At("HEAD"),
+        cancellable = true
     )
-    public void cancelMagneticEnchantmentRegister(
-        ResourceKey<T> key,
-        T entry,
+    private static <E> void cancelMagneticEnchantmentRegister(
+        WritableRegistry<E> registry,
+        Decoder<E> decoder,
+        RegistryOps<JsonElement> ops,
+        ResourceKey<E> registryKey,
+        Resource resource,
         RegistrationInfo info,
-        CallbackInfoReturnable<Holder.Reference<T>> cir
+        CallbackInfo ci
     ) {
-        if (!ConfigKt.getConfig().getNeedEnchantment() && key.location().equals(MagneticEnchantmentKt.getMagneticEnchantmentId())) cir.cancel();
+        if (!ConfigKt.getConfig().getNeedEnchantment() && registryKey.location().equals(MagneticEnchantmentKt.getMagneticEnchantmentId())) ci.cancel();
     }
      /*?}*/
 }
