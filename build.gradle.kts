@@ -22,7 +22,7 @@ val mcVersionName = property("versionName")!!.toString()
 version = "$featureVersion-$mcVersionName"
 
 group = "dev.nyon"
-val githubRepo = "btwonion/telekinesis"
+val githubRepo = "btwonion/magnetic"
 
 base {
     archivesName.set(rootProject.name)
@@ -36,7 +36,7 @@ loom {
         }
     }
 
-    accessWidenerPath = rootDir.resolve("src/main/resources/telekinesis.accesswidener")
+    accessWidenerPath = rootDir.resolve("src/main/resources/magnetic.accesswidener")
     mixin { useLegacyMixinAp = false }
 }
 
@@ -74,9 +74,9 @@ dependencies {
 val javaVersion = if (stonecutter.eval(mcVersion, ">=1.20.6")) 21 else 17
 tasks {
     processResources {
-        val modId = "telekinesis"
-        val modName = "telekinesis"
-        val modDescription = "Adds auto-pickup functionality to the player. Also know as telekinesis from Hypixel Skyblock."
+        val modId = "magnetic"
+        val modName = "magnetic"
+        val modDescription = "Magnetically moves items and experience into your inventory. Also known as telekinesis from Hypixel Skyblock."
 
         val props = mapOf(
             "id" to modId,
@@ -163,7 +163,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "dev.nyon"
-            artifactId = "telekinesis"
+            artifactId = "magnetic"
             version = project.version.toString()
             from(components["java"])
         }

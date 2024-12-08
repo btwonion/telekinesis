@@ -1,3 +1,2 @@
-- change icon
-- re-require yacl
-- rename doubled function name in MobMixin
+- rebrand mod to "magnetic"
+- do not register telekinesis enchantment if "needEnchantment" is false

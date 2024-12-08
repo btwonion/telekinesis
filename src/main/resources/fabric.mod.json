@@ -4,10 +4,10 @@
     "name": "${name}",
     "description": "${description}",
     "contact": {
-        "issues": "https://github.com/btwonion/telekinesis/issues",
-        "sources": "https://github.com/btwonion/telekinesis"
+        "issues": "https://github.com/btwonion/magnetic/issues",
+        "sources": "https://github.com/btwonion/magnetic"
     },
-    "icon": "assets/telekinesis/icon.png",
+    "icon": "assets/magnetic/icon.png",
     "authors": [
         "btwonion"
     ],
@@ -27,25 +27,25 @@
     },
     "entrypoints": {
         "fabric-datagen": [
-            "dev.nyon.telekinesis.TelekinesisEnchantmentGenerator"
+            "dev.nyon.magnetic.MagneticEnchantmentGenerator"
         ],
         "main": [
             {
                 "adapter": "kotlin",
-                "value": "dev.nyon.telekinesis.MainKt::init"
+                "value": "dev.nyon.magnetic.MainKt::init"
             }
         ],
         "modmenu": [
             {
                 "adapter": "kotlin",
-                "value": "dev.nyon.telekinesis.config.ModMenuImpl"
+                "value": "dev.nyon.magnetic.config.ModMenuImpl"
             }
         ]
     },
     "mixins": [
-        "telekinesis.mixins.json"
+        "magnetic.mixins.json"
     ],
-    "accessWidener": "telekinesis.accesswidener",
+    "accessWidener": "magnetic.accesswidener",
     "custom": {
         "modmenu": {
             "links": {

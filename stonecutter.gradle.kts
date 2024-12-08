@@ -63,7 +63,7 @@ tasks.register("postUpdate") {
     val changelogText = rootProject.file("changelog.md").readText()
     val webhook = DiscordWebhook(
         username = "${rootProject.name} Release Notifier",
-        avatarUrl = "https://raw.githubusercontent.com/btwonion/telekinesis/master/src/main/resources/assets/telekinesis/icon.png",
+        avatarUrl = "https://raw.githubusercontent.com/btwonion/magnetic/master/src/main/resources/assets/magnetic/icon.png",
         embeds = listOf(
             Embed(
                 title = "v$featureVersion of ${rootProject.name} released!",
@@ -77,8 +77,8 @@ tasks.register("postUpdate") {
                             .flatten().toSet().joinToString(),
                         false
                     ),
-                    Field("Modrinth", "https://modrinth.com/mod/telekinesis", true),
-                    Field("GitHub", "https://github.com/btwonion/telekinesis", true)
+                    Field("Modrinth", "https://modrinth.com/mod/magnetic", true),
+                    Field("GitHub", "https://github.com/btwonion/magnetic", true)
                 ),
             )
         )
